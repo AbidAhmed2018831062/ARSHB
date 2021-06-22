@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".hotelRegister3"
+    android:background="#fff"
+    android:padding="30dp"
+    android:transitionName="nextTras3">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+    <TextView
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hotel\nCreation"
+
+        android:textSize="24sp"
+        android:textColor="#000"
+        android:fontFamily="@font/muli_black"></TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Photo of Your Hotel For Profile Picture:"
+            android:textColor="#000"
+            android:textSize="18sp"
+            android:fontFamily="@font/muli_bold"></TextView>
+
+        <Button
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/chooseimage"
+            android:text="Choose Image"
+            android:background="#000"></Button>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/name"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Enter Hotel Name"
+            app:boxStrokeColor="#000"
+            app:boxStrokeWidthFocused="2dp"
+
+            app:endIconMode="clear_text"
+            app:endIconTint="#000"
+            app:hintTextColor="#000"
+            app:passwordToggleEnabled="true"
+            app:startIconDrawable="@drawable/create"
+            app:startIconTint="#000"
+            android:textColorHint="#000"
+            android:layout_marginTop="20dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/muli_bold"
+                android:textColor="#000" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <ImageView
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:src="@drawable/star31"
+            android:id="@+id/dpp"></ImageView>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/upload"
+            android:text="Upload"
+            android:layout_marginTop="20dp"
+            android:background="#000"></Button>
+    </LinearLayout>
+
+</ScrollView>

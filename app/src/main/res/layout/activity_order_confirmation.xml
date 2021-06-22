@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".OrderConfirmation"
+    android:background="#fff"
+    android:padding="30dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/back"
+            android:layout_marginBottom="20dp"
+            android:id="@+id/back"></ImageView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Order Confirmation"
+        android:textColor="#593E31"
+        android:textSize="20sp"
+
+        android:fontFamily="@font/muli_black"
+        ></TextView>
+    <LinearLayout
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        >
+      <LinearLayout
+
+
+          android:layout_width="0dp"
+          android:layout_weight="1"
+          android:layout_height="wrap_content"
+          android:orientation="vertical">
+          <TextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="Issue Date"
+              android:textColor="#926E51"
+              android:fontFamily="@font/muli_bold"
+              android:textSize="16dp"
+              ></TextView>
+          <TextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="30 May 2021"
+              android:textColor="#000"
+              android:textSize="16dp"
+              android:layout_marginTop="5dp"
+              android:id="@+id/cdate"
+              ></TextView>
+          <TextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="Issue Date"
+              android:textColor="#926E51"
+              android:fontFamily="@font/muli_bold"
+              android:textSize="16dp"
+              ></TextView>
+          <TextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="30 May 2021"
+              android:textColor="#000"
+              android:textSize="16dp"
+              android:layout_marginTop="5dp"
+              android:id="@+id/start"
+              ></TextView> <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Booking Date"
+          android:textColor="#926E51"
+          android:fontFamily="@font/muli_bold"
+          android:textSize="16dp"
+          ></TextView>
+          <TextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="30 May 2021"
+              android:textColor="#000"
+              android:textSize="16dp"
+              android:layout_marginTop="5dp"
+              android:id="@+id/end"
+              ></TextView>
+      </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="0.1"
+            android:layout_height="match_parent">
+            <View
+                android:layout_width="3dp"
+                android:layout_height="match_parent"
+                android:background="#593E31"></View>
+        </LinearLayout>
+        <LinearLayout
+
+
+
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Hotel Description"
+                android:textColor="#593E31"
+                android:fontFamily="@font/muli_black"
+                android:textSize="16dp"
+                android:layout_marginBottom="10dp"
+                ></TextView>
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Abid Ahmed"
+                android:textColor="#000"
+                android:textSize="16dp"
+                android:layout_marginTop="5dp"
+                android:id="@+id/hdes"
+                ></TextView>
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Customer Description"
+                android:textColor="#000"
+                android:textSize="16dp"
+                android:layout_marginTop="30dp"
+
+                android:fontFamily="@font/muli_black"
+                ></TextView>
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="30 May 2021"
+                android:textColor="#000"
+                android:textSize="16dp"
+                android:layout_marginTop="5dp"
+                android:id="@+id/cdes"
+                ></TextView>
+        </LinearLayout>
+
+
+    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="30dp">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Name"
+                android:textColor="#593E31"
+                android:textSize="20sp"
+                android:fontFamily="@font/muli_black"
+                android:padding="3dp"
+                android:gravity="center_horizontal"
+                ></TextView>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Quantity"
+                android:textColor="#593E31"
+                android:textSize="20sp"
+                android:padding="3dp"
+                android:fontFamily="@font/muli_black"
+                ></TextView>
+            <TextView
+                android:gravity="center_horizontal"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Price"
+                android:textColor="#593E31"
+                android:textSize="20sp"
+                android:fontFamily="@font/muli_black"
+                ></TextView>
+
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="#593E31"></View>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+         >
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Name"
+                android:textColor="#000"
+                android:textSize="16sp"
+                android:fontFamily="@font/muli_black"
+                android:padding="3dp"
+                android:gravity="center_horizontal"
+
+                android:id="@+id/rname"
+                ></TextView>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="2"
+                android:textColor="#000"
+                android:textSize="16sp"
+                android:id="@+id/qua"
+                android:gravity="center_horizontal"
+                android:padding="3dp"
+                android:fontFamily="@font/muli_black"
+                ></TextView>
+            <TextView
+                android:paddingLeft="10dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="3000Tk."
+                android:textColor="#000"
+                android:textSize="16sp"
+                android:fontFamily="@font/muli_black"
+                android:id="@+id/total"
+                android:gravity="center_horizontal"
+                ></TextView>
+
+
+        </LinearLayout>
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Total: 3000Tk"
+    android:textColor="#000"
+    android:textSize="18dp"
+    android:fontFamily="@font/muli_black"
+    android:id="@+id/total1"
+    android:layout_marginTop="30dp">
+
+</TextView>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/confirm"
+            android:text="Confirm"
+            android:textColor="#fff"
+            android:background="#593E31"
+            android:layout_marginTop="30dp"
+            ></Button>
+    </LinearLayout>
+
+
+
+
+</ScrollView>

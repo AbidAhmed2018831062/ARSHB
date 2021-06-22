@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".OTPEMAIL"
+    android:background="#fff"
+    android:padding="30dp">
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:src="@drawable/cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/cancel"></ImageView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:fontFamily="@font/muli_bold"
+            android:text="CODE\nVerification"
+            android:textColor="#000"
+            android:layout_marginTop="50dp"></TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enter The Code We Have Sent On"
+            android:textColor="#000"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:textSize="18sp"></TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Your Changed Email"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_gravity="center"
+            android:id="@+id/phoneNum"
+            android:textColor="#000"
+            android:layout_marginTop="10dp"></TextView>
+        <com.chaos.view.PinView
+            android:layout_width="wrap_content"
+            app:itemCount="6"
+            app:itemHeight="50dp"
+            android:id="@+id/pin"
+            app:itemWidth="50dp"
+            app:cursorColor="@color/Black"
+            app:lineColor="@color/colorPrimary"
+            android:layout_marginTop="20dp"
+            android:itemBackground="@color/Black"
+            style="@style/PinWidget.PinView"
+            android:layout_height="wrap_content"
+            android:cursorVisible="true"
+            android:inputType="number"
+            app:hideLineWhenFilled="true"
+            app:itemRadius="5dp"
+            android:layout_gravity="center"
+            ></com.chaos.view.PinView>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/yellow"
+            android:textColor="#000"
+            android:layout_marginTop="20dp"
+            android:id="@+id/verify"
+            android:text="Verify Code"></Button>
+
+    </LinearLayout>
+
+
+</ScrollView>

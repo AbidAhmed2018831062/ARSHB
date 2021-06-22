@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".hotelRegister2"
+    android:background="#fff"
+    android:padding="30dp"
+    android:transitionName="nextTra">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    <ImageView
+
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/arrowb"
+        android:layout_marginBottom="20dp"/>
+
+    <TextView
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hotel\nRegister"
+
+        android:textSize="24sp"
+        android:textColor="#000"
+        android:fontFamily="@font/muli_black"></TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select How Luxurious Your Hotel Is"
+            android:textColor="#000"
+            android:textSize="18sp"
+            android:fontFamily="@font/muli_bold"></TextView>
+
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:id="@+id/radio">
+
+            <RadioButton
+                android:id="@+id/radioButton3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3"
+                android:textColor="#000"
+                android:fontFamily="@font/muli_black"/>
+
+            <RadioButton
+                android:id="@+id/radioButton2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4"
+                android:textColor="#000"
+                android:fontFamily="@font/muli_black"/>
+
+            <RadioButton
+                android:id="@+id/radioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5"
+                android:textColor="#000"
+                android:fontFamily="@font/muli_black"/>
+        </RadioGroup>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enter Hote; Description: "
+            android:textColor="#000"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="20dp"
+            android:textSize="18sp"
+            android:fontFamily="@font/muli_bold"></TextView>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/des"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:hint="Enter Description"
+            app:boxStrokeColor="#000"
+            app:boxStrokeWidthFocused="2dp"
+
+            app:endIconMode="clear_text"
+            app:endIconTint="#000"
+            app:hintTextColor="#000"
+            app:passwordToggleEnabled="true"
+            app:startIconDrawable="@drawable/create"
+            app:startIconTint="#000"
+            android:textColorHint="#000">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/muli_bold"
+                android:textColor="#000" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <Button
+            android:id="@+id/next"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="#000"
+            android:text="Next"
+            android:textColor="#fff"
+            android:transitionName="nextTras2"></Button>
+
+        <Button
+            android:id="@+id/Log_In"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+
+            android:layout_marginTop="20dp"
+            android:background="#00000000"
+            android:text="Log In"
+            android:textColor="#000"
+            android:textSize="14sp"></Button>
+    </LinearLayout>
+
+
+
+</ScrollView>

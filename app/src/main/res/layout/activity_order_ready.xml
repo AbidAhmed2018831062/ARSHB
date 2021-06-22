@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".OrderReady"
+    android:background="#fff"
+    android:padding="20dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/back"
+            android:layout_marginBottom="20dp"
+            android:id="@+id/back"></ImageView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="30dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/muli_bold"
+                android:text="How Many Rooms:"
+                android:textColor="#000"
+                android:textSize="16dp"></TextView>
+
+            <Spinner
+                android:id="@+id/qua"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@color/yellow"></Spinner>
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select Hotel Entering Date:"
+            android:textColor="#000"
+            android:textSize="18sp"
+            android:fontFamily="@font/muli_bold"
+
+            ></TextView>
+        <DatePicker
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/start"
+            android:datePickerMode="spinner"
+            android:calendarViewShown="false"
+            android:spinnersShown="true"
+            android:background="#000"
+
+            android:layout_marginTop="20dp"></DatePicker>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select Hotel Leaving Date:"
+            android:textColor="#000"
+            android:textSize="18sp"
+            android:fontFamily="@font/muli_bold"
+            android:layout_marginTop="20dp"
+            ></TextView>
+        <DatePicker
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/end"
+            android:datePickerMode="spinner"
+            android:calendarViewShown="false"
+            android:spinnersShown="true"
+            android:background="#000"
+
+            android:layout_marginTop="20dp"></DatePicker>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/confirm"
+            android:text="Order Confirmation"
+            android:textColor="#fff"
+            android:background="#593E31"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"
+            ></Button>
+    </LinearLayout>
+
+</ScrollView>

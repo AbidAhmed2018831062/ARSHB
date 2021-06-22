@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+        <item android:id="@+id/home"
+            android:title="Explore"
+            android:icon="@drawable/search"
+            android:textColor="#000"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            />
+        <item android:id="@+id/fav"
+            android:title="Favorite"
+            android:textColor="#000"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:icon="@drawable/fav"
+            />
+        <item android:id="@+id/save"
+            android:title="Wish List"
+            android:textColor="#000"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:icon="@drawable/save"
+            />
+        <item android:id="@+id/profile"
+            android:title="Profile"
+            android:textColor="#000"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:icon="@drawable/profile"
+            />
+</menu>

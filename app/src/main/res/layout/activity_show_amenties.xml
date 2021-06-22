@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ShowAmenties"
+    android:background="#fff"
+    android:orientation="vertical"
+    android:padding="20dp">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/back"
+        android:layout_marginBottom="20dp"
+        android:id="@+id/back"></ImageView>
+    <TextView
+        android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+        android:text="All Amenities"
+        android:textSize="20dp"
+        android:textColor="#000"
+        android:fontFamily="@font/muli_black"
+        android:layout_marginBottom="20dp">s</TextView>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/li"
+        android:dividerHeight="2dp"
+        android:divider="#000"></ListView>
+
+
+</LinearLayout>

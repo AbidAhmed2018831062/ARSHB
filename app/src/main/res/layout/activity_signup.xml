@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Signup"
+    android:transitionName="transitionSign"
+    android:background="@color/yellow"
+    android:padding="30dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:src="@drawable/arrowb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/back"></ImageView>
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create\nAccount"
+            android:textSize="24sp"
+            android:textColor="#000"
+            android:fontFamily="@font/muli_black"></TextView>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/name"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Enter Name"
+            app:boxStrokeColor="#000"
+            app:boxStrokeWidthFocused="2dp"
+
+            app:endIconMode="clear_text"
+            app:endIconTint="#000"
+            app:hintTextColor="#000"
+            app:passwordToggleEnabled="true"
+            app:startIconDrawable="@drawable/create"
+            app:startIconTint="#000"
+            android:textColorHint="#000">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/muli_bold"
+                android:textColor="#000" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/username"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Enter Username"
+            app:boxStrokeColor="#000"
+            app:boxStrokeWidthFocused="2dp"
+
+            app:endIconMode="clear_text"
+            app:endIconTint="#000"
+            app:hintTextColor="#000"
+            app:passwordToggleEnabled="true"
+            app:startIconDrawable="@drawable/person"
+            app:startIconTint="#000"
+            android:textColorHint="#000">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/muli_bold"
+                android:textColor="#000" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/email"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Enter Email"
+            app:boxStrokeColor="#000"
+            app:boxStrokeWidthFocused="2dp"
+
+            app:endIconMode="clear_text"
+            app:endIconTint="#000"
+            app:hintTextColor="#000"
+            app:passwordToggleEnabled="true"
+            app:startIconDrawable="@drawable/email"
+            app:startIconTint="#000"
+            android:textColorHint="#000">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/muli_bold"
+                android:textColor="#000" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/password"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Enter Password"
+            app:boxStrokeColor="#000"
+            app:boxStrokeWidthFocused="2dp"
+
+            app:endIconMode="password_toggle"
+            app:endIconTint="#000000"
+            app:hintTextColor="#000"
+            app:passwordToggleEnabled="true"
+            app:startIconDrawable="@drawable/lock"
+            app:startIconTint="#000"
+            android:textColorHint="#000">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/muli_bold"
+                android:textColor="#000" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/confirmPassword"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Re-Type Password"
+            app:boxStrokeColor="#000"
+            app:boxStrokeWidthFocused="2dp"
+
+            app:endIconMode="password_toggle"
+            app:endIconTint="#000000"
+            app:hintTextColor="#000"
+            app:passwordToggleEnabled="true"
+            app:startIconDrawable="@drawable/lock"
+            app:startIconTint="#000"
+            android:textColorHint="#000">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/muli_bold"
+                android:textColor="#000" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginTop="20dp"
+            android:textColor="#fff"
+            android:text="Next"
+            android:transitionName="nextTra"
+            android:background="#000"
+            android:id="@+id/next"></Button>
+        <Button
+            android:id="@+id/Log_In"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00000000"
+
+
+            android:text="Log In"
+            android:layout_gravity="center"
+            android:textColor="#000"
+            android:layout_marginTop="20dp"
+            android:textSize="14sp"></Button>
+
+    </LinearLayout>
+</ScrollView>

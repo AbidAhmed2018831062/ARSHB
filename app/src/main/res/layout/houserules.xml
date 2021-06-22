@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:id="@+id/houserules"
+    android:padding="30dp"
+    android:background="@drawable/bottombackground">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="House Rules"
+        android:textColor="#000"
+        android:textSize="20dp"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/muli_black"></TextView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/muli_black"
+        android:text="   Check Out: 12:00 PM"
+        android:drawableLeft="@drawable/deadline"
+        android:textColor="#000"
+        android:textSize="18dp"
+        android:layout_marginBottom="20dp"></TextView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/muli_black"
+        android:text="   No Smoking Inside Hotel"
+        android:drawableLeft="@drawable/smoke"
+        android:textColor="#000"
+        android:textSize="18dp"
+        android:id="@+id/change"
+        android:layout_marginBottom="20dp"></TextView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/muli_black"
+        android:text="   No Alcohol"
+        android:drawableLeft="@drawable/remove"
+        android:textColor="#000"
+        android:textSize="18dp"
+        android:id="@+id/remove"
+        android:layout_marginBottom="20dp"></TextView>
+
+
+</LinearLayout>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="250dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="10dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="12dp"
+    android:id="@+id/rl3c1"
+    android:layout_margin="10dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/rl3l1">
+    <ImageView
+        android:layout_height="150dp"
+        android:layout_width="match_parent"
+        android:src="@drawable/star51"
+        android:id="@+id/rl3img"
+        android:scaleType="fitXY"/>
+
+        <TextView
+            android:id="@+id/rl3h"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Hotel RoseView"
+            android:textColor="#000"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:fontFamily="sans-serif" />
+
+    </LinearLayout>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/rl3l1">
+    <Button
+        app:fontFamily="sans-serif"
+        android:text="Expand All"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:padding="15dp"
+        android:id="@+id/rl3b1"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="#00000000"/>
+</RelativeLayout>
+</androidx.cardview.widget.CardView>

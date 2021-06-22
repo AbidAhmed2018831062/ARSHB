@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <resources>
+
+    <color name="colorPrimary">#008577</color>
+    <color name="colorw">#fff</color>
+    <color name="makeUplight">#F5D0C5</color>
+    <color name="makeUp">#D69F7E</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="white">#000</color>
+    <color name="green">#5FB709</color>
+    <color name="Red">#EB0D0D</color>
+    <color name="blueish">#17A2C0</color>
+    <color name="Black">#000000</color>
+    <color name="Blacklogo">#262626</color>
+    <color name="defaultColor">#000000</color>
+    <color name="grey">#7E000000</color>
+    <color name="darkgray">#B2000000</color>
+    <color name="lightgray">#1D000000</color>
+    <color name="yellow1">#FDD835</color>
+    <color name="darkgreen">#026909</color>
+    <color name="OffWhite">#36FFFFFF</color>
+  <color name="colorWhite">#fff</color>
+  <color name="colorGreenPaste">#77dd77</color>
+  <color name="colorGreenPasteMint">#90EE90</color>
+  <color name="colorGreenPasteMint1">#4677DD77</color>
+  <color name="colorGrey">#696969</color>
+    <color name="DarkBlue">#250285</color>
+    <color name="yellow">#FFE400</color>
+    <color name="lightBrown">#F1E9CE</color>
+    <color name="DarkGray">#272727</color>
+    <color name="LightWhite">#f2f5f8</color>
+
+    <color name="yourSelectedColor">#E53935</color>
+  </resources>

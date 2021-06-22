@@ -1,0 +1,72 @@
+<resources>
+    <string name="app_name">ARSHB</string>
+    <string name="title_1">Home</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="first">Search Hotels</string>
+    <string name="second">Find Your Dream Hotel</string>
+    <string name="title">Confirmation</string>
+    <string name="message">To change email address click on ok to enter otp which has been given in your email address</string>
+    <string name="third">Hotels According To Budget</string>
+    <string-array name="HotelNames">
+        <item>Rose View</item>
+        <item>Star Pacific</item>
+        <item>Hotel Noorjahan</item>
+        <item>Hotel Supreme</item>
+
+    </string-array>
+    <string-array name="HotelDes">
+        <item>Swimmingpool, Hospital, Free Breakfast, Easy Transport Sytsem.</item>
+        <item>Swimmingpool, Hospital, Free Breakfast, Easy Transport Sytsem.</item>
+        <item>Swimmingpool, Hospital, Free Breakfast, Easy Transport Sytsem.</item>
+        <item>Swimmingpool, Hospital, Free Breakfast, Easy Transport Sytsem.</item>
+
+    </string-array>
+    <string-array name="qua">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+    <string-array name="Star">
+        <item>3 Star</item>
+        <item>4 Star</item>
+        <item>5 Star</item>
+    </string-array>
+    <string-array name="insti">
+        <item>Shahjalal University of Science and Technology</item>
+        <item>Sylhet Agricultural University</item>
+        <item>Sylhet Engineering College[1]</item>
+        <item>Leading University</item>
+        <item>Metropolitan University, Sylhet</item>
+        <item>North East University</item>
+        <item>Sylhet International University</item>
+        <item>Army Institute of Business Administration, Sylhet</item>
+        <item>Border Guard Public School and College, Akhalia</item>
+        <item>State College, Housing Estate</item>
+        <item>Sylhet Govt. Model School and College</item>
+        <item>Mohammad Chowdhury Academy Model School and College</item>
+        <item>Sylhet Govt. Commercial Institute</item>
+        <item>Sylhet Central College</item>
+        <item>Shahjalal Jamia Islamia School and College</item>
+        <item>Hazrat Shahjalal (RH) College</item>
+        <item>Jalalabad University College</item>
+        <item>Kurar Bazar College</item>
+        <item>Sylhet Commerce College</item>
+        <item>Sylhet Science College</item>
+        <item>Sylhet Science And Technology College</item>
+        <item>Dhakadakshin Multilateral High School and College</item>
+        <item>Kawsarabad College</item>
+        <item>Jalalabad Cantonment Public School and College</item>
+        <item>Blue Bird High School and College</item>
+        <item>Scholarshome</item>
+    </string-array>
+    <string-array name="Service">
+        <item>Free Breakfast, Free Wifi, Free Laundary, 24 hour Room Service.</item>
+        <item>Free Breakfast, Free Wifi, Free Laundary, 24 hour RoomService, Swimmingpool.</item>
+        <item>Free Breakfast, Free Wifi, Free Laundary, 24 hour RoomService, Swimmingpool, Hospital, Free Breakfast, Easy Transport Sytsem.</item>
+    </string-array>
+    <string name="title_activity_hotel_maps">Map</string>
+
+
+</resources>

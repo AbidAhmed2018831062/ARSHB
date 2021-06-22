@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HotelShowCase"
+    android:background="#fff">
+
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/display"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/star31"></ImageView>
+
+                <ImageView
+                    android:id="@+id/back"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_margin="20dp"
+                    android:background="@drawable/roudingback"
+                    android:padding="10dp"
+                    android:src="@drawable/back"></ImageView>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="20dp"
+                    android:orientation="horizontal"
+
+                    >
+
+                    <ImageView
+                        android:id="@+id/fav"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/roudingback"
+                        android:padding="10dp"
+                        android:src="@drawable/fav"></ImageView>
+
+                    <ImageView
+                        android:id="@+id/save"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/roudingback"
+                        android:padding="10dp"
+                        android:src="@drawable/save"></ImageView>
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="15dp">
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/muli_black"
+                    android:text="Hotel Noorzahan"
+                    android:textColor="#000"
+                    android:textSize="25dp"></TextView>
+
+                <TextView
+                    android:id="@+id/address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/muli_bold"
+                    android:text="Dargah Gate, Sylhet"
+                    android:textColor="#000"
+                    android:textSize="16dp"></TextView>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="30dp"
+                    android:background="@color/colorGrey"></View>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/muli_black"
+                    android:gravity="center"
+                    android:text="Rooms"
+                    android:textColor="#000"
+                    android:textSize="20dp"></TextView>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rl4HR"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"></androidx.recyclerview.widget.RecyclerView>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="30dp"
+                    android:background="@color/colorGrey"></View>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/muli_black"
+                    android:gravity="center"
+                    android:text="Service and Rules"
+                    android:textColor="#000"
+                    android:textSize="20dp"></TextView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:drawableLeft="@drawable/room"
+                    android:fontFamily="@font/muli_bold"
+                    android:text="    24 Hour Room Service"
+                    android:textColor="#000"
+                    android:textSize="16dp"></TextView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:drawableLeft="@drawable/house"
+                    android:fontFamily="@font/muli_bold"
+                    android:text="    House Rules (Click To View)"
+                    android:textColor="#000"
+                    android:id="@+id/house"
+                    android:textSize="16dp"></TextView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:drawableLeft="@drawable/house"
+                    android:fontFamily="@font/muli_bold"
+                    android:text="    Every Morning Laundary"
+                    android:textColor="#000"
+                    android:textSize="16dp"></TextView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="30dp"
+                    android:background="@color/colorGrey"></View>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/muli_black"
+                    android:gravity="center"
+                    android:text="Location"
+                    android:textColor="#000"
+                    android:textSize="20dp"></TextView>
+
+                <TextView
+                    android:id="@+id/location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:drawableLeft="@drawable/house"
+                    android:fontFamily="@font/muli_bold"
+                    android:text="    Exact opposite of Dargah Main Gate"
+                    android:textColor="#000"
+                    android:textSize="16dp"></TextView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:fontFamily="@font/muli_bold"
+                    android:text="See In Google Map (Click TO See Exact Location)"
+                    android:textColor="#000"
+                    android:textSize="16dp"></TextView>
+
+                <ImageView
+                    android:id="@+id/map"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="10dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/map"></ImageView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="30dp"
+                    android:background="@color/colorGrey"></View>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/muli_black"
+                    android:gravity="center"
+                    android:text="Health and Safety"
+                    android:textColor="#000"
+                    android:textSize="20dp"></TextView>
+
+                <TextView
+                    android:id="@+id/healthandsafety"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:fontFamily="@font/muli_bold"
+                    android:text="Our top priority is to ensure the safety of our customers. Our every room is cleaned everyday. Social distancing is strictly maintained. If anyone does not follow the rules, we fine them. In this hard and tough situation we want to make sure safety if each of our customers."
+                    android:textColor="#000"
+                    android:textSize="16dp"></TextView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="30dp"
+                    android:background="@color/colorGrey"></View>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/muli_black"
+                    android:gravity="center"
+                    android:text="Amenities"
+                    android:textColor="#000"
+                    android:textSize="20dp"></TextView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:drawableLeft="@drawable/tv"
+                    android:fontFamily="@font/muli_bold"
+                    android:text="   TV"
+                    android:textColor="#000"
+                    android:textSize="16dp"></TextView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:drawableLeft="@drawable/wifi_24"
+                    android:fontFamily="@font/muli_bold"
+                    android:text="   WIFI"
+                    android:textColor="#000"
+                    android:textSize="16dp"></TextView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:drawableLeft="@drawable/fi2"
+                    android:fontFamily="@font/muli_bold"
+                    android:text="   First Aid"
+                    android:textColor="#000"
+                    android:textSize="16dp"></TextView>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:drawableLeft="@drawable/ac"
+                    android:fontFamily="@font/muli_bold"
+                    android:text="   AC"
+                    android:textColor="#000"
+                    android:textSize="16dp"></TextView>
+
+                <Button
+                    android:id="@+id/amenities"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/amenities"
+                    android:text="Watch All Amenities"
+                    android:textColor="#000"></Button>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="30dp"
+                    android:background="@color/colorGrey"></View>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/muli_black"
+                    android:gravity="center"
+                    android:text="Special Facilities"
+                    android:textColor="#000"
+                    android:textSize="20dp"></TextView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:fontFamily="@font/muli_bold"
+                    android:text="We are in in this industry for nearly 50 years. we have branch in almost every big cities of Bangladesh. We have won the award of Best Hotel Of Bangladesh in 2017 and 2019. Come Visit us once. We will try our level best to satisfy you with our service and behavior"
+                    android:textColor="#000"
+                    android:id="@+id/des1"
+                    android:textSize="16dp"></TextView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="30dp"
+                    android:background="@color/colorGrey"></View>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/muli_black"
+                    android:gravity="center"
+                    android:text="Cancellation Policy"
+                    android:textColor="#000"
+                    android:textSize="20dp"></TextView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:fontFamily="@font/muli_bold"
+                    android:text="If booking is cancelled one day prior to the fixed date, no fine is applied. But if the booking is cancelled on the fixed date, advance payment are not refunded"
+                    android:textColor="#000"
+                    android:textSize="16dp"></TextView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="30dp"
+                    android:background="@color/colorGrey"></View>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/muli_black"
+                    android:gravity="center"
+                    android:text="About Hotel"
+                    android:textColor="#000"
+                    android:textSize="20dp"></TextView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:fontFamily="@font/muli_bold"
+                    android:text="We are in in this industry for nearly 50 years. we have branch in almost every big cities of Bangladesh. We have won the award of Best Hotel Of Bangladesh in 2017 and 2019. Come Visit us once. We will try our level best to satisfy you with our service and behavior"
+                    android:textColor="#000"
+                    android:id="@+id/des"
+                    android:textSize="16dp"></TextView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="30dp"
+                    android:background="@color/colorGrey"></View>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+    <com.etebarian.meowbottomnavigation.MeowBottomNavigation
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:id="@+id/bottomnav"
+       app:mbn_shadowColor="#2E2E2E"
+        app:mbn_backgroundBottomColor="#3c145e"
+        app:mbn_selectedIconColor="#3c415e"
+        app:mbn_countBackgroundColor="#ff6f00"
+        app:mbn_circleColor="#fff"
+        app:mbn_countTextColor="#fff"
+        app:mbn_defaultIconColor="#fff"
+
+
+        ></com.etebarian.meowbottomnavigation.MeowBottomNavigation>
+
+</RelativeLayout>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".roomCreation"
+    android:background="#fff"
+    android:padding="30dp"
+    android:transitionName="nextTras3">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Room\nCreation"
+
+            android:textSize="24sp"
+            android:textColor="#000"
+            android:fontFamily="@font/muli_black"></TextView>
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+            android:id="@+id/linear"
+            android:orientation="vertical"></LinearLayout>
+        <Button
+            android:id="@+id/rooms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/corner_3"
+            android:drawableRight="@drawable/plus"
+            android:fontFamily="@font/muli_black"
+            android:padding="10dp"
+            android:text="Add Rooms"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+        <Button
+            android:id="@+id/submit"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/yellow"
+            android:textColor="#000"
+
+            android:fontFamily="@font/muli_black"
+            android:padding="10dp"
+            android:text="Submit Rooms"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+</ScrollView>

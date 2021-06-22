@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:background="@color/LightWhite"
+    android:padding="15dp">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#000"
+        android:text="Vintage Hotels"
+        android:id="@+id/vinta"
+        android:textSize="18sp"
+        android:layout_alignParentBottom="true"/>
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_above="@id/vinta"
+        android:text="ARSHB"
+        android:textSize="30sp"
+        android:textColor="#000"
+        android:textStyle="bold"
+        android:id="@+id/name1"/>
+    <ImageView
+        android:layout_height="40dp"
+        android:layout_width="40dp"
+        android:layout_above="@id/name1"
+        android:text="ARSHB"
+        android:src="@drawable/smalllogo"/>
+    <ImageView
+        android:layout_height="160dp"
+        android:layout_width="160dp"
+        android:layout_alignParentRight="true"
+        android:text="ARSHB"
+        android:src="@drawable/star52"
+        android:layout_alignParentBottom="true"/>
+
+
+
+
+</RelativeLayout>
