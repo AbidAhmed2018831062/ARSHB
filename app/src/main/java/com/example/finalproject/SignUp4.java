@@ -49,7 +49,7 @@ Button finish1;
                 {
                     edu=insti.getSelectedItem().toString();
                     storeUserData();
-                    Intent in=new Intent(SignUp4.this, UserPrfofilew.class);
+                    Intent in=new Intent(SignUp4.this, ChooseImage.class);
                     startActivity(in);
                 }
             }

@@ -70,7 +70,8 @@
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:src="@drawable/star31"
-            android:id="@+id/dpp"></ImageView>
+            android:id="@+id/dpp"
+            android:visibility="gone"></ImageView>
 
         <Button
             android:layout_width="match_parent"

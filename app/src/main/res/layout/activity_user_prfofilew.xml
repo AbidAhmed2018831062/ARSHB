@@ -132,6 +132,7 @@
                 android:layout_gravity="center"
                 android:textColor="#000"
                 android:textStyle="bold"
+                android:id="@+id/order"
                 android:textSize="16dp"></TextView>
 
         </androidx.cardview.widget.CardView>

@@ -18,8 +18,13 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".StarHotels"></activity>
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".RazorPay"></activity>
+        <activity android:name=".OrderGiven" />
+        <activity android:name=".ChooseImage" />
+        <activity android:name=".Reviews" />
+        <activity android:name=".StarHotels" />
         <activity android:name=".WatchLater" />
         <activity android:name=".Fav" />
         <activity android:name=".OrderReady" />

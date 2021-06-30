@@ -52,17 +52,20 @@ private static final int IMAGE_REQUEST=1;
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_hotel_register3);
-
+        img=(ImageView) findViewById(R.id.dpp);
         name2 = getIntent().getStringExtra("Name");
+        upload=(Button) findViewById(R.id.upload);
         st= FirebaseStorage.getInstance().getReference("Upload");
         chooseimage=(Button) findViewById(R.id.chooseimage);
         chooseimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openImageChooser();
+                upload.setVisibility(View.VISIBLE);
+                img.setVisibility(View.VISIBLE);
             }
         });
-        upload=(Button) findViewById(R.id.upload);
+
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,7 +76,7 @@ private static final int IMAGE_REQUEST=1;
                 uploadImage();
             }
         });
-        img=(ImageView) findViewById(R.id.dpp);
+
         name=(TextInputLayout) findViewById(R.id.name);
       name.getEditText().setText(name2);
         name.getEditText().setEnabled(false);

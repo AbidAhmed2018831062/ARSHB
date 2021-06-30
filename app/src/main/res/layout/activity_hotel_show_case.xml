@@ -92,6 +92,26 @@
                     android:text="Dargah Gate, Sylhet"
                     android:textColor="#000"
                     android:textSize="16dp"></TextView>
+                <RatingBar
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:rating="3"
+                    android:numStars="5"
+                    style="?android:attr/ratingBarStyleIndicator"
+                    android:progressTint="#FFCC01"
+                    android:id="@+id/rating"
+                    android:progressBackgroundTint="#000"
+                    />
+                <TextView
+                    android:id="@+id/count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/muli_bold"
+                    android:text="10 Reviews"
+                    android:textColor="#000"
+                    android:textSize="16dp"></TextView>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
@@ -120,7 +140,59 @@
                     android:layout_marginTop="30dp"
                     android:layout_marginBottom="30dp"
                     android:background="@color/colorGrey"></View>
-
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/muli_black"
+                    android:gravity="center"
+                    android:text="Service and Rules"
+                    android:textColor="#000"
+                    android:textSize="20dp"></TextView>
+              <LinearLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/profile"
+                  android:orientation="horizontal"
+                  android:layout_marginBottom="20dp"
+                  >
+                  <de.hdodenhof.circleimageview.CircleImageView
+                      xmlns:app="http://schemas.android.com/apk/res-auto"
+                      android:id="@+id/profile_image"
+                      android:layout_width="50dp"
+                      android:layout_height="50dp"
+                      android:src="@drawable/sh"
+                      app:civ_border_width="2dp"
+                      app:civ_border_color="#FF000000"/>
+                  <TextView
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:id="@+id/profileName"
+                      android:text="Abid Ahmed"
+                      android:layout_gravity="center_vertical"
+                      android:layout_marginLeft="10dp"
+                      android:textSize="20dp"
+                      android:textColor="#000"
+                      android:fontFamily="@font/muli_black"></TextView>
+              </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/review"
+                    android:textSize="16dp"
+                    android:layout_marginBottom="20dp"></TextView>
+                <Button
+                    android:id="@+id/allreview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/amenities"
+                    android:text="Watch All Reviews"
+                    android:textColor="#000"></Button>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="30dp"
+                    android:background="@color/colorGrey"></View>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

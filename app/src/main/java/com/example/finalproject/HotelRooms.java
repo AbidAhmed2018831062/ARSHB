@@ -146,6 +146,13 @@ layoutList.addView(roomView);*/
                     startActivity(new Intent(getApplicationContext(),UpdateAccount.class));
                 else if(item.getItemId()==R.id.updaterooms)
                     startActivity(new Intent(getApplicationContext(),UpdateAccount.class));
+                else{
+                    Intent in=new Intent(getApplicationContext(),OrderGiven.class);
+                    in.putExtra("phone",name);
+                    startActivity(in);
+                    finish();
+                }
+
                 return true;
             }
         });

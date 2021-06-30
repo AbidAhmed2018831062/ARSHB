@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#fff"
+    android:orientation="vertical"
+    android:padding="30dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/profile"
+        android:orientation="horizontal"
+        android:layout_marginBottom="0dp"
+        >
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/profile_image"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/sh"
+            app:civ_border_width="2dp"
+            app:civ_border_color="#FF000000"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/profileName"
+            android:text="Abid Ahmed"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:textSize="20dp"
+            android:textColor="#000"
+            android:fontFamily="@font/muli_black"></TextView>
+    </LinearLayout>
+    <RatingBar
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:rating="3"
+        style="?android:attr/ratingBarStyleIndicator"
+        android:progressTint="#FFCC01"
+        android:id="@+id/rating"
+        android:numStars="5"
+        android:progressBackgroundTint="#000"
+        android:layout_marginBottom="10dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/review"
+        android:textSize="16dp"
+        android:layout_marginBottom="5dp"
+        android:text="This is the best hotel I have ever seen"
+        android:textColor="#000"></TextView>
+
+</LinearLayout>
