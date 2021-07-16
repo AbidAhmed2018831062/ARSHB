@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ActivityBeforeMap"
+    android:background="#fff">
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:map="http://schemas.android.com/apk/res-auto"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/searchmap"
+        android:elevation="10dp"
+        android:layout_margin="20dp"
+        android:id="@+id/s"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/search"
+            android:id="@+id/search"
+            android:layout_centerVertical="true"></ImageView>
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Address, City or Zip Code"
+            android:textColor="#000"
+            android:textStyle="bold"
+            android:id="@+id/ed"
+            android:layout_toRightOf="@id/search"
+            android:imeOptions="actionSearch"></EditText>
+    </RelativeLayout>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/s"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/ic_baseline_refresh_24"
+       android:layout_alignParentRight="true"
+        android:id="@+id/gps"
+        android:layout_marginRight="30dp"></ImageView>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="StreetView"
+        android:textColor="#fff"
+        android:background="#00000000"
+        android:layout_below="@id/gps"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:visibility="gone"
+        android:id="@+id/street"
+        android:fontFamily="@font/muli_black"></Button>
+
+</RelativeLayout>

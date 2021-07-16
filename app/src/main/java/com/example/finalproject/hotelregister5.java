@@ -1,18 +1,19 @@
 package com.example.finalproject;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
+import java.util.Random;
 
 public class hotelregister5 extends AppCompatActivity {
     CheckBox wifi,tv,ac,fa,fia,rlc,sp,hd,sc,plc,rs,rc;
@@ -199,6 +200,19 @@ public class hotelregister5 extends AppCompatActivity {
                     db.updateChildren(hm);
                 }
                 if(address()) {
+                    DatabaseReference db= FirebaseDatabase.getInstance().getReference("Hotels").child(name1);
+                    HashMap hm=new HashMap();
+                    hm.put("address",ad1);
+                    db.updateChildren(hm);
+                    DatabaseReference dbb=FirebaseDatabase.getInstance().getReference("Hotels").child("Address");
+                    Random rn=new Random();
+                    int p10=rn.nextInt(10000);
+                    HashMap a=new HashMap();
+                    SessionManagerHotels sh=new SessionManagerHotels(hotelregister5.this,SessionManagerHotels.USERSESSION);
+                    HashMap<String,String> u=sh.returnData();
+                    String n=u.get(SessionManager.FULLNAME);
+                    a.put("hotel"+p10, n+" ,"+ad1);
+                    dbb.updateChildren(a);
                     Intent in = new Intent(getApplicationContext(), roomCreation.class);
                     in.putExtra("Name", name1);
 

@@ -17,7 +17,8 @@
         android:background="@color/Black"
         app:headerLayout="@layout/menu__header"
         app:menu="@menu/main_menu"
-        android:theme="@style/nav_theme"/>
+      
+        />
     <LinearLayout
         android:layout_height="match_parent"
         android:layout_width="match_parent"
@@ -258,14 +259,51 @@
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
                        android:text="Categories"
-                       android:textSize="30sp"
+                       android:textSize="20sp"
                        android:textStyle="bold"></TextView>
                </RelativeLayout>
                <androidx.recyclerview.widget.RecyclerView
                    android:layout_height="220dp"
                    android:layout_width="match_parent"
                    android:id="@+id/rl2"/>
-           </LinearLayout>
+           </LinearLayout> 
+           <TextView
+               android:drawableLeft="@drawable/category"
+               android:textColor="#000"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="Find Hotels By The Names Of Division"
+               android:textSize="20sp"
+               android:layout_marginLeft="15dp"
+               android:textStyle="bold"></TextView>
+             <androidx.recyclerview.widget.RecyclerView
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:id="@+id/division"
+                 android:layout_marginTop="10dp"
+                 android:layout_marginBottom="20dp"
+                 android:padding="10dp"
+                 ></androidx.recyclerview.widget.RecyclerView>
+           <TextView
+               android:layout_marginLeft="15dp"
+               android:drawableLeft="@drawable/category"
+               android:textColor="#000"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="Find Hotels From Map"
+               android:textSize="20sp"
+               android:textStyle="bold"></TextView>
+
+           <ImageView
+               android:id="@+id/map"
+               android:layout_width="match_parent"
+               android:layout_height="200dp"
+               android:layout_marginTop="10dp"
+               android:scaleType="fitXY"
+               android:src="@drawable/map"
+               android:layout_marginBottom="20dp"
+               android:layout_marginRight="15dp"
+               android:layout_marginLeft="15dp"></ImageView>
 
        </LinearLayout>
    </ScrollView>

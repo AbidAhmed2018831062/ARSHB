@@ -24,6 +24,13 @@
             android:textSize="15sp"
             android:icon="@drawable/update_24"
             />
+        <item android:id="@+id/add"
+            android:title="Add Rooms"
+            android:textColor="#000"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:icon="@drawable/update_24"
+            />
     </group>
     <item android:title="Order"
         android:textColor="#000"

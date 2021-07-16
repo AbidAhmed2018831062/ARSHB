@@ -1,12 +1,5 @@
 package com.example.finalproject;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -17,8 +10,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,6 +29,8 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import static com.example.finalproject.rl4HR.dele;
 
 public class HotelRooms extends AppCompatActivity {
 TextView h1,h2;
@@ -53,21 +54,23 @@ LinearLayout layoutList;
         dpp=(ImageView) findViewById(R.id.dpp);
         dr=(DrawerLayout) findViewById(R.id.drawer);
         menui=(ImageView) findViewById(R.id.menuicon);
+
         SessionManagerHotels sh= new SessionManagerHotels(HotelRooms.this,SessionManagerHotels.USERSESSION);
 
         HashMap<String,String> hm=sh.returnData();
-        name=hm.get(SessionManager.FULLNAME);
+        name=hm.get(SessionManagerHotels.FULLNAME);
         String fullname1=hm.get(SessionManagerHotels.DES);
         String fullname2=hm.get(SessionManagerHotels.EMAIL);
         String fullname3=hm.get(SessionManagerHotels.PHONE);
         String fullname4=hm.get(SessionManagerHotels.USERNAME);
         String fullname5=hm.get(SessionManagerHotels.RATING);
         String fullname6=hm.get(SessionManagerHotels.PASS);
+        delete();
         nav=(NavigationView) findViewById(R.id.navigation);
     rl4HR1=(RecyclerView)findViewById(R.id.rl4HR);
     list=new ArrayList<>();
 
-     rl=new rl4HR(HotelRooms.this, list,name);
+     rl=new rl4HR(HotelRooms.this, list,name,"Rooms");
           rl4HR1.setHasFixedSize(true);
         LinearLayoutManager li=new LinearLayoutManager(this,RecyclerView.HORIZONTAL,false);
         rl4HR1.setLayoutManager(li);rl4HR1.setAdapter(rl);
@@ -96,6 +99,7 @@ layoutList.addView(roomView);*/
                     list.add(roo);
                 }
                 rl.notifyDataSetChanged();
+
             }
 
             @Override
@@ -104,6 +108,7 @@ layoutList.addView(roomView);*/
 
             }
         });
+
 
 
         Query c = FirebaseDatabase.getInstance().getReference("Hotels").orderByChild("name").equalTo(name);
@@ -144,9 +149,16 @@ layoutList.addView(roomView);*/
                     startActivity(new Intent(getApplicationContext(),HotelInfo.class));
                 else if(item.getItemId()==R.id.update)
                     startActivity(new Intent(getApplicationContext(),UpdateAccount.class));
-                else if(item.getItemId()==R.id.updaterooms)
-                    startActivity(new Intent(getApplicationContext(),UpdateAccount.class));
-                else{
+                else if(item.getItemId()==R.id.updaterooms) {
+                    startActivity(new Intent(getApplicationContext(), UpdateRooms.class));
+                    finish();
+                }
+                    else if(item.getItemId()==R.id.add){
+                        startActivity(new Intent(getApplicationContext(), roomCreation.class).putExtra("Name",name));
+                        finish();
+
+                }
+                else if(item.getItemId()==R.id.add){
                     Intent in=new Intent(getApplicationContext(),OrderGiven.class);
                     in.putExtra("phone",name);
                     startActivity(in);
@@ -171,5 +183,21 @@ layoutList.addView(roomView);*/
     }
     public void animateNavDrawer(){
         dr.setScrimColor(getResources().getColor(R.color.makeUplight));
+    }
+    public void delete()
+    {
+        Toast.makeText(getApplicationContext(),"KI"+rl4HR.d, Toast.LENGTH_LONG).show();
+        for(int i=0;i<rl4HR.d;i++)
+        {
+
+            if(dele[i]!=null)
+            {
+                Toast.makeText(getApplicationContext(),dele[i], Toast.LENGTH_LONG).show();
+                FirebaseDatabase.getInstance().getReference("Hotels").child(name).child("rooms").child(dele[i]).removeValue();
+                dele[i]=null;
+            }
+            else
+                Toast.makeText(getApplicationContext(),dele[i], Toast.LENGTH_LONG).show();
+        }
     }
 }

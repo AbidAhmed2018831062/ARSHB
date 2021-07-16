@@ -15,6 +15,7 @@ public class SessionManager {
 
 
     public static final String ISLOGGED = "ISLOGGEDIN";
+    public static final String signupdate = "signupdate";
     public static final String SOCIALMEDIA = "SOCIALMEDIA";
     public static final String EDUCATION = "EDUCATION";
     public static final String LOCATION = "LOCATION";
@@ -38,7 +39,7 @@ public class SessionManager {
         ed = sh.edit();
     }
 
-    public void loginSession(String fullname, String email, String gender, String phone, String pass, String dob, String username,String location,String socialmedia, String bio, String edu) {
+    public void loginSession(String fullname, String email, String gender, String phone, String pass, String dob, String username,String location,String socialmedia, String bio, String edu, String signudate) {
 
         ed.putBoolean(ISLOGGED, true);
 
@@ -53,6 +54,7 @@ public class SessionManager {
         ed.putString(SOCIALMEDIA, socialmedia);
         ed.putString(BIO, bio);
         ed.putString(EDUCATION, edu);
+        ed.putString(signupdate, signudate);
 
         ed.commit();
     }
@@ -70,6 +72,7 @@ public class SessionManager {
         hm.put(SOCIALMEDIA, sh.getString(SOCIALMEDIA, null));
         hm.put(BIO, sh.getString(BIO, null));
         hm.put(EDUCATION, sh.getString(EDUCATION, null));
+        hm.put(signupdate, sh.getString(signupdate, null));
 
         return hm;
     }

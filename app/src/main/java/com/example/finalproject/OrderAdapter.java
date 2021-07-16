@@ -42,7 +42,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.Show> {
             holder.count.setText("3rdOrder\nSeeMore...");
         else
             holder.count.setText(i+1+"thOrder\nSeeMore...");
-holder.cdate.setText(list.get(i).getIssueDate());
+holder.cdate.setText(list.get(i).getIdate());
 holder.end.setText(list.get(i).getEndDate());
 holder.start.setText(list.get(i).getIssueDate());
 holder.cdes.setText(list.get(i).getCname());

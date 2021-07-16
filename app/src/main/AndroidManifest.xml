@@ -11,6 +11,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -20,7 +22,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".RazorPay"></activity>
+        <activity android:name=".ChangeRoomInfo"></activity>
+        <activity android:name=".UpdateRooms" />
+        <activity android:name=".DivisionWiseHotels" />
+        <activity android:name=".ActivityBeforeMap" />
+        <activity android:name=".CheckoutActivityJava" />
         <activity android:name=".OrderGiven" />
         <activity android:name=".ChooseImage" />
         <activity android:name=".Reviews" />
@@ -40,10 +46,6 @@
              sign the APK for publishing.
              You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
-
         <activity
             android:name=".HotelMaps"
             android:label="@string/title_activity_hotel_maps" />
@@ -81,6 +83,12 @@
             </intent-filter>
         </activity>
 
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCbW3c1PS5UU9sKScVVHbWUP1yL7FOQXw0" />
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

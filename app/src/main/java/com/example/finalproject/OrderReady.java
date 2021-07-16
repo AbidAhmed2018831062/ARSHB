@@ -30,13 +30,15 @@ int p=1,p1=1;
 int year,cmonth,day,day1,cmonth1,year1;
     String name;
     Button order;
+    String HNAME;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_ready);
         name=getIntent().getStringExtra("Name");
+        HNAME=getIntent().getStringExtra("HNAME");
 
-
+Toast.makeText(getApplicationContext(),name,Toast.LENGTH_LONG).show();
         quas=getResources().getStringArray(R.array.qua);
         qua1=(Spinner)findViewById(R.id.qua);
         start=(DatePicker) findViewById(R.id.start);
@@ -50,7 +52,7 @@ int year,cmonth,day,day1,cmonth1,year1;
         qua1.setAdapter(ar);
        start.setMinDate(System.currentTimeMillis()-1000);
         long now=System.currentTimeMillis()-1000;
-        end.setMinDate(System.currentTimeMillis()-1000);
+        end.setMinDate(start.getDayOfMonth());
         start.setMaxDate(now+(1000*60*60*24*7));
         end.setMaxDate(now+(1000*60*60*24*7)+(1000*60*60*24*7));
 
@@ -125,6 +127,7 @@ int year,cmonth,day,day1,cmonth1,year1;
                 in.putExtra("Start",start1);
                 in.putExtra("End",end1);
                 in.putExtra("Rn",ne);
+                in.putExtra("HNAME",HNAME);
                 /*Calendar st= Calendar.getInstance();
                 Calendar en=Calendar.getInstance();
                 st.set(year,cmonth,day);
@@ -132,12 +135,22 @@ int year,cmonth,day,day1,cmonth1,year1;
                 Date o=st.getTime();
                 Date t=en.getTime();
                 long diff=difference(o,t);*/
-                LocalDate d1= LocalDate.of(year,cmonth-1,day);
-                LocalDate d2= LocalDate.of(year1,cmonth1-1,day1);
-                long diff= Math.abs(Period.between(d2,d1).getDays());
+                LocalDate d1= null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    d1 = LocalDate.of(year,cmonth-1,day);
+                }
+                LocalDate d2= null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    d2 = LocalDate.of(year1,cmonth1-1,day1);
+                }
+                long diff= 0;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    diff = Math.abs(Period.between(d2,d1).getDays());
+                }
                 if(diff==0)
                     diff=1;
                 in.putExtra("Diff",""+diff);
+
                 Toast.makeText(getApplicationContext(),""+p1+" "+diff+" "+start1+"   "+end1+" "+qua,Toast.LENGTH_LONG).show();
                 p=80*p1;
                 in.putExtra("Price",""+p);

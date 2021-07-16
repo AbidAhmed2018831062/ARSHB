@@ -88,6 +88,16 @@ android:visibility="gone"
             android:textColor="#000"
             android:text="Alll Reviews"
             android:textSize="20dp"></TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/muli_black"
+            android:textColor="#000"
+            android:layout_marginTop="20dp"
+            android:visibility="gone"
+            android:id="@+id/no"
+            android:text="Nop reviews for this hotel yet!!!"
+            android:textSize="20dp"></TextView>
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

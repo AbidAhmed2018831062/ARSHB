@@ -1,23 +1,20 @@
 package com.example.finalproject;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class roomCreation extends AppCompatActivity {
  LinearLayout layoutList;
@@ -25,6 +22,7 @@ public class roomCreation extends AppCompatActivity {
  ArrayList<Rooms> list=new ArrayList<>();
  DatabaseReference db,db1;
  FirebaseDatabase fb;
+ String abid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +31,7 @@ public class roomCreation extends AppCompatActivity {
         rooms=(Button) findViewById(R.id.rooms);
         layoutList=(LinearLayout) findViewById(R.id.linear);
         submit=(Button) findViewById(R.id.submit);
+        abid=getIntent().getStringExtra("name");
         rooms.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,18 +75,21 @@ public class roomCreation extends AppCompatActivity {
     public boolean check()
     {
         list.clear();
+        int d=0;
         boolean r=true;
         db=fb.getInstance().getReference("Hotels").child(getIntent().getStringExtra("Name").toString()).child("rooms");
+        String RoomName[]=new String[100];
         for(int i=0;i<layoutList.getChildCount();i++)
         {
            View view=layoutList.getChildAt(i);
             TextInputLayout se=(TextInputLayout) view.findViewById(R.id.service);
 
             Rooms roo=new Rooms();
-           db1=db.child("rooms"+ i);
+
            if(!se.getEditText().getText().toString().equals(""))
            {
            roo.setServices(se.getEditText().getText().toString());
+
            }
            else {
                Toast.makeText(getApplicationContext(),"All field needs to be filled", Toast.LENGTH_LONG).show();
@@ -109,6 +111,15 @@ public class roomCreation extends AppCompatActivity {
             if(!rn.getEditText().getText().toString().equals(""))
             {
                 roo.setRoomname(rn.getEditText().getText().toString());
+                for(int j=0;j<d;j++)
+                {
+                    if(RoomName[j].equals(rn.getEditText().getText().toString())) {
+                        rn.getEditText().setError("Room Name Already Exists");
+                        rn.getEditText().requestFocus();
+                    }
+                }
+                RoomName[i]=rn.getEditText().getText().toString();
+                d++;
             }
             else {
                 Toast.makeText(getApplicationContext(),"All field needs to be filled", Toast.LENGTH_LONG).show();
@@ -116,6 +127,7 @@ public class roomCreation extends AppCompatActivity {
                 break;
             }
 
+            db1=db.child(rn.getEditText().getText().toString());
            db1.setValue(roo);
             list.add(roo);
 

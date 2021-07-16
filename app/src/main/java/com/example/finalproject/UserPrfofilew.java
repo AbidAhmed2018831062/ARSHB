@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
@@ -32,7 +33,9 @@ import java.util.List;
 public class UserPrfofilew extends AppCompatActivity {
 TextView name,study,date,place,aboutme,fb;
 ImageView profile_image;
-CardView fav,save,order;
+CardView fav,save,order,upcoming;
+String phone;
+
 List<OrderShow> list=new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +46,11 @@ List<OrderShow> list=new ArrayList<>();
         fb=(TextView)findViewById(R.id.fb);
         profile_image=(ImageView) findViewById(R.id.profile_image);
         fav=(CardView)findViewById(R.id.fav);
+        SessionManager sh=new SessionManager(this,SessionManager.USERSESSION);
+
+        HashMap<String,String>  hm=sh.returnData();
         order=(CardView)findViewById(R.id.order);
+        upcoming=(CardView)findViewById(R.id.upcoming);
         save=(CardView)findViewById(R.id.save);
 
         fav.setOnClickListener(new OnClickListener() {
@@ -80,13 +87,11 @@ List<OrderShow> list=new ArrayList<>();
         date=(TextView)findViewById(R.id.date);
         place=(TextView)findViewById(R.id.place);
         aboutme=(TextView)findViewById(R.id.aboutme);
-        SessionManager sh=new SessionManager(this,SessionManager.USERSESSION);
 
-        HashMap<String,String>  hm=sh.returnData();
         String fullname=hm.get(SessionManager.FULLNAME);
         String dob=hm.get(SessionManager.DOB);
         String email=hm.get(SessionManager.EMAIL);
-        final String phone=hm.get(SessionManager.PHONE);
+         phone=hm.get(SessionManager.PHONE);
         String username=hm.get(SessionManager.USERNAME);
         String gender=hm.get(SessionManager.GENDER);
         String pass=hm.get(SessionManager.PASS);
@@ -94,6 +99,7 @@ List<OrderShow> list=new ArrayList<>();
         String bio=hm.get(SessionManager.BIO);
         String edu=hm.get(SessionManager.EDUCATION);
         String location=hm.get(SessionManager.LOCATION);
+        String signupdate=hm.get(SessionManager.signupdate);
         final String[] url = new String[1];
         Query c = FirebaseDatabase.getInstance().getReference("Users").orderByChild("phone").equalTo(phone);
         c.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -114,41 +120,30 @@ List<OrderShow> list=new ArrayList<>();
         aboutme.setText("    "+bio);
         fb.setText("    "+fullname);
 
-        int cyear = Calendar.getInstance().get(Calendar.YEAR);
-        int cmonth= Calendar.getInstance().get(Calendar.MONTH);
-        String month;
-        if(cmonth==1-1)
-            month="January";
-       else if(cmonth==2-1)
-            month="February";
-        else if(cmonth==3-1)
-            month="March";
-        else if(cmonth==4-1)
-            month="April";
-        else if(cmonth==5-1)
-            month="May";
-        else  if(cmonth==6-1)
-            month="June";
-        else if(cmonth==7-1)
-            month="July";
-        else   if(cmonth==8-1)
-            month="August";
-        else if(cmonth==9-1)
-            month="September";
-        else if(cmonth==10-1)
-            month="October";
-        else if(cmonth==11-1)
-            month="November";
-        else month="December";
 
         int cday = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+        upcoming.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent in= new Intent(getApplicationContext(),OrderGiven.class);
+                in.putExtra("phone",phone);
+                in.putExtra("name","upcoming");
 
-        date.setText("   "+cday+" "+month+" "+cyear);
+                startActivity(in);
+            }
+        });
+        if(signupdate==null) {
+
+            date.setText("   10 April 2021");
+        }
+        else
+            date.setText("    "+signupdate);
 order.setOnClickListener(new OnClickListener() {
     @Override
     public void onClick(View view) {
         Intent in= new Intent(getApplicationContext(),OrderGiven.class);
         in.putExtra("phone",phone);
+        in.putExtra("name","given");
 
 startActivity(in);
     }

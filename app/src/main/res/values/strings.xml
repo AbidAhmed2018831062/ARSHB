@@ -16,6 +16,16 @@
         <item>Hotel Supreme</item>
 
     </string-array>
+    <string-array name="Division">
+        <item>Sylhet- The City Of Nature and Peace</item>
+        <item>Dhaka- The City Of Mosques</item>
+        <item>Barishal- The City Of Rice</item>
+        <item>Chattaogram- The City Of Nature</item>
+        <item>Khulna- The Gateway Of Sundarban</item>
+        <item>Rajshahi- The City Of Mango</item>
+        <item>Rangpur- The City Of Industry</item>
+        <item>Mymensingh- The City Of Education</item>
+    </string-array>
     <string-array name="HotelDes">
         <item>Swimmingpool, Hospital, Free Breakfast, Easy Transport Sytsem.</item>
         <item>Swimmingpool, Hospital, Free Breakfast, Easy Transport Sytsem.</item>

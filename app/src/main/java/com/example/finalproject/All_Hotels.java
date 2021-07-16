@@ -1,21 +1,18 @@
 package com.example.finalproject;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,8 +22,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.widget.LinearLayout.VERTICAL;
 
 public class All_Hotels extends AppCompatActivity {
     private RecyclerView rl;
@@ -38,12 +33,17 @@ public class All_Hotels extends AppCompatActivity {
     Users it;
     int count;
     List<Users> listI = new ArrayList<>();
+    ProgressDialog pr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         //getSupportActionBar().hide();
+        pr=new ProgressDialog(this);
+        pr.show();
+        pr.setContentView(R.layout.progress);
+        pr.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         setContentView(R.layout.activity_all__hotels);
         rl = (RecyclerView) findViewById(R.id.rl3);
         backB = (ImageView) findViewById(R.id.backButton);
@@ -77,29 +77,17 @@ public class All_Hotels extends AppCompatActivity {
                 li.clear();
                 for(DataSnapshot ds: dataSnapshot.getChildren())
                 {
-                    final String name=ds.getValue().toString();
-                    li.add(name);
+                    HotelShow hr=ds.getValue(HotelShow.class);
+                    li.add(hr.getName());
                     count++;
-
-                    DatabaseReference db1=FirebaseDatabase.getInstance().getReference("Hotels").child(name);
-                    db1.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
-                            String url=dataSnapshot1.child("url").getValue().toString();
-                            image.add(url);
-                           Users it1 = new Users(url, name, "Expand All");
+                           Users it1 = new Users(hr.getUrl(), hr.getName(), "Expand All");
                             listI.add(it1);
-                            rl3.notifyDataSetChanged();
+
 
                         }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
+                rl3.notifyDataSetChanged();
+                pr.dismiss();
                 }
-            }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
+import android.widget.TextView;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
@@ -34,10 +36,12 @@ RecyclerView allR;
 List<CommentShow> list=new ArrayList<>();
 ALLR rl;
 int C=2;
+ProgressDialog pr;
 LinearLayout visi;
     int k,E;
     String url;
     RatingBar rating;
+    TextView no;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +51,16 @@ LinearLayout visi;
         arrowb=(ImageView)findViewById(R.id.back);
         submit=(Button)findViewById(R.id.submit);
         allR=(RecyclerView)findViewById(R.id.allR);
+        no=(TextView)findViewById(R.id.no);
         visi=(LinearLayout)findViewById(R.id.visi);
         rating=(RatingBar)findViewById(R.id.rating);
         final String hotelName=getIntent().getStringExtra("name");
         comment=(TextInputLayout)findViewById(R.id.comment);
         SessionManager sh=new SessionManager(this,SessionManager.USERSESSION);
-
+        pr=new ProgressDialog(this);
+        pr.show();
+        pr.setContentView(R.layout.progress);
+        pr.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         HashMap<String,String> hm=sh.returnData();
         final String fullname=hm.get(SessionManager.FULLNAME);
         final String phone=hm.get(SessionManager.PHONE);
@@ -148,8 +156,10 @@ LinearLayout visi;
 
             }
         });
-        if(k[0] !=0&&yu[0]==0)
-          visi.setVisibility(View.VISIBLE);
+        if(k[0] !=0&&yu[0]==0) {
+            pr.dismiss();
+            visi.setVisibility(View.VISIBLE);
+        }
         Random rn=new Random();
         int jk= rn.nextInt(10000000);
         DatabaseReference db = FirebaseDatabase.getInstance().getReference("Hotels").child(hotelName).child("Review");
@@ -163,7 +173,12 @@ LinearLayout visi;
                    CommentShow roo= ds.getValue(CommentShow.class);
                     list.add(roo);
                 }
+                if(list.size()==0)
+                {
+                    no.setVisibility(View.VISIBLE);
+                }
                 rl.notifyDataSetChanged();
+                pr.dismiss();
             }
 
             @Override
