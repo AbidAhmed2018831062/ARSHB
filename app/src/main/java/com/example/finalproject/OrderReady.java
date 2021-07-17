@@ -1,9 +1,6 @@
 package com.example.finalproject;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.icu.util.LocaleData;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -13,10 +10,18 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
 public class OrderReady extends AppCompatActivity {
 String[] quas;
@@ -31,14 +36,21 @@ int year,cmonth,day,day1,cmonth1,year1;
     String name;
     Button order;
     String HNAME;
+    String Hname;
+    String token;
+    String userName,phone2;
+    static String name1,qua23,start11,end12,ne1,HNAME1,final1,price1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_ready);
         name=getIntent().getStringExtra("Name");
         HNAME=getIntent().getStringExtra("HNAME");
+        SessionManager sh=new SessionManager(this,SessionManager.USERSESSION);
 
-Toast.makeText(getApplicationContext(),name,Toast.LENGTH_LONG).show();
+        HashMap<String,String> hm=sh.returnData();
+       phone2=hm.get(SessionManager.PHONE);
+       userName=hm.get(SessionManager.FULLNAME);
         quas=getResources().getStringArray(R.array.qua);
         qua1=(Spinner)findViewById(R.id.qua);
         start=(DatePicker) findViewById(R.id.start);
@@ -120,7 +132,7 @@ Toast.makeText(getApplicationContext(),name,Toast.LENGTH_LONG).show();
                 else month1="December";
                 start1=""+day+" "+month+" "+year;
                 end1=""+day1+" "+month1+" "+year1;
-                String ne=getIntent().getStringExtra("Rn");
+                final String ne=getIntent().getStringExtra("Rn");
                 Intent in=new Intent(OrderReady.this,OrderConfirmation.class);
                 in.putExtra("Name",name);
                 in.putExtra("Qua",qua);
@@ -154,7 +166,35 @@ Toast.makeText(getApplicationContext(),name,Toast.LENGTH_LONG).show();
                 Toast.makeText(getApplicationContext(),""+p1+" "+diff+" "+start1+"   "+end1+" "+qua,Toast.LENGTH_LONG).show();
                 p=80*p1;
                 in.putExtra("Price",""+p);
-             startActivity(in);
+          //   startActivity(in);
+                final long finalDiff = diff;
+                Toast.makeText(getApplicationContext(),ne,Toast.LENGTH_LONG).show();
+                FirebaseDatabase.getInstance().getReference("Hotels").child(ne).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        OrderShow or=new OrderShow(userName+"\n "+phone2,ne,p+"TK.",qua+"",start1+"",end1+"",name,start1);
+                        FirebaseDatabase.getInstance().getReference("Hotels").child(ne).child("needApp").child(start1+end1).setValue(or);
+                        name1=name;
+                        qua23=qua;
+                        start11=start1;
+                        end12=end1;
+                        ne1=ne;
+                        HNAME1=HNAME;
+                        final1=""+finalDiff;
+                        price1=price;
+                        token=dataSnapshot.child("token").getValue().toString();
+                       FcmNotificationsSender fcm=new FcmNotificationsSender(token,"New Order","Your Hotel Has New Order.",getApplicationContext(),OrderReady.this);
+                      Toast.makeText(getApplicationContext(),token,Toast.LENGTH_LONG).show();
+                       fcm.SendNotifications();
+                       startActivity(new Intent(getApplicationContext(),AfterCallingNotification.class));
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
             }
         });
 

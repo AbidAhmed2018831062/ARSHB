@@ -59,9 +59,21 @@
             android:text="Hotels"
             android:layout_margin="10dp"
             android:textColor="#000"
-            android:textSize="40sp"
+            android:textSize="20sp"
+            android:id="@+id/nameOfDiv"
             android:textStyle="bold"
             app:fontFamily="sans-serif" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hotels"
+        android:layout_margin="10dp"
+        android:textColor="#000"
+        android:textSize="20sp"
+        android:id="@+id/empty"
+        android:visibility="gone"
+
+        app:fontFamily="sans-serif" />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rl3"
             android:layout_marginTop="20dp"

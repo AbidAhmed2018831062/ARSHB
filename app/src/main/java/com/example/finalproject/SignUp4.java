@@ -1,7 +1,5 @@
 package com.example.finalproject;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,11 +7,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Calendar;
 import java.util.HashMap;
 
 public class SignUp4 extends AppCompatActivity {
@@ -98,17 +99,45 @@ Button finish1;
     {
         FirebaseAuth auth=FirebaseAuth.getInstance();
         DatabaseReference re= FirebaseDatabase.getInstance().getReference("Users");
-
+        int cyear = Calendar.getInstance().get(Calendar.YEAR);
+        int cmonth= Calendar.getInstance().get(Calendar.MONTH);
+        cmonth++;
+        String month;
+        if(cmonth==1)
+            month="January";
+        else if(cmonth==2)
+            month="February";
+        else if(cmonth==3)
+            month="March";
+        else if(cmonth==4)
+            month="April";
+        else if(cmonth==5)
+            month="May";
+        else  if(cmonth==6)
+            month="June";
+        else if(cmonth==7)
+            month="July";
+        else   if(cmonth==8)
+            month="August";
+        else if(cmonth==9)
+            month="September";
+        else if(cmonth==10)
+            month="October";
+        else if(cmonth==11)
+            month="November";
+        else month="December";
+        int cday = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
         HashMap hm1=new HashMap<>();
         hm1.put("location",location1);
         hm1.put("bio",bio);
         hm1.put("education",edu);
         hm1.put("socialmedia",socialmedia1);
+        hm1.put("signupdate",cday+" "+month+" "+cyear);
 
 
         re.child(phone).updateChildren(hm1);
         SessionManager sh=new SessionManager(SignUp4.this,SessionManager.USERSESSION);
 
-        sh.loginSession(name1,email,gender,phone,password,dob,username,location1,socialmedia1,bio,edu);
+        sh.loginSession(name1,email,gender,phone,password,dob,username,location1,socialmedia1,bio,edu,cday+" "+month+" "+cyear);
     }
 }

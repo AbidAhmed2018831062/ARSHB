@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="300dp"
-    android:layout_height="200dp"
+    android:layout_height="190dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardBackgroundColor="@color/LightWhite"
     app:cardElevation="8dp"
     app:cardCornerRadius="8dp"
     android:paddingTop="10dp"
-    android:paddingBottom="10dp" android:layout_marginBottom="10dp"
+
     android:layout_marginRight="10dp"
     android:id="@+id/ca1">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="20dp"
+        android:paddingTop="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:orientation="vertical"
-        android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp">
         <TextView
 
@@ -47,7 +48,40 @@
 
         android:text="Free Breakfast, 24 hours Room Service "
         android:textColor="#000"
-        android:textSize="16dp"></TextView>
+        android:textSize="12dp"></TextView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+        <Button
+
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+             android:text="Update_Room"
+            android:textColor="#fff"
+            android:layout_marginTop="20dp"
+
+            android:background="#000"
+            android:id="@+id/update"
+            android:layout_marginRight="5dp"
+
+            ></Button>
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Delete_Room"
+            android:textColor="#fff"
+            android:layout_marginTop="20dp"
+
+            android:background="#000"
+            android:layout_marginLeft="5dp"
+
+            android:id="@+id/delete"
+         ></Button>
+        </LinearLayout>
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

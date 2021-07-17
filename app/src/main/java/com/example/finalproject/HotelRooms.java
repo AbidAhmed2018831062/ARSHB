@@ -17,6 +17,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,11 +26,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import static com.example.finalproject.rl4HR.dele;
 
@@ -42,6 +47,7 @@ LinearLayout layoutList;
     NavigationView nav;
     ImageView menui;
  List<Rooms> list;
+ String token;
  rl4HR rl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +65,20 @@ LinearLayout layoutList;
 
         HashMap<String,String> hm=sh.returnData();
         name=hm.get(SessionManagerHotels.FULLNAME);
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (task.isSuccessful()) {
+                             token = Objects.requireNonNull(task.getResult()).getToken();
+                             HashMap t=new HashMap();
+                             t.put("token",token);
+                            FirebaseDatabase.getInstance().getReference("Hotels").child(name).updateChildren(t);
+
+                        }
+
+                    }
+                });
         String fullname1=hm.get(SessionManagerHotels.DES);
         String fullname2=hm.get(SessionManagerHotels.EMAIL);
         String fullname3=hm.get(SessionManagerHotels.PHONE);
@@ -66,6 +86,7 @@ LinearLayout layoutList;
         String fullname5=hm.get(SessionManagerHotels.RATING);
         String fullname6=hm.get(SessionManagerHotels.PASS);
         delete();
+        delete1();
         nav=(NavigationView) findViewById(R.id.navigation);
     rl4HR1=(RecyclerView)findViewById(R.id.rl4HR);
     list=new ArrayList<>();
@@ -138,6 +159,23 @@ layoutList.addView(roomView);*/
 
 
     }
+
+    private void delete1() {
+        Toast.makeText(getApplicationContext(),"KI"+ApprovalAdapter.d, Toast.LENGTH_LONG).show();
+        for(int i=0;i<ApprovalAdapter.d;i++)
+        {
+
+            if(ApprovalAdapter.dele[i]!=null)
+            {
+                Toast.makeText(getApplicationContext(),ApprovalAdapter.dele[i], Toast.LENGTH_LONG).show();
+                FirebaseDatabase.getInstance().getReference("Hotels").child(name).child("needApp").child(ApprovalAdapter.dele[i]).removeValue();
+                ApprovalAdapter.dele[i]=null;
+            }
+            else
+                Toast.makeText(getApplicationContext(),dele[i], Toast.LENGTH_LONG).show();
+        }
+    }
+
     public void navigationDrawer()
     {
         nav.bringToFront();
@@ -157,6 +195,11 @@ layoutList.addView(roomView);*/
                         startActivity(new Intent(getApplicationContext(), roomCreation.class).putExtra("Name",name));
                         finish();
 
+                }
+                    else if(item.getItemId()==R.id.approval)
+                {
+                    startActivity(new Intent(getApplicationContext(), Approval.class));
+                    finish();
                 }
                 else if(item.getItemId()==R.id.add){
                     Intent in=new Intent(getApplicationContext(),OrderGiven.class);

@@ -19,12 +19,19 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+
+import java.util.HashMap;
+import java.util.Objects;
 
 public class LogIn extends AppCompatActivity {
     ImageView im1;
@@ -150,7 +157,7 @@ public class LogIn extends AppCompatActivity {
                             String dob = d.child(p).child("dob").getValue(String.class);
                             String gender = d.child(p).child("gender").getValue(String.class);
                             String fullname = d.child(p).child("name").getValue(String.class);
-                            String phone2 = d.child(p).child("phone").getValue(String.class);
+                            final String phone2 = d.child(p).child("phone").getValue(String.class);
                             String username = d.child(p).child("username").getValue(String.class);
                             String edu = d.child(p).child("education").getValue(String.class);
                             String location = d.child(p).child("location").getValue(String.class);
@@ -158,7 +165,20 @@ public class LogIn extends AppCompatActivity {
                             String signupdate = d.child(p).child("signupdate").getValue(String.class);
                             String socialmedia = d.child(p).child("socialmedia").getValue(String.class);
                             SessionManager sh = new SessionManager(LogIn.this, SessionManager.USERSESSION);
+                            FirebaseInstanceId.getInstance().getInstanceId()
+                                    .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                                            if (task.isSuccessful()) {
+                                                String token = Objects.requireNonNull(task.getResult()).getToken();
+                                                HashMap t=new HashMap();
+                                                t.put("token",token);
+                                                FirebaseDatabase.getInstance().getReference("Users").child(phone2).updateChildren(t);
 
+                                            }
+
+                                        }
+                                    });
                             sh.loginSession(fullname, email, gender, phone2, pass, dob, username, location, socialmedia, bio, edu, signupdate);
                             startActivity(new Intent(LogIn.this, UserPrfofilew.class));
 
@@ -188,7 +208,20 @@ public class LogIn extends AppCompatActivity {
                                                 SessionManagerHotels sh = new SessionManagerHotels(LogIn.this, SessionManagerHotels.USERSESSION);
                                                 Toast.makeText(getApplicationContext(),star+"",Toast.LENGTH_LONG).show();
                                                 sh.loginSession(n,email,star,p2,pass,des,user,url);
+                                                FirebaseInstanceId.getInstance().getInstanceId()
+                                                        .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                                                                if (task.isSuccessful()) {
+                                                                   String token = Objects.requireNonNull(task.getResult()).getToken();
+                                                                    HashMap t=new HashMap();
+                                                                    t.put("token",token);
+                                                                    FirebaseDatabase.getInstance().getReference("Hotels").child(n).updateChildren(t);
 
+                                                                }
+
+                                                            }
+                                                        });
                                               startActivity(new Intent(LogIn.this, HotelRooms.class));
                                                 finish();
                                             }

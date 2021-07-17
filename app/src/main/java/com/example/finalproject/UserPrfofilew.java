@@ -1,11 +1,5 @@
 package com.example.finalproject;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,19 +10,27 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class UserPrfofilew extends AppCompatActivity {
 TextView name,study,date,place,aboutme,fb;
@@ -49,10 +51,24 @@ List<OrderShow> list=new ArrayList<>();
         SessionManager sh=new SessionManager(this,SessionManager.USERSESSION);
 
         HashMap<String,String>  hm=sh.returnData();
+        final String phone2=hm.get(SessionManager.PHONE);
         order=(CardView)findViewById(R.id.order);
         upcoming=(CardView)findViewById(R.id.upcoming);
         save=(CardView)findViewById(R.id.save);
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (task.isSuccessful()) {
+                            String token = Objects.requireNonNull(task.getResult()).getToken();
+                            HashMap t=new HashMap();
+                            t.put("token",token);
+                            FirebaseDatabase.getInstance().getReference("Users").child(phone2).updateChildren(t);
 
+                        }
+
+                    }
+                });
         fav.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
