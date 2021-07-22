@@ -276,11 +276,20 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Approve"
+                    android:text="Dis Approve"
                     android:textColor="#fff"
                     android:layout_marginLeft="10dp"
                     android:id="@+id/disApprove"
                     android:visibility="gone"></Button>
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Pay Now"
+                android:textColor="#fff"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/pay"
+                android:visibility="gone"></Button>
             </LinearLayout>
     </LinearLayout>
 

@@ -49,6 +49,9 @@ LinearLayout layoutList;
  List<Rooms> list;
  String token;
  rl4HR rl;
+ static String Dele[]=new String[1000];
+ static int poi=0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +76,7 @@ LinearLayout layoutList;
                              token = Objects.requireNonNull(task.getResult()).getToken();
                              HashMap t=new HashMap();
                              t.put("token",token);
-                            FirebaseDatabase.getInstance().getReference("Hotels").child(name).updateChildren(t);
+                            FirebaseDatabase.getInstance().getReference("Hotels").child(name).child("Token").updateChildren(t);
 
                         }
 
@@ -161,19 +164,14 @@ layoutList.addView(roomView);*/
     }
 
     private void delete1() {
-        Toast.makeText(getApplicationContext(),"KI"+ApprovalAdapter.d, Toast.LENGTH_LONG).show();
-        for(int i=0;i<ApprovalAdapter.d;i++)
+        for(int i=0;i<poi;i++)
         {
-
-            if(ApprovalAdapter.dele[i]!=null)
+            if(Dele[i]!=null)
             {
-                Toast.makeText(getApplicationContext(),ApprovalAdapter.dele[i], Toast.LENGTH_LONG).show();
-                FirebaseDatabase.getInstance().getReference("Hotels").child(name).child("needApp").child(ApprovalAdapter.dele[i]).removeValue();
-                ApprovalAdapter.dele[i]=null;
+                FirebaseDatabase.getInstance().getReference("Hotels").child(name).child("needApp").child(Dele[i]).removeValue();
             }
-            else
-                Toast.makeText(getApplicationContext(),dele[i], Toast.LENGTH_LONG).show();
         }
+
     }
 
     public void navigationDrawer()

@@ -23,13 +23,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Approval"></activity>
+        <activity android:name=".PendingPayment"></activity>
+        <activity android:name=".Approval" />
         <activity android:name=".AfterCallingNotification" />
         <activity
             android:name=".ActivityAfterNotification"
             android:excludeFromRecents="true"
             android:launchMode="singleTask"
-            android:parentActivityName=".MainActivity"
             android:taskAffinity="" />
         <activity android:name=".ChangeRoomInfo" />
         <activity android:name=".UpdateRooms" />

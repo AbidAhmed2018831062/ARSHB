@@ -1,29 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="300dp"
-    android:layout_height="190dp"
+    android:layout_height="350dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardBackgroundColor="@color/LightWhite"
     app:cardElevation="8dp"
     app:cardCornerRadius="8dp"
-    android:paddingTop="10dp"
 
     android:layout_marginRight="10dp"
     android:id="@+id/ca1">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="10dp"
+        android:paddingTop="5dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:orientation="vertical"
         android:layout_marginTop="10dp">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:src="@drawable/star31"
+            android:scaleType="fitXY"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/Ab"></ImageView>
         <TextView
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Single Room"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="5dp"
             android:id="@+id/rn"
             android:textSize="20dp"
             android:textColor="#000"
@@ -34,7 +40,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="$25"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="5dp"
         android:id="@+id/price"
         android:textSize="20dp"
         android:textColor="#000"
@@ -61,7 +67,7 @@
             android:layout_height="wrap_content"
              android:text="Update_Room"
             android:textColor="#fff"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
 
             android:background="#000"
             android:id="@+id/update"
@@ -74,7 +80,7 @@
             android:layout_height="wrap_content"
             android:text="Delete_Room"
             android:textColor="#fff"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
 
             android:background="#000"
             android:layout_marginLeft="5dp"
