@@ -6,12 +6,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -52,6 +55,7 @@ this.c=c;
            holder.price.setText("$"+list.get(position).getPrice());
            holder.service.setText(list.get(position).getServices());
            holder.rn.setText(list.get(position).getRoomname());
+        Picasso.with(c).load(list.get(position).getUrl()).fit().centerCrop().into(holder.Ab);
             name1=list.get(position).getRoomname();
             price=list.get(position).getPrice();
 
@@ -103,6 +107,7 @@ this.c=c;
         TextView price, service,rn;
         Button update,delete;
         CardView ca1;
+        ImageView Ab;
         public RoomsAd(@NonNull View itemView) {
             super(itemView);
             price=(TextView)itemView.findViewById(R.id.price);
@@ -111,6 +116,7 @@ this.c=c;
            ca1=(CardView)itemView.findViewById(R.id.ca1);
            delete=(Button)itemView.findViewById(R.id.delete);
            update=(Button)itemView.findViewById(R.id.update);
+           Ab=(ImageView) itemView.findViewById(R.id.Ab);
 
         }
     }

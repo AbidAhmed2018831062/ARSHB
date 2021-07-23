@@ -1,8 +1,5 @@
 package com.example.finalproject;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,19 +8,17 @@ import android.util.Patterns;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.regex.Pattern;
 
 public class Signup extends AppCompatActivity {
 
@@ -68,25 +63,25 @@ public class Signup extends AppCompatActivity {
     public void goToSignUp2()
     {
         if(validateName()&&validateEmail()&&validatePassword()&&validateUserName()) {
-           gotoEmailVeri();
+            gotoEmailVeri();
         }
     }
     public boolean validateName()
     {
-     name1=name.getEditText().getText().toString().trim();
-     if(name1.isEmpty()){
-         name.setError("This field needs to be filled");
-         name.requestFocus();
-         return false;
-     }
-     else if(name1.length()>20)
-     {
-      name.setError(" Too Large. Name needs to be smaller than 20characters");
-      name.requestFocus();
-      return false;
-     }
-     else
-         return true;
+        name1=name.getEditText().getText().toString().trim();
+        if(name1.isEmpty()){
+            name.setError("This field needs to be filled");
+            name.requestFocus();
+            return false;
+        }
+        else if(name1.length()>20)
+        {
+            name.setError(" Too Large. Name needs to be smaller than 20characters");
+            name.requestFocus();
+            return false;
+        }
+        else
+            return true;
     }
     public boolean validateUserName()
     {
@@ -119,8 +114,8 @@ public class Signup extends AppCompatActivity {
             return false;
 
         }
-       else
-          return true;
+        else
+            return true;
     }
     public boolean validatePassword()
     {
@@ -138,12 +133,12 @@ public class Signup extends AppCompatActivity {
             return false;
         }
         else if(!pass1.equals(cpass1)){
-         pass.setError("Password and Confirm Password have to be same");
-        pass.requestFocus();
-        return false;
+            pass.setError("Password and Confirm Password have to be same");
+            pass.requestFocus();
+            return false;
         }
-         else
-             return true;
+        else
+            return true;
     }
     public void gotoEmailVeri()
     {

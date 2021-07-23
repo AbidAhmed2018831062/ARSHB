@@ -23,9 +23,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".HotelsOverview">
-
-        </activity>
+        <activity android:name=".Payment"></activity>
+        <activity android:name=".Signup" />
+        <activity android:name=".HotelsOverview" />
         <activity android:name=".PendingPayment" />
         <activity android:name=".Approval" />
         <activity android:name=".AfterCallingNotification" />
@@ -81,7 +81,6 @@
         <activity android:name=".phoneAuth" />
         <activity android:name=".SignUp3" />
         <activity android:name=".SignUp2" />
-        <activity android:name=".Signup" />
         <activity android:name=".LogIn" />
         <activity android:name=".LogIn_Or_SignUp" />
         <activity android:name=".All_Hotels" />

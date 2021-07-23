@@ -1,20 +1,36 @@
 package com.example.finalproject;
 
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
 
 public class roomCreation extends AppCompatActivity {
  LinearLayout layoutList;
@@ -23,6 +39,16 @@ public class roomCreation extends AppCompatActivity {
  DatabaseReference db,db1;
  FirebaseDatabase fb;
  String abid;
+ ImageView RoomImage;
+    Uri imgUri;
+    StorageReference st;
+    StorageTask uploadtask;
+    String url234[]=new String[100];
+    int r=0;String RoomName[]=new String[100];
+    int d=0;
+     boolean g=false;
+    private static final int IMAGE_REQUEST=1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +56,8 @@ public class roomCreation extends AppCompatActivity {
         setContentView(R.layout.activity_room_creation);
         rooms=(Button) findViewById(R.id.rooms);
         layoutList=(LinearLayout) findViewById(R.id.linear);
+        st= FirebaseStorage.getInstance().getReference("Upload");
+
         submit=(Button) findViewById(R.id.submit);
         abid=getIntent().getStringExtra("name");
         rooms.setOnClickListener(new View.OnClickListener() {
@@ -41,33 +69,119 @@ public class roomCreation extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(check()){
-                    Intent in=new Intent(roomCreation.this, HotelRooms.class);
+                if(layoutList.getChildCount()==0) {
+                    if (g == true) {
+                        Intent in = new Intent(roomCreation.this, HotelRooms.class);
 
-                    in.putExtra("Name",getIntent().getStringExtra("Name").toString());
+                        in.putExtra("Name", getIntent().getStringExtra("Name").toString());
 
-                   startActivity(in);
-                    finish();
+                        startActivity(in);
+                        finish();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "All fileds need to be filled", Toast.LENGTH_LONG).show();
+                    }
                 }
                 else
                 {
-                    Toast.makeText(getApplicationContext(), "Something went wrong, Please try again", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Submit the earlier rooms first", Toast.LENGTH_LONG).show();
                 }
             }
         });
     }
     public void addView()
     {
-        View roomView=getLayoutInflater().inflate(R.layout.roomcreation1, null,false);
-        TextInputLayout se=(TextInputLayout) roomView.findViewById(R.id.service);
-        TextInputLayout pr=(TextInputLayout)roomView.findViewById(R.id.price);
-        TextInputLayout rn=(TextInputLayout)roomView.findViewById(R.id.rn);
+        final View roomView=getLayoutInflater().inflate(R.layout.roomcreation1, null,false);
+        final TextInputLayout se=(TextInputLayout) roomView.findViewById(R.id.service);
+        final TextInputLayout pr=(TextInputLayout)roomView.findViewById(R.id.price);
+        final TextInputLayout rn1=(TextInputLayout)roomView.findViewById(R.id.rn);
         Button img=(Button) roomView.findViewById(R.id.cancel);
+        final Button ci=(Button) roomView.findViewById(R.id.ci);
+        final Button ui=(Button) roomView.findViewById(R.id.cancel);
+        final Button sub=(Button) roomView.findViewById(R.id.sub);
+        RoomImage=(ImageView) roomView.findViewById(R.id.RoomImage);
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               layoutList.removeView(view);
+               layoutList.removeView(roomView);
         }});
+        ci.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openImageChooser();
+                ui.setVisibility(View.VISIBLE);
+                RoomImage.setVisibility(View.VISIBLE);
+
+            }
+        });
+        ui.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                g=false;
+                StorageReference ref=st.child(System.currentTimeMillis()+"."+getFileExtension(imgUri));
+
+                ref.putFile(imgUri)
+                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+
+                                Task<Uri> tu=taskSnapshot.getStorage().getDownloadUrl();
+                                HashMap hem=new HashMap();
+                                Random rn=new Random();
+                                int p10=rn.nextInt(10000);
+                                while(!tu.isSuccessful());
+                                Uri dow=tu.getResult();
+                                url234[r]=dow.toString();
+                                r++;
+                                ci.setVisibility(View.GONE);
+                                ui.setVisibility(View.GONE);
+                                RoomImage.setVisibility(View.GONE);
+
+                                se.setVisibility(View.VISIBLE);
+                                rn1.setVisibility(View.VISIBLE);
+                                pr.setVisibility(View.VISIBLE);
+                                sub.setVisibility(View.VISIBLE);
+                                for(int j=0;j<d;j++)
+                                {
+                                    if(RoomName[j].equals(rn1.getEditText().getText().toString())) {
+                                        rn1.getEditText().setError("Room Name Already Exists");
+                                        rn1.getEditText().requestFocus();
+                                    }
+                                }
+                                RoomName[d]=rn1.getEditText().getText().toString();
+                                d++;
+                                sub.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        if(!se.getEditText().getText().toString().equals("")&&!pr.getEditText().getText().toString().equals("")&&!rn1.getEditText().getText().toString().equals(""))
+                                        {
+                                            SessionManagerHotels sh= new SessionManagerHotels(roomCreation.this,SessionManagerHotels.USERSESSION);
+
+                                            HashMap<String,String> hm=sh.returnData();
+                                            String name123=hm.get(SessionManagerHotels.FULLNAME);
+                                          Rooms roo=new Rooms(rn1.getEditText().getText().toString(),se.getEditText().getText().toString(),pr.getEditText().getText().toString(),url234[r-1]);
+                                          FirebaseDatabase.getInstance().getReference("Hotels").child(name123).child(rn1.getEditText().getText().toString()).setValue(roo);
+                                      g=true;
+                                        layoutList.removeView(roomView);
+                                        }
+                                        else
+                                        {
+                                            Toast.makeText(getApplicationContext(),"All fields need to be filled",Toast.LENGTH_LONG).show();
+                                        }
+                                    }
+                                });
+
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                // Handle unsuccessful uploads
+                                // ...
+                            }
+                        });
+            }
+        });
 
 
      layoutList.addView(roomView);
@@ -142,5 +256,32 @@ public class roomCreation extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),"All field needs to be filled", Toast.LENGTH_LONG).show();
         }
         return r;
+    }  @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if((requestCode == IMAGE_REQUEST) && (resultCode == RESULT_OK) && (data.getData() != null)){
+            imgUri=data.getData();
+            Picasso.with(this).load(imgUri).into(RoomImage);
+
+        }
     }
+
+    private void openImageChooser()
+    {
+
+
+        Intent in=new Intent();
+        in.setType("image/*");
+        in.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(in, IMAGE_REQUEST);
+
+    }
+
+    public String getFileExtension(Uri imgURI)
+    {
+        ContentResolver con= getContentResolver();
+        MimeTypeMap mim=MimeTypeMap.getSingleton();
+        return mim.getExtensionFromMimeType(con.getType(imgURI));
+    }
+
 }
