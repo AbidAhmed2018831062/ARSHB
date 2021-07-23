@@ -173,7 +173,7 @@ public class LogIn extends AppCompatActivity {
                                                 String token = Objects.requireNonNull(task.getResult()).getToken();
                                                 HashMap t=new HashMap();
                                                 t.put("token",token);
-                                                FirebaseDatabase.getInstance().getReference("Users").child(phone2).updateChildren(t);
+                                                FirebaseDatabase.getInstance().getReference("Users").child(phone2).child("Token").updateChildren(t);
 
                                             }
 
@@ -216,7 +216,7 @@ public class LogIn extends AppCompatActivity {
                                                                    String token = Objects.requireNonNull(task.getResult()).getToken();
                                                                     HashMap t=new HashMap();
                                                                     t.put("token",token);
-                                                                    FirebaseDatabase.getInstance().getReference("Hotels").child(n).updateChildren(t);
+                                                                    FirebaseDatabase.getInstance().getReference("Hotels").child(n).child("Token").updateChildren(t);
 
                                                                 }
 

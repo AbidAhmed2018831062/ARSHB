@@ -20,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -169,11 +170,12 @@ int year,cmonth,day,day1,cmonth1,year1;
           //   startActivity(in);
                 final long finalDiff = diff;
                 Toast.makeText(getApplicationContext(),ne,Toast.LENGTH_LONG).show();
-                FirebaseDatabase.getInstance().getReference("Hotels").child(ne).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        OrderShow or=new OrderShow(userName+"\n "+phone2,ne,p+"TK.",qua+"",start1+"",end1+"",name,start1);
-                        FirebaseDatabase.getInstance().getReference("Hotels").child(ne).child("needApp").child(start1+end1).setValue(or);
+                        Calendar cal = Calendar.getInstance();
+                        int cday = cal.get(Calendar.DAY_OF_MONTH);
+                        int cm = cal.get(Calendar.MONTH);
+                        int cy = cal.get(Calendar.YEAR);
+                        OrderShow or=new OrderShow(userName+"\n "+phone2,ne,p+"",qua+"",start1+"",end1+"",name,cday+" "+cm+" "+cy);
+                        FirebaseDatabase.getInstance().getReference("Hotels").child(ne).child("needApp").child(start1+end1+p+""+name+cday+" "+cm+" "+cy).setValue(or);
                         name1=name;
                         qua23=qua;
                         start11=start1;
@@ -182,19 +184,23 @@ int year,cmonth,day,day1,cmonth1,year1;
                         HNAME1=HNAME;
                         final1=""+finalDiff;
                         price1=price;
-                        token=dataSnapshot.child("token").getValue().toString();
-                       FcmNotificationsSender fcm=new FcmNotificationsSender(token,"New Order","Your Hotel Has New Order.",getApplicationContext(),OrderReady.this);
-                      Toast.makeText(getApplicationContext(),token,Toast.LENGTH_LONG).show();
-                       fcm.SendNotifications();
-                       startActivity(new Intent(getApplicationContext(),AfterCallingNotification.class));
+                        FirebaseDatabase.getInstance().getReference("Hotels").child(ne).child("Token").addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                token=dataSnapshot.child("token").getValue().toString();
+                                FcmNotificationsSender fcm=new FcmNotificationsSender(token,"New Order","Your Hotel Has New Order.",getApplicationContext(),OrderReady.this);
+                                Toast.makeText(getApplicationContext(),token,Toast.LENGTH_LONG).show();
+                                fcm.SendNotifications();
+                                startActivity(new Intent(getApplicationContext(),AfterCallingNotification.class));
+                            }
 
-                    }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                            }
+                        });
 
-                    }
-                });
+
             }
         });
 

@@ -28,13 +28,13 @@ public class ActivityAfterNotification extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_after_notification);
-        SessionManager sh=new SessionManager(this,SessionManager.USERSESSION);
+        SessionManagerHotels sh=new SessionManagerHotels(this,SessionManagerHotels.USERSESSION);
         HashMap<String,String> hm=sh.returnData();
-        final String n=hm.get(SessionManager.FULLNAME);
+        final String n=hm.get(SessionManagerHotels.FULLNAME);
         ok=(Button)findViewById(R.id.OK);
         user=(TextView)findViewById(R.id.user);
         hotel=(TextView)findViewById(R.id.hotel);
-        phone=hm.get(SessionManager.PHONE);
+        phone=hm.get(SessionManagerHotels.RATING);
 
         if(phone!=null)
         {
@@ -42,7 +42,6 @@ public class ActivityAfterNotification extends AppCompatActivity {
             ok.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    startActivity(new Intent(getApplicationContext(),HotelRooms.class));
                     startActivity(new Intent(getApplicationContext(),HotelRooms.class));
                 }
             });

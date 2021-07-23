@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class ApprovalAdapter extends RecyclerView.Adapter<ApprovalAdapter.NEED> {
@@ -84,8 +85,11 @@ public class ApprovalAdapter extends RecyclerView.Adapter<ApprovalAdapter.NEED> 
                 holder.approve.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        dele[d]=start1+end1;
-                        d++;
+                        SessionManagerHotels sh= new SessionManagerHotels(c,SessionManagerHotels.USERSESSION);
+
+                        HashMap<String,String> hm=sh.returnData();
+                        String name=hm.get(SessionManagerHotels.FULLNAME);
+                      FirebaseDatabase.getInstance().getReference("Hotels").child(name).child("needApp").child(start1+end1+price+rn+idate1).removeValue();
                         list.remove(i);
                         notifyItemRemoved(i);
                         int k=0;
@@ -105,8 +109,8 @@ public class ApprovalAdapter extends RecyclerView.Adapter<ApprovalAdapter.NEED> 
                         OrderShow or=new OrderShow(cname,hname,price,qua,start1,
                                end1,rn,idate1);
                         FirebaseDatabase.getInstance().getReference("Users").child(userNum).
-                                child("Payment").child(qua+start1+end1).setValue(or);
-                        FirebaseDatabase.getInstance().getReference("Users").child(userNum).addValueEventListener(new ValueEventListener() {
+                                child("Payment").child(qua+start1+end1+price+idate1).setValue(or);
+                        FirebaseDatabase.getInstance().getReference("Users").child(userNum).child("Token").addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 String token=dataSnapshot.child("token").getValue().toString();
@@ -146,7 +150,7 @@ public class ApprovalAdapter extends RecyclerView.Adapter<ApprovalAdapter.NEED> 
                 input1.reverse();
                 userNum=input1.toString();
                 userNum="+88"+userNum;
-                FirebaseDatabase.getInstance().getReference("Users").child(userNum).addValueEventListener(new ValueEventListener() {
+                FirebaseDatabase.getInstance().getReference("Users").child(userNum).child("Token").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         String token=dataSnapshot.child("token").getValue().toString();

@@ -35,7 +35,7 @@ import java.util.Objects;
 public class UserPrfofilew extends AppCompatActivity {
 TextView name,study,date,place,aboutme,fb;
 ImageView profile_image;
-CardView fav,save,order,upcoming;
+CardView fav,save,order,upcoming,pay;
 String phone;
 
 List<OrderShow> list=new ArrayList<>();
@@ -48,6 +48,7 @@ List<OrderShow> list=new ArrayList<>();
         fb=(TextView)findViewById(R.id.fb);
         profile_image=(ImageView) findViewById(R.id.profile_image);
         fav=(CardView)findViewById(R.id.fav);
+        pay=(CardView)findViewById(R.id.pay);
         SessionManager sh=new SessionManager(this,SessionManager.USERSESSION);
 
         HashMap<String,String>  hm=sh.returnData();
@@ -63,7 +64,7 @@ List<OrderShow> list=new ArrayList<>();
                             String token = Objects.requireNonNull(task.getResult()).getToken();
                             HashMap t=new HashMap();
                             t.put("token",token);
-                            FirebaseDatabase.getInstance().getReference("Users").child(phone2).updateChildren(t);
+                            FirebaseDatabase.getInstance().getReference("Users").child(phone2).child("Token").updateChildren(t);
 
                         }
 
@@ -80,6 +81,13 @@ List<OrderShow> list=new ArrayList<>();
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(UserPrfofilew.this,WatchLater.class));
+                finish();
+            }
+        });
+        pay.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(UserPrfofilew.this,Payment.class));
                 finish();
             }
         });

@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
      }
      else
      {
+
          startActivity(new Intent(getApplicationContext(),DashBoard.class));
      }
 

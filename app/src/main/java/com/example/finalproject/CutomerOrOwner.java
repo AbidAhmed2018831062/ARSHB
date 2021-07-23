@@ -1,13 +1,13 @@
 package com.example.finalproject;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class CutomerOrOwner extends AppCompatActivity {
     ImageView im1;
@@ -24,7 +24,7 @@ public class CutomerOrOwner extends AppCompatActivity {
         cus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(CutomerOrOwner.this, LogIn_Or_SignUp.class));
+                startActivity(new Intent(CutomerOrOwner.this, Signup.class));
                 finish();
             }
         });

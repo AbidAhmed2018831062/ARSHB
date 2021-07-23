@@ -96,7 +96,7 @@ public class roomCreation extends AppCompatActivity {
         final TextInputLayout rn1=(TextInputLayout)roomView.findViewById(R.id.rn);
         Button img=(Button) roomView.findViewById(R.id.cancel);
         final Button ci=(Button) roomView.findViewById(R.id.ci);
-        final Button ui=(Button) roomView.findViewById(R.id.cancel);
+        final Button ui=(Button) roomView.findViewById(R.id.ui);
         final Button sub=(Button) roomView.findViewById(R.id.sub);
         RoomImage=(ImageView) roomView.findViewById(R.id.RoomImage);
         img.setOnClickListener(new View.OnClickListener() {
@@ -160,9 +160,10 @@ public class roomCreation extends AppCompatActivity {
                                             HashMap<String,String> hm=sh.returnData();
                                             String name123=hm.get(SessionManagerHotels.FULLNAME);
                                           Rooms roo=new Rooms(rn1.getEditText().getText().toString(),se.getEditText().getText().toString(),pr.getEditText().getText().toString(),url234[r-1]);
-                                          FirebaseDatabase.getInstance().getReference("Hotels").child(name123).child(rn1.getEditText().getText().toString()).setValue(roo);
+                                          FirebaseDatabase.getInstance().getReference("Hotels").child(name123).child("rooms").child(rn1.getEditText().getText().toString()).setValue(roo);
                                       g=true;
                                         layoutList.removeView(roomView);
+                                            Toast.makeText(getApplicationContext(), "Rooms submitted successfully", Toast.LENGTH_LONG).show();
                                         }
                                         else
                                         {

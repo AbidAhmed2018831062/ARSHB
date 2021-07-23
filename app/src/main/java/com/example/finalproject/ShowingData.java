@@ -5,7 +5,9 @@ public class ShowingData {
     public String getDate() {
         return date;
     }
+public ShowingData(){
 
+}
     public void setDate(String date) {
         this.date = date;
     }
