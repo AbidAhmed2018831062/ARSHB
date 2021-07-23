@@ -62,6 +62,6 @@ String name;
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(getApplicationContext(),DashBoard.class));
+        startActivity(new Intent(getApplicationContext(),HotelsOverview.class));
     }
 }

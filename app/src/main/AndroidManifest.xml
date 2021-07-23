@@ -23,7 +23,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".PendingPayment"></activity>
+        <activity android:name=".HotelsOverview">
+
+        </activity>
+        <activity android:name=".PendingPayment" />
         <activity android:name=".Approval" />
         <activity android:name=".AfterCallingNotification" />
         <activity
