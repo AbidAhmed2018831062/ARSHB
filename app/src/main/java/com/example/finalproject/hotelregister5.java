@@ -12,6 +12,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -211,7 +212,20 @@ public class hotelregister5 extends AppCompatActivity {
                     SessionManagerHotels sh=new SessionManagerHotels(hotelregister5.this,SessionManagerHotels.USERSESSION);
                     HashMap<String,String> u=sh.returnData();
                     String n=u.get(SessionManager.FULLNAME);
+                    String pass=u.get(SessionManager.PASS);
+                    String phone=u.get(SessionManager.PHONE);
+                    int cmonth= Calendar.getInstance().get(Calendar.MONTH);
+                    int cye= Calendar.getInstance().get(Calendar.YEAR);
+                    HashMap mon=new HashMap();
+                    mon.put("omon",cmonth);
+                    mon.put("oyear",cye);
+                    FirebaseDatabase.getInstance().getReference("Hotels").child(name1).child("Opening").updateChildren(mon);
                     a.put("hotel"+p10, n+" ,"+ad1);
+                    HotelLogIn hl=new HotelLogIn(phone,pass,n);
+                    FirebaseDatabase.getInstance().getReference("Hotels").child("HotelsPassword").setValue(hl);
+                   Earning DS=new Earning(0,0);
+                    FirebaseDatabase.getInstance().getReference("Hotels").child(name1).child("Earning").setValue(DS);
+
                     dbb.updateChildren(a);
                     Intent in = new Intent(getApplicationContext(), roomCreation.class);
                     in.putExtra("Name", name1);

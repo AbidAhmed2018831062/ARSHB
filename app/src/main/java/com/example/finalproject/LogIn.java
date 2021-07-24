@@ -187,7 +187,7 @@ public class LogIn extends AppCompatActivity {
                         }
                     } else {
 
-                        Query c1 = FirebaseDatabase.getInstance().getReference("HotelsPassword").orderByChild("phone").equalTo(p2);
+                        Query c1 = FirebaseDatabase.getInstance().getReference("Hotels").child("HotelsPassword").orderByChild("phone").equalTo(p2);
 
                         c1.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override

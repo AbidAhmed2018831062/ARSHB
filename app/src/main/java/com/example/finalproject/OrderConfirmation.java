@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -27,6 +28,7 @@ import com.paypal.android.sdk.payments.PaymentActivity;
 import com.paypal.android.sdk.payments.PaymentConfirmation;
 
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -41,15 +43,19 @@ long di;
 String n1;
 int q;
 String phone;
+    Calendar cal=Calendar.getInstance();
 String rn12,HNAME=" ";
 String email;
 String fullname;
     String price;
+    static int totalOrders;
     long jk;
+    long ear=0,oRd=0;
     private static final int PAYPAL_REQUEST_CODE = 7171;
     private static PayPalConfiguration config=new PayPalConfiguration().
             environment(PayPalConfiguration.ENVIRONMENT_SANDBOX).
             clientId(Config.PAYPAL_CLIENT_ID);
+    static long earning=0;
     @Override
     protected void onDestroy() {
         stopService(new Intent(this,PayPalService.class));
@@ -58,6 +64,8 @@ String fullname;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_order_confirmation);
         SessionManager sh=new SessionManager(this,SessionManager.USERSESSION);
         Intent I=new Intent(this,PayPalService.class);
@@ -76,6 +84,7 @@ rn12=getIntent().getStringExtra("rn12");
             @Override
             public void onDataChange(@NonNull DataSnapshot d) {
                  fullname = d.child(rn12).child("name").getValue(String.class);
+
                  email = d.child(rn12).child("email").getValue(String.class);
 
                 String address=d.child(rn12).child("address").getValue(String.class);
@@ -116,6 +125,7 @@ name=getIntent().getStringExtra("Name");
        qua.setText(qua1);
         price=getIntent().getStringExtra("Price");
  tot=Integer.parseInt(price);
+
         rname.setText(name);
 total.setText(price+"TK.");
 total1.setText("Total: "+price+"TK.");
@@ -159,7 +169,31 @@ public void process()
                 if(confirmation!=null)
                 {
                     try {
-                        OrderShow or=new OrderShow(cdes.getText().toString(),hdes.getText().toString(),tot+"TK.",q+"",start1+"",end1+"",rname.getText().toString(),cdate.getText().toString());
+
+                        Random r12n=new Random();
+                        long yui=r12n.nextInt(10000000);
+                  FirebaseDatabase.getInstance().getReference("Hotels").child(fullname).child("Earning").addListenerForSingleValueEvent(new ValueEventListener() {
+                          @Override
+                          public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                             Earning ds=dataSnapshot.getValue(Earning.class);
+                              oRd=ds.getOrders();
+                              ear=ds.getEarning();
+                              ear+=tot;
+                              oRd+=1;
+                              HashMap uio=new HashMap();
+                              uio.put("earning",ear);
+                              uio.put("orders",oRd);
+                              FirebaseDatabase.getInstance().getReference("Hotels").child(fullname).child("Earning").updateChildren(uio);
+
+
+                          }
+
+                          @Override
+                          public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                          }
+                      });
+                       OrderShow or=new OrderShow(cdes.getText().toString(),hdes.getText().toString(),tot+"TK.",q+"",start1+"",end1+"",rname.getText().toString(),cdate.getText().toString());
                         DatabaseReference d=FirebaseDatabase.getInstance().getReference("Users").child(phone).child("Order");
                         or.setCname(cdes.getText().toString());
                         or.setHname(hdes.getText().toString());
@@ -167,75 +201,81 @@ public void process()
                         Toast.makeText(getApplicationContext(),fullname,Toast.LENGTH_LONG).show();
                         DatabaseReference ho=FirebaseDatabase.getInstance().getReference("Hotels").child(fullname).child("Order");
                         Toast.makeText(getApplicationContext(),fullname,Toast.LENGTH_LONG).show();
-                        ho.child("order"+jk).setValue(or);
-                        d.child("order"+jk).setValue(or);
+                        ho.child("order"+yui).setValue(or);
+                        d.child("order"+yui).setValue(or);
 
-                        Random r12n=new Random();
-                        long yui=r12n.nextInt(10000000);
-                        Query c = FirebaseDatabase.getInstance().getReference("Hotels").child(fullname).child("DataSet").orderByChild("date").equalTo(start1);
+
+                        final int cmonth=cal.get(Calendar.MONTH);
+                        String month="";
+                        if (cmonth == 1 - 1)
+                            month = "January";
+                        else if (cmonth == 2 - 1)
+                            month = "February";
+                        else if (cmonth == 3 - 1)
+                            month = "March";
+                        else if (cmonth == 4 - 1)
+                            month = "April";
+                        else if (cmonth == 5 - 1)
+                            month = "May";
+                        else if (cmonth == 6 - 1)
+                            month = "June";
+                        else if (cmonth == 7 - 1)
+                            month = "July";
+                        else if (cmonth == 8 - 1)
+                            month = "August";
+                        else if (cmonth == 9 - 1)
+                            month = "September";
+                        else if (cmonth == 10 - 1)
+                            month = "October";
+                        else if (cmonth == 11 - 1)
+                            month = "November";
+                        else month = "December";
+                        month=month.toLowerCase();
+                        Query orM=FirebaseDatabase.getInstance().getReference("Hotels").child(fullname).child("OrderMonths").orderByChild("month").equalTo(month);
+                        final String finalMonth = month;
+                        orM.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                if(dataSnapshot.exists())
+                                {
+                                    long orders= (long) dataSnapshot.child(finalMonth).child("orders").getValue();
+                                    orders++;
+
+                                    HashMap o=new HashMap();
+                                    o.put("orders",orders);
+                                    FirebaseDatabase.getInstance().getReference("Hotels").child(fullname).child("OrderMonths").child(finalMonth).updateChildren(o);
+                                }
+                                else
+                                {
+                                          ShowingData shp=new ShowingData(finalMonth,1);
+                                          FirebaseDatabase.getInstance().getReference("Hotels").child(fullname).child("OrderMonths").child(finalMonth).setValue(shp);
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+                        Query c = FirebaseDatabase.getInstance().getReference("Hotels").child(fullname).child("DataSet").orderByChild("date").equalTo(cal.get(Calendar.DAY_OF_MONTH)+" "+cal.get(Calendar.MONTH)+" "+cal.get(Calendar.YEAR));
                         c.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 if(dataSnapshot.exists())
                                 {
-                                    String total=dataSnapshot.child("Orders").getValue().toString();
-                                    int ord;
-                                    if(total==null){
-                                        ord=1;
-                                    }
-                                    else {
-                                        ord = Integer.parseInt(total);
-                                        ord++;
-                                    }
-
+                                    long orders= (long) dataSnapshot.child(cal.get(Calendar.DAY_OF_MONTH)+" "+cal.get(Calendar.MONTH)+" "+cal.get(Calendar.YEAR)).child("orders").getValue();
+                                    orders++;
 
                                     HashMap o=new HashMap();
-                                    o.put("orders",ord+"");
+                                    o.put("orders",orders);
 
-                                    FirebaseDatabase.getInstance().getReference("Hotels").child(fullname).child("DataSet").child(cdate.getText().toString()).updateChildren(o);
+                                    FirebaseDatabase.getInstance().getReference("Hotels").child(fullname).child("DataSet").child(cal.get(Calendar.DAY_OF_MONTH)+" "+cal.get(Calendar.MONTH)+" "+cal.get(Calendar.YEAR)).updateChildren(o);
                                 }
                                 else
                                 {
-                                    String mon="";
-                                    String day1="";
-                                    day1+=cdate.getText().toString().charAt(0);
-                                    day1=+cdate.getText().toString().charAt(1)+"";
-                                    for(int i=2;i<cdate.getText().toString().length();i++)
-                                    {
-                                        if(Character.isWhitespace(cdate.getText().toString().charAt(i)))
-                                            break;
-                                        else
-                                            mon+=cdate.getText().toString().charAt(i);
-                                    }
-                                    mon=mon.toLowerCase();
-                                    if(mon=="january")
-                                        mon=1+"";
-                                    else if(mon=="february")
-                                        mon=2+"";
-                                    else if(mon=="march")
-                                        mon=3+"";
-                                    else if(mon=="april")
-                                        mon=4+"";
-                                    else if(mon=="may")
-                                        mon=5+"";
-                                    else if(mon=="june")
-                                        mon=6+"";
-                                    else if(mon=="july")
-                                        mon=7+"";
-                                    else if(mon=="august")
-                                        mon=8+"";
-                                    else if(mon=="september")
-                                        mon=9+"";
-                                    else if(mon=="october")
-                                        mon=10+"";
-                                    else if(mon=="november")
-                                        mon=11+"";
-                                    else if(mon=="december")
-                                        mon=12+"";
-                                    else
-                                        mon=7+"";
 
-                                       ShowingData sho=new ShowingData(cdate.getText().toString(),"1", day1,mon);
+
+                                       ShowingData sho=new ShowingData(cdate.getText().toString(),1, cal.get(Calendar.DAY_OF_MONTH),finalMonth);
                                     FirebaseDatabase.getInstance().getReference("Hotels").child(fullname).child("DataSet").child(cdate.getText().toString()).setValue(sho);
                                 }
                             }
@@ -245,7 +285,7 @@ public void process()
 
                             }
                         });
-                       FirebaseDatabase.getInstance().getReference("Users").child(phone).child("Payment").child(q+start1+end1+getIntent().getStringExtra("Price")+""+getIntent().getStringExtra("Cdate")).removeValue();
+                     FirebaseDatabase.getInstance().getReference("Users").child(phone).child("Payment").child(q+start1+end1+getIntent().getStringExtra("Price")+""+getIntent().getStringExtra("Cdate")).removeValue();
                   //  Toast.makeText(getApplicationContext(),q+start1+end1+getIntent().getStringExtra("Price")+""+getIntent().getStringExtra("Cdate"),Toast.LENGTH_LONG).show();
                         String paymentDetails =confirmation.toJSONObject().toString(4);
                         startActivity(new Intent(this, CheckoutActivityJava.class).

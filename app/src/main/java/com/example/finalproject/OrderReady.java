@@ -1,8 +1,10 @@
 package com.example.finalproject;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -23,6 +25,16 @@ import java.time.Period;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Properties;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 public class OrderReady extends AppCompatActivity {
 String[] quas;
@@ -44,6 +56,7 @@ int year,cmonth,day,day1,cmonth1,year1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_order_ready);
         name=getIntent().getStringExtra("Name");
         HNAME=getIntent().getStringExtra("HNAME");
@@ -77,7 +90,39 @@ int year,cmonth,day,day1,cmonth1,year1;
         });
         order.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view) { SessionManagerHotels sh = new SessionManagerHotels(getApplicationContext(), SessionManagerHotels.USERSESSION);
+
+                String subject = "Your Hotel Has New Order. Now go the Need Approal section of your profile to approve the booking";
+                final String Email = "hotelarshb7@gmail.com";
+                final String pass = "arshbhotelABIDRAJU";
+                Properties prop = new Properties();
+                prop.put("mail.smtp.host", "smtp.gmail.com");
+                prop.put("mail.smtp.port", "465");
+                prop.put("mail.smtp.auth", "true");
+                prop.put("mail.smtp.socketFactory.port", "465");
+                prop.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+                Session session = Session.getDefaultInstance(prop, new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(Email, pass);
+                    }
+                });
+                try {
+
+                    Message message = new MimeMessage(session);
+                    message.setFrom(new InternetAddress(Email));
+                    message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
+                    message.setSubject("New Order");
+                    message.setText(subject);
+
+                    new OrderReady.SendEmail().execute(message);
+
+
+                } catch (AddressException e) {
+                    e.printStackTrace();
+                } catch (MessagingException e) {
+                    e.printStackTrace();
+                }
+
                 year=start.getYear();
                 cmonth=start.getMonth();
                 day=start.getDayOfMonth();
@@ -187,14 +232,15 @@ int year,cmonth,day,day1,cmonth1,year1;
                         FirebaseDatabase.getInstance().getReference("Hotels").child(ne).child("Token").addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                token=dataSnapshot.child("token").getValue().toString();
-                                FcmNotificationsSender fcm=new FcmNotificationsSender(token,"New Order","Your Hotel Has New Order.",getApplicationContext(),OrderReady.this);
-                                Toast.makeText(getApplicationContext(),token,Toast.LENGTH_LONG).show();
+                                token = dataSnapshot.child("token").getValue().toString();
+                                FcmNotificationsSender fcm = new FcmNotificationsSender(token, "New Order", "Your Hotel Has New Order.", getApplicationContext(), OrderReady.this);
+                                Toast.makeText(getApplicationContext(), token, Toast.LENGTH_LONG).show();
                                 fcm.SendNotifications();
-                                startActivity(new Intent(getApplicationContext(),AfterCallingNotification.class));
+                                startActivity(new Intent(getApplicationContext(), AfterCallingNotification.class));
+
                             }
 
-                            @Override
+                                @Override
                             public void onCancelled(@NonNull DatabaseError databaseError) {
 
                             }
@@ -215,5 +261,21 @@ int year,cmonth,day,day1,cmonth1,year1;
     @Override
     public void onBackPressed() {
         OrderReady.super.onBackPressed();
+    }
+    private class SendEmail extends AsyncTask<Message, String, String> {
+
+        @Override
+        protected String doInBackground(Message... messages) {
+
+            try {
+                Transport.send(messages[0]);
+                return "success";
+            } catch (MessagingException e) {
+                e.printStackTrace();
+                return "error";
+            }
+
+
+        }
     }
 }

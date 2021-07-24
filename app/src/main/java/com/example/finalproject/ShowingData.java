@@ -1,26 +1,34 @@
 package com.example.finalproject;
 
 public class ShowingData {
-    String date,orders,day,month;
+    String date,month;
+    int orders, day;
+
     public String getDate() {
         return date;
     }
 public ShowingData(){
 
 }
+    public ShowingData(String month, int orders){
+        this.orders=orders;
+        this.month=month;
+
+    }
+
     public void setDate(String date) {
         this.date = date;
     }
 
-    public void setOrders(String orders) {
+    public void setOrders(int orders) {
         this.orders = orders;
     }
 
-    public String getDay() {
+    public int getDay() {
         return day;
     }
 
-    public void setDay(String day) {
+    public void setDay(int day) {
         this.day = day;
     }
 
@@ -32,11 +40,11 @@ public ShowingData(){
         this.month = month;
     }
 
-    public String getOrders() {
+    public int getOrders() {
         return orders;
     }
 
-    public ShowingData(String date, String orders,String day, String month) {
+    public ShowingData(String date, int orders,int day, String month) {
         this.date = date;
         this.orders = orders;
         this.day = day;

@@ -2,6 +2,7 @@ package com.example.finalproject;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,15 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Properties;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 public class ApprovalAdapter extends RecyclerView.Adapter<ApprovalAdapter.NEED> {
     List<OrderShow> list;
@@ -89,6 +99,36 @@ public class ApprovalAdapter extends RecyclerView.Adapter<ApprovalAdapter.NEED> 
 
                         HashMap<String,String> hm=sh.returnData();
                         String name=hm.get(SessionManagerHotels.FULLNAME);
+                      
+                        String subject= "Your Last Order Has Been Approved. Now go the Pay Now section of your profile to complete the booking";
+                        final String Email="hotelarshb7@gmail.com";
+                        final String pass="arshbhotelABIDRAJU";
+                        Properties prop = new Properties();
+                        prop.put("mail.smtp.host", "smtp.gmail.com");
+                        prop.put("mail.smtp.port", "465");
+                        prop.put("mail.smtp.auth", "true");
+                        prop.put("mail.smtp.socketFactory.port", "465");
+                        prop.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+                        Session session = Session.getDefaultInstance(prop, new javax.mail.Authenticator() {
+                            protected PasswordAuthentication getPasswordAuthentication() {
+                                return new PasswordAuthentication(Email, pass);
+                            }
+                        });
+                        try {
+
+                            Message message = new MimeMessage(session);
+                            message.setFrom(new InternetAddress(Email));
+                            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
+                            message.setSubject("Successful");
+                            message.setText(subject);
+
+                            new ApprovalAdapter.SendEmail().execute(message);
+
+                        } catch (MessagingException e) {
+                            e.printStackTrace();
+                            /*StrictMode.ThreadPolicy po=new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                            StrictMode.setThreadPolicy(po);*/
+                        }
                       FirebaseDatabase.getInstance().getReference("Hotels").child(name).child("needApp").child(start1+end1+price+rn+idate1).removeValue();
                         list.remove(i);
                         notifyItemRemoved(i);
@@ -132,6 +172,7 @@ public class ApprovalAdapter extends RecyclerView.Adapter<ApprovalAdapter.NEED> 
         holder.disApprove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 dele[d]=list.get(i).getIssueDate()+list.get(i).getEndDate();
                 d++;
                 list.remove(i);
@@ -157,6 +198,7 @@ public class ApprovalAdapter extends RecyclerView.Adapter<ApprovalAdapter.NEED> 
                         FcmNotificationsSender fcm=new FcmNotificationsSender(token,"Successful","Your last order has been approved.",c, (Activity) c);
                         Toast.makeText(c,token,Toast.LENGTH_LONG).show();
                         fcm.SendNotifications();
+
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -203,6 +245,22 @@ public void onClick(View view) {
             off = (TextView) itemView.findViewById(R.id.off);
             approve = (Button) itemView.findViewById(R.id.approve);
             disApprove = (Button) itemView.findViewById(R.id.disApprove);
+        }
+    }
+    private class SendEmail extends AsyncTask<Message, String, String> {
+
+        @Override
+        protected String doInBackground(Message... messages) {
+
+            try {
+                Transport.send(messages[0]);
+                return "success";
+            } catch (MessagingException e) {
+                e.printStackTrace();
+                return "error";
+            }
+
+
         }
     }
 }

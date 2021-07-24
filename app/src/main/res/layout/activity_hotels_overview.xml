@@ -11,11 +11,220 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/head"
+        android:layout_marginBottom="10dp"
+        android:text="Rose View"
+        android:textColor="#000"
+        android:textSize="18sp"
+        android:fontFamily="@font/muli_black"
+        ></TextView>
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#9BE3D2"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/ord"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginRight="5dp"></ImageView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/orders"
+                    android:gravity="center_horizontal"
+                    android:text="0"
+                    android:textColor="#000"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/muli_bold"
+                    ></TextView>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="Total Orders"
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/muli_bold"
+                    android:gravity="center_horizontal"
+                    ></TextView></LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/money_24"
+                android:layout_marginRight="5dp"></ImageView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/earning"
+                    android:gravity="center_horizontal"
+                    android:text="8000"
+                    android:textColor="#000"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/muli_bold"
+                    ></TextView>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="Total Earning"
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    android:gravity="center_horizontal"
+                    android:fontFamily="@font/muli_bold"
+                    ></TextView></LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="#9BE3D2"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ord"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginRight="5dp"></ImageView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_gravity="center"
+                    >
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/avgO"
+                        android:gravity="center_horizontal"
+                        android:text="0"
+                        android:textColor="#000"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/muli_bold"
+                        ></TextView>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:text="Order Average(Month)"
+                        android:textColor="#000"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/muli_bold"
+                        android:gravity="center_horizontal"
+                        ></TextView></LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/money_24"
+                    android:layout_marginRight="5dp"></ImageView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_gravity="center"
+                    >
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/avgE"
+                        android:gravity="center_horizontal"
+                        android:text="8000"
+                        android:textColor="#000"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/muli_bold"
+                        ></TextView>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:text="Earning Average(Month)"
+                        android:textColor="#000"
+                        android:textSize="14sp"
+                        android:gravity="center_horizontal"
+                        android:fontFamily="@font/muli_bold"
+                        ></TextView></LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="Current Month Report:"
+            android:textColor="#000"
+            android:textSize="18sp"
+            android:fontFamily="@font/muli_bold"
+            ></TextView>
 
         <com.github.mikephil.charting.charts.LineChart
             android:layout_width="match_parent"
             android:layout_height="350dp"
-            android:id="@+id/line"></com.github.mikephil.charting.charts.LineChart>
+            android:id="@+id/line"
+            android:background="#000"
+            android:layout_marginBottom="50dp"></com.github.mikephil.charting.charts.LineChart>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="Current Year Report:"
+            android:textColor="#000"
+            android:textSize="18sp"
+            android:fontFamily="@font/muli_bold"
+            ></TextView>
+
+        <com.github.mikephil.charting.charts.BarChart
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:background="#000"
+
+        android:id="@+id/bar"></com.github.mikephil.charting.charts.BarChart>
     </LinearLayout>
 
 </ScrollView>
