@@ -1,6 +1,9 @@
 package com.example.finalproject;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class rl4HR extends RecyclerView.Adapter<rl4HR.RoomsAd> {
@@ -25,7 +29,7 @@ public class rl4HR extends RecyclerView.Adapter<rl4HR.RoomsAd> {
     String name1,price,name,n,what;
     static String[] dele=new String[100];
  static int d=0;
-
+    Dialog d1;
     public rl4HR( Context c, List<Rooms> list, String n,String what) {
 this.c=c;
         this.list = list;
@@ -87,11 +91,50 @@ this.c=c;
                 holder.ca1.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent in = new Intent(c, OrderReady.class);
-                        in.putExtra("Name", list.get(position).getRoomname());
-                        in.putExtra("Price", list.get(position).getPrice());
-                        in.putExtra("Rn", n);
-                        c.startActivity(in);
+                        SessionManager sh=new SessionManager(c,SessionManager.USERSESSION);
+
+                        HashMap<String,String> hm=sh.returnData();
+                        final String phone2=hm.get(SessionManager.PHONE);
+                       if(phone2!=null) {
+
+
+                               Intent in = new Intent(c, OrderReady.class);
+                               in.putExtra("Name", list.get(position).getRoomname());
+                               in.putExtra("Price", list.get(position).getPrice());
+                               in.putExtra("Rn", n);
+                               c.startActivity(in);
+
+                       }
+                       else
+                       {
+                           AlertDialog.Builder alertDialog2 = new AlertDialog.Builder(
+                                   c);
+
+// Setting Dialog Title
+                           alertDialog2.setTitle("Log In.");
+
+// Setting Dialog Message
+                           alertDialog2.setMessage("Log In To Book Hotels");
+                           alertDialog2.setIcon(R.drawable.apptitle);
+                           alertDialog2.setPositiveButton("YES",
+                                   new DialogInterface.OnClickListener() {
+                                       public void onClick(DialogInterface dialog, int which) {
+                                           // Write your code here to execute after dialog
+                                        c.startActivity(new Intent(c,LogIn_Or_SignUp.class));
+
+                                       }
+                                   });
+// Setting Negative "NO" Btn
+                           alertDialog2.setNegativeButton("NO",
+                                   new DialogInterface.OnClickListener() {
+                                       public void onClick(DialogInterface dialog, int which) {
+                                           dialog.cancel();
+                                       }
+                                   });
+
+// Showing Alert Dialog
+                           alertDialog2.show();
+                       }
                     }
                 });
             }
@@ -120,5 +163,6 @@ this.c=c;
 
         }
     }
+
 
 }

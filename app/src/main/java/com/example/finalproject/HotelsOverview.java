@@ -1,11 +1,22 @@
 package com.example.finalproject;
 
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,13 +63,16 @@ public class HotelsOverview extends AppCompatActivity implements OnChartValueSel
     LineData ld;
     HashMap<String,Integer> hm345=new HashMap<>();
     BarChart b;
+    Dialog d1;
      int cmonth;
      float avg=0;
      TextView orders,head,earning,avgO,avgE;
     int cday,cy;
     float avg1;
+    ImageView plusicon;
     long earning1,totalOrders;
     Earning ds;
+    LinearLayout inte;
     String months[]={"january","february","march","april","may","june","july","august","september","october","november","december"};
 
     @Override
@@ -71,132 +85,137 @@ public class HotelsOverview extends AppCompatActivity implements OnChartValueSel
         line.setOnChartValueSelectedListener(this);
         line.setDragEnabled(true);
         line.setScaleEnabled(false);
-        b=(BarChart)findViewById(R.id.bar);
         head=(TextView)findViewById(R.id.head);
-        orders=(TextView)findViewById(R.id.orders);
-        earning=(TextView)findViewById(R.id.earning);
-        avgO=(TextView)findViewById(R.id.avgO);
-        avgE=(TextView)findViewById(R.id.avgE);
+        inte=(LinearLayout)findViewById(R.id.inte);
+        if(!isWiConnected(HotelsOverview.this))
+        {
+           head.setText("Connect To Internet To Access This App's Features!!!");
+           inte.setVisibility(View.GONE);
+           showCustomDialog();
+        }
+        else {
+            b = (BarChart) findViewById(R.id.bar);
+             plusicon=(ImageView)findViewById(R.id.plusicon);
+            plusicon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(getApplicationContext(),HotelRooms.class));
+                }
+            });
+            orders = (TextView) findViewById(R.id.orders);
+            earning = (TextView) findViewById(R.id.earning);
+            avgO = (TextView) findViewById(R.id.avgO);
+            avgE = (TextView) findViewById(R.id.avgE);
 
-        SessionManagerHotels sh = new SessionManagerHotels(this, SessionManagerHotels.USERSESSION);
-        HashMap<String, String> hm = sh.returnData();
-        name = hm.get(SessionManagerHotels.FULLNAME);
-        FirebaseDatabase.getInstance().getReference("Hotels").child(name).child("Earning").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-              ds=dataSnapshot.getValue(Earning.class);
-                totalOrders=ds.getOrders();
-                earning1=ds.getEarning();
-            }
+            SessionManagerHotels sh = new SessionManagerHotels(this, SessionManagerHotels.USERSESSION);
+            HashMap<String, String> hm = sh.returnData();
+            name = hm.get(SessionManagerHotels.FULLNAME);
+            FirebaseDatabase.getInstance().getReference("Hotels").child(name).child("Earning").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    ds = dataSnapshot.getValue(Earning.class);
+                    totalOrders = ds.getOrders();
+                    earning1 = ds.getEarning();
+                }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
+                }
+            });
 
-        head.setText(name);
+            head.setText(name);
 
-        phone = hm.get(SessionManagerHotels.PHONE);
-        Calendar c23 = Calendar.getInstance();
-        cmonth = c23.get(Calendar.MONTH);
-        cy = c23.get(Calendar.YEAR);
-        cday = c23.get(Calendar.DAY_OF_MONTH);
+            phone = hm.get(SessionManagerHotels.PHONE);
+            Calendar c23 = Calendar.getInstance();
+            cmonth = c23.get(Calendar.MONTH);
+            cy = c23.get(Calendar.YEAR);
+            cday = c23.get(Calendar.DAY_OF_MONTH);
 
-        if (cmonth == 1 - 1)
-            month = "January";
-        else if (cmonth == 2 - 1)
-            month = "February";
-        else if (cmonth == 3 - 1)
-            month = "March";
-        else if (cmonth == 4 - 1)
-            month = "April";
-        else if (cmonth == 5 - 1)
-            month = "May";
-        else if (cmonth == 6 - 1)
-            month = "June";
-        else if (cmonth == 7 - 1)
-            month = "July";
-        else if (cmonth == 8 - 1)
-            month = "August";
-        else if (cmonth == 9 - 1)
-            month = "September";
-        else if (cmonth == 10 - 1)
-            month = "October";
-        else if (cmonth == 11 - 1)
-            month = "November";
-        else month = "December";
-        FirebaseDatabase.getInstance().getReference("Hotels").child(name).child("Opening").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-              long omon= (long) dataSnapshot.child("omon").getValue();
-              long oyear= (long) dataSnapshot.child("oyear").getValue();
-              if(omon>cmonth)
-              {
-                  avg=earning1/(omon+cmonth);
-                  avg1=totalOrders/(omon+cmonth);
-              }
-              else
-              {
-                  if(oyear==cy)
-                  {
-                      if(cmonth==omon)
-                      {
-                          avg=earning1;
-                          avg1=totalOrders;
-                      }
-                      else {
-                          avg =earning1 / (cmonth - omon);
-                          avg1 =totalOrders / (cmonth - omon);
-                      }
-                  }
-                  else
-                  {
-                      avg=earning1/(cmonth-omon)*((cy-oyear));
-                      avg1=totalOrders/(cmonth-omon)*((cy-oyear));
-                  }
-              }
-              avgO.setText(avg1+"");
-              avgE.setText(avg+"");
-                orders.setText(totalOrders+"");
-                earning.setText(earning1+"");
+            if (cmonth == 1 - 1)
+                month = "January";
+            else if (cmonth == 2 - 1)
+                month = "February";
+            else if (cmonth == 3 - 1)
+                month = "March";
+            else if (cmonth == 4 - 1)
+                month = "April";
+            else if (cmonth == 5 - 1)
+                month = "May";
+            else if (cmonth == 6 - 1)
+                month = "June";
+            else if (cmonth == 7 - 1)
+                month = "July";
+            else if (cmonth == 8 - 1)
+                month = "August";
+            else if (cmonth == 9 - 1)
+                month = "September";
+            else if (cmonth == 10 - 1)
+                month = "October";
+            else if (cmonth == 11 - 1)
+                month = "November";
+            else month = "December";
+            FirebaseDatabase.getInstance().getReference("Hotels").child(name).child("Opening").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    long omon = (long) dataSnapshot.child("omon").getValue();
+                    long oyear = (long) dataSnapshot.child("oyear").getValue();
+                    if (omon > cmonth) {
+                        avg = earning1 / (omon + cmonth);
+                        avg1 = totalOrders / (omon + cmonth);
+                    } else {
+                        if (oyear == cy) {
+                            if (cmonth == omon) {
+                                avg = earning1;
+                                avg1 = totalOrders;
+                            } else {
+                                avg = earning1 / (cmonth - omon);
+                                avg1 = totalOrders / (cmonth - omon);
+                            }
+                        } else {
+                            avg = earning1 / (cmonth - omon) * ((cy - oyear));
+                            avg1 = totalOrders / (cmonth - omon) * ((cy - oyear));
+                        }
+                    }
+                    avgO.setText(avg1 + "");
+                    avgE.setText(avg + "");
+                    orders.setText(totalOrders + "");
+                    earning.setText(earning1 + "");
 
-            }
+                }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
+                }
+            });
             FirebaseDatabase.getInstance().getReference("Hotels").child(name).child("OrderMonths").addValueEventListener(new ValueEventListener() {
 
                 ArrayList<BarEntry> bar = new ArrayList<>();
-                ArrayList<String> label=new ArrayList<>();
+                ArrayList<String> label = new ArrayList<>();
+
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     bar.clear();
-                    for(DataSnapshot ds:dataSnapshot.getChildren()) {
+                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
                         ShowingData shdt = ds.getValue(ShowingData.class);
-                        hm345.put(shdt.getMonth(),shdt.getOrders());
+                        hm345.put(shdt.getMonth(), shdt.getOrders());
                         //Toast.makeText(getApplicationContext(),shdt.getMonth()+" "+shdt.getOrders(),Toast.LENGTH_LONG).show();
                     }
-                    for(int i=0;i<cmonth+1;i++)
-                    {
-                        if(hm345.get(months[i])!=null)
-                        {
-                          bar.add(new BarEntry(i,hm345.get(months[i])));
-                          Toast.makeText(getApplicationContext(),months[i]+" "+hm345.get(months[i]),Toast.LENGTH_LONG).show();
+                    for (int i = 0; i < cmonth + 1; i++) {
+                        if (hm345.get(months[i]) != null) {
+                            bar.add(new BarEntry(i, hm345.get(months[i])));
+                            Toast.makeText(getApplicationContext(), months[i] + " " + hm345.get(months[i]), Toast.LENGTH_LONG).show();
 
 
-                        }
-                        else
-                            bar.add(new BarEntry(i,0));
-                        label.add(months[i]);   Log.d(months[i],hm345.get(months[i])+"");
+                        } else
+                            bar.add(new BarEntry(i, 0));
+                        label.add(months[i]);
+                        Log.d(months[i], hm345.get(months[i]) + "");
 
                     }
-                    showBarGraph(bar,label);
+                    showBarGraph(bar, label);
                 }
-
 
 
                 @Override
@@ -211,42 +230,42 @@ public class HotelsOverview extends AppCompatActivity implements OnChartValueSel
     ar.add(lin);
  d=new LineData(ar);
     line.setData(d);*/
-        for (int i = 0; i < 31; i++)
-            da[i] = 0;
-        month = month.toLowerCase();
-        final String finalMonth = month;
-        FirebaseDatabase.getInstance().getReference("Hotels").child(name).child("DataSet").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ArrayList<Entry> data = new ArrayList<>();
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+            for (int i = 0; i < 31; i++)
+                da[i] = 0;
+            month = month.toLowerCase();
+            final String finalMonth = month;
+            FirebaseDatabase.getInstance().getReference("Hotels").child(name).child("DataSet").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    ArrayList<Entry> data = new ArrayList<>();
+                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
 
-                    ShowingData sho = ds.getValue(ShowingData.class);
-                    int tday = sho.getDay();
-                    String tmonth = sho.getMonth().toLowerCase();
-                    float ord = sho.getOrders();
-                    if (tmonth.equals(finalMonth)) {
+                        ShowingData sho = ds.getValue(ShowingData.class);
+                        int tday = sho.getDay();
+                        String tmonth = sho.getMonth().toLowerCase();
+                        float ord = sho.getOrders();
+                        if (tmonth.equals(finalMonth)) {
 
-                        da[tday] = ord;
+                            da[tday] = ord;
+                        }
+
                     }
+                    for (int i = 1; i <= cday; i++) {
+                        if (da[i] == 0)
+                            data.add(new Entry(i, 0));
+                        else
+                            data.add(new Entry(i, da[i]));
+                    }
+                    showChart(data);
+
 
                 }
-                for (int i = 1; i <= cday; i++) {
-                    if (da[i] == 0)
-                        data.add(new Entry(i, 0));
-                    else
-                        data.add(new Entry(i, da[i]));
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
                 }
-                showChart(data);
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+            });
    /* for(int i=0;i<po;i++) {
         data.clear();
 
@@ -260,6 +279,7 @@ public class HotelsOverview extends AppCompatActivity implements OnChartValueSel
 
 
     }*/
+        }
     }
     private void showBarGraph(ArrayList<BarEntry> bar, ArrayList<String> label) {
         BarDataSet barD=new BarDataSet(bar,"Monthly Orders");
@@ -421,5 +441,83 @@ public class HotelsOverview extends AppCompatActivity implements OnChartValueSel
     @Override
     public void onNothingSelected() {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+       AlertDialog.Builder alertDialog2 = new AlertDialog.Builder(
+                this);
+
+// Setting Dialog Title
+        alertDialog2.setTitle("Exit");
+
+// Setting Dialog Message
+        alertDialog2.setMessage("Are You Sure Want To Exit??");
+        alertDialog2.setIcon(R.drawable.apptitle);
+        alertDialog2.setPositiveButton("YES",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Write your code here to execute after dialog
+                        Intent a = new Intent(Intent.ACTION_MAIN);
+                        a.addCategory(Intent.CATEGORY_HOME);
+                        a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(a);
+
+                    }
+                });
+// Setting Negative "NO" Btn
+        alertDialog2.setNegativeButton("NO",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+// Showing Alert Dialog
+        alertDialog2.show();
+
+
+    }
+    public boolean isWiConnected(HotelsOverview l) {
+        ConnectivityManager c = (ConnectivityManager) l.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo wi = c.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        NetworkInfo mi = c.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+
+        if ((wi != null && wi.isConnected()) || (mi != null && mi.isConnected())) {
+            return true;
+        } else
+            return false;
+
+    }
+
+    private void showCustomDialog() {
+        String x="LogIn_Or_SignUp";
+        d1 = new Dialog(HotelsOverview.this);
+        d1.setContentView(R.layout.custom);
+        d1.getWindow().setBackgroundDrawable(getDrawable(R.drawable.customdraw));
+        d1.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        d1.setCancelable(false);
+        d1.getWindow().getAttributes().windowAnimations = R.style.animate;
+        d1.show();
+        Button b1 = d1.findViewById(R.id.cancel);
+        b1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent a = new Intent(Intent.ACTION_MAIN);
+                a.addCategory(Intent.CATEGORY_HOME);
+                a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(a);
+                finish();
+            }
+
+        });
+
+        Button b2 = d1.findViewById(R.id.connect);
+        b2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+            }
+        });
     }
 }

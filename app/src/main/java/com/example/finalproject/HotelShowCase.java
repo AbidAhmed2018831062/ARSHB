@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -20,7 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -52,7 +53,7 @@ public class HotelShowCase extends AppCompatActivity {
     String count;
     TextView na;
     RecyclerView rl4HR1;
-    MeowBottomNavigation bm;
+    BottomNavigationView  bm;
     List<Rooms> list;
     ImageView fav;
     rl4HR rl;
@@ -124,7 +125,26 @@ public class HotelShowCase extends AppCompatActivity {
         profileName = (TextView) findViewById(R.id.profileName);
         des = (TextView) findViewById(R.id.des);
 
-        bm = (MeowBottomNavigation) findViewById(R.id.bottomnav);
+        bm = (BottomNavigationView) findViewById(R.id.bottomnav);
+        bm.setOnNavigationItemReselectedListener(new BottomNavigationView.OnNavigationItemReselectedListener() {
+            @Override
+            public void onNavigationItemReselected(@NonNull MenuItem item) {
+                if (item.getItemId()==R.id.s) {
+                    startActivity(new Intent(HotelShowCase.this, All_Hotels.class));
+                } else if (item.getItemId() == R.id.fav) {
+                    startActivity(new Intent(HotelShowCase.this, Fav.class));
+
+                } else if (item.getItemId() == R.id.profile) {
+                    startActivity(new Intent(HotelShowCase.this, UserPrfofilew.class));
+
+                }
+                else
+                {
+                    startActivity(new Intent(HotelShowCase.this, WatchLater.class));
+
+                }
+            }
+        });
         house = (TextView) findViewById(R.id.house);
         rl4HR1 = (RecyclerView) findViewById(R.id.rl4HR);
         list = new ArrayList<>();
@@ -158,46 +178,105 @@ public class HotelShowCase extends AppCompatActivity {
 
         fav = (ImageView) findViewById(R.id.fav);
         save = (ImageView) findViewById(R.id.save);
+        Query SAVE = FirebaseDatabase.getInstance().getReference("Users").child(phone).child("save").orderByChild("name").equalTo(name);
+        SAVE.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+
+                    save.setImageResource(R.drawable.do1);
+
+                } else {
+
+                    save.setImageResource(R.drawable.save);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        Query FAV=FirebaseDatabase.getInstance().getReference("Users").child(phone).child("fav").child(name).orderByChild("name").equalTo(name);
+        FAV.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+
+                    fav.setImageResource(R.drawable.fav);
+
+                } else {
+                    fav.setImageResource(R.drawable.download);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        final int[] k = {0};
         fav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (co % 2 == 1) {
+                Query FAV=FirebaseDatabase.getInstance().getReference("Users").child(phone).child("fav").orderByChild("name").equalTo(name);
+               FAV.addListenerForSingleValueEvent(new ValueEventListener() {
+                   @Override
+                   public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                       if (dataSnapshot.exists()) {
+                           DatabaseReference db = FirebaseDatabase.getInstance().getReference("Users").child(phone).child("fav").child(name);
+                           db.removeValue();
+                           Toast.makeText(getApplicationContext(), "Hotel Removed From Your Favorite List", Toast.LENGTH_LONG).show();
+                           fav.setImageResource(R.drawable.fav);
 
-                    DatabaseReference db = FirebaseDatabase.getInstance().getReference("Users").child(phone);
-                    HashMap hm1 = new HashMap();
-                    hm1.put("fav" + co, name);
-                    db.child("fav").updateChildren(hm1);
-                    Toast.makeText(getApplicationContext(), "Hotel Added To Your Favorite List", Toast.LENGTH_LONG).show();
-                    co++;
-                    fav.setImageResource(R.drawable.fav);
-                } else {
-                    DatabaseReference db = FirebaseDatabase.getInstance().getReference("Users").child(phone).child("fav").child(name);
-                    db.removeValue();
-                    Toast.makeText(getApplicationContext(), "Hotel Removed From Your Favorite List", Toast.LENGTH_LONG).show();
-                    fav.setImageResource(R.drawable.download);
-                }
+                       } else {
+                           k[0]++;
+                           DatabaseReference db = FirebaseDatabase.getInstance().getReference("Users").child(phone).child("fav").child(name);
+                           SaveAndFav sf=new SaveAndFav(name);
+                           db.child("name").setValue(name);
+                           Toast.makeText(getApplicationContext(), "Hotel Added To Your Favorite List", Toast.LENGTH_LONG).show();
+                           co++;
+                           fav.setImageResource(R.drawable.download);
+                       }
+                   }
+
+                   @Override
+                   public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                   }
+               });
             }
         });
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (cow % 2 == 1) {
 
-                    DatabaseReference db = FirebaseDatabase.getInstance().getReference("Users").child(phone);
-                    HashMap hm1 = new HashMap();
-                    hm1.put("save" + cow, name);
-                    db.child("save").updateChildren(hm1);
-                    Toast.makeText(getApplicationContext(), "Hotel Added To Your Save List", Toast.LENGTH_LONG).show();
-                    cow++;
-                    save.setImageResource(R.drawable.save);
-                    //  fav.setBackgroundColor(getResources().getColor(R.color.DarkBlue));
-                } else {
-                    DatabaseReference db = FirebaseDatabase.getInstance().getReference("Users").child(phone).child("fav").child(name);
-                    db.removeValue();
-                    Toast.makeText(getApplicationContext(), "Hotel Removed From Your Save List", Toast.LENGTH_LONG).show();
-                    save.setImageResource(R.drawable.do1);
-                }
+                Query SAVE = FirebaseDatabase.getInstance().getReference("Users").child(phone).child("save").orderByChild("name").equalTo(name);
+                SAVE.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            DatabaseReference db = FirebaseDatabase.getInstance().getReference("Users").child(phone).child("save").child(name);
+                            db.removeValue();
+                            Toast.makeText(getApplicationContext(), "Hotel Removed From Your Watch Later List", Toast.LENGTH_LONG).show();
+                            save.setImageResource(R.drawable.do1);
+
+                        } else {
+                            DatabaseReference db = FirebaseDatabase.getInstance().getReference("Users").child(phone).child("save").child(name);
+                           SaveAndFav sf=new SaveAndFav(name);
+                            db.child("name").setValue(name);
+                            Toast.makeText(getApplicationContext(), "Hotel Added To Your Watch Later List", Toast.LENGTH_LONG).show();
+                            co++;
+                            save.setImageResource(R.drawable.save);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
             }
         });
 
@@ -221,25 +300,6 @@ public class HotelShowCase extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 onBackPressed();
-            }
-        });
-        bm.add(new MeowBottomNavigation.Model(1, R.drawable.search));
-        bm.add(new MeowBottomNavigation.Model(2, R.drawable.fav));
-        bm.add(new MeowBottomNavigation.Model(3, R.drawable.save));
-        bm.add(new MeowBottomNavigation.Model(4, R.drawable.profile));
-        bm.setOnShowListener(new MeowBottomNavigation.ShowListener() {
-            @Override
-            public void onShowItem(MeowBottomNavigation.Model item) {
-                if (item.getId() == 1) {
-                    startActivity(new Intent(HotelShowCase.this, All_Hotels.class));
-                    finish();
-                } else if (item.getId() == 2) {
-                    startActivity(new Intent(HotelShowCase.this, Fav.class));
-                    finish();
-                } else if (item.getId() == 4) {
-                    startActivity(new Intent(HotelShowCase.this, UserPrfofilew.class));
-                    finish();
-                }
             }
         });
 
@@ -354,6 +414,6 @@ layoutList.addView(roomView);*/
     }
     @Override
     public void onBackPressed() {
-        HotelShowCase.super.onBackPressed();
+       startActivity(new Intent(getApplicationContext(),DashBoard.class));
     }
 }

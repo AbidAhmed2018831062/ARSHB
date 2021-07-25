@@ -2,14 +2,22 @@ package com.example.finalproject;
 
 import android.Manifest;
 import android.app.ActivityOptions;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Pair;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -45,6 +53,7 @@ public class DashBoard extends AppCompatActivity {
     String rl1h[],rl1des[],rl2h[],rl2des[];
     List<String> ad=new ArrayList<>();
     int y=0;
+     String phoneUser;
     DrawerLayout dr;
     NavigationView nav;
     RecyclerView rl1,rl2;
@@ -54,6 +63,7 @@ public class DashBoard extends AppCompatActivity {
     private FusedLocationProviderClient f;
      double lng2,lat2;
     boolean isP=false;
+    Dialog d1;
     int img[]={R.drawable.tree,R.drawable.dhaka,R.drawable.barishal,R.drawable.chittagong,R.drawable.khulna,R.drawable.rajshahi,R.drawable.rangpur,R.drawable.mymensingh};
      String str;
 String[] list;
@@ -110,6 +120,12 @@ String[] list;
                     map.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
+                            if (!isWiConnected(DashBoard.this)) {
+
+                                showCustomDialog();
+
+                            }
+                            else
                             startActivity(new Intent(getApplicationContext(), ActivityBeforeMap.class).putExtra("name", str).putExtra("op", op));
                         }
                     });
@@ -124,7 +140,7 @@ String[] list;
             });
         }
         HashMap<String,String>  hm=sh.returnData();
-        final String phoneUser = hm.get(SessionManager.PHONE);
+        phoneUser = hm.get(SessionManager.PHONE);
 
         SessionManagerHotels sh1=new SessionManagerHotels(this,SessionManagerHotels.USERSESSION);
         HashMap<String,String>  hm1=sh1.returnData();
@@ -134,12 +150,19 @@ String[] list;
             public void onClick(View view) {
 
                              if(phoneUser!=null&&phoneHotel==null){
-                                Toast.makeText(getApplicationContext(),phoneUser+"/"+phoneHotel, Toast.LENGTH_LONG).show();
-                                    Intent in = new Intent(DashBoard.this, UserPrfofilew.class);
-                                    Pair pair[] = new Pair[1];
-                                    pair[0] = new Pair<View, String>(plusicon, "nextTra");
-                                    ActivityOptions ac = ActivityOptions.makeSceneTransitionAnimation(DashBoard.this, pair);
-                                    startActivity(in, ac.toBundle());
+                                 if (!isWiConnected(DashBoard.this)) {
+
+                                     showCustomDialog();
+
+                                 }
+                                 else {
+                                     Toast.makeText(getApplicationContext(), phoneUser + "/" + phoneHotel, Toast.LENGTH_LONG).show();
+                                     Intent in = new Intent(DashBoard.this, UserPrfofilew.class);
+                                     Pair pair[] = new Pair[1];
+                                     pair[0] = new Pair<View, String>(plusicon, "nextTra");
+                                     ActivityOptions ac = ActivityOptions.makeSceneTransitionAnimation(DashBoard.this, pair);
+                                     startActivity(in, ac.toBundle());
+                                 }
 
 
 
@@ -151,11 +174,20 @@ String[] list;
                                     startActivity(in, ac.toBundle());
 
                                 } else {
-                                 Intent in = new Intent(DashBoard.this, LogIn_Or_SignUp.class);
-                                 Pair pair[] = new Pair[1];
-                                 pair[0] = new Pair<View, String>(plusicon, "nextTra");
-                                 ActivityOptions ac = ActivityOptions.makeSceneTransitionAnimation(DashBoard.this, pair);
-                                 startActivity(in, ac.toBundle());
+                                 if (!isWiConnected(DashBoard.this)) {
+
+                                     showCustomDialog();
+
+                                 }
+                                 else {
+                                     Intent in = new Intent(DashBoard.this, LogIn_Or_SignUp.class);
+                                     Pair pair[] = new Pair[1];
+                                     pair[0] = new Pair<View, String>(plusicon, "nextTra");
+                                     ActivityOptions ac = ActivityOptions.makeSceneTransitionAnimation(DashBoard.this, pair);
+                                     startActivity(in, ac.toBundle());
+                                 }
+
+
 
 
                             }
@@ -178,11 +210,148 @@ String[] list;
         nav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-              if(item.getItemId()==R.id.allHotels)
-                  startActivity(new Intent(getApplicationContext(),All_Hotels.class));
-              else if(item.getItemId()==R.id.nav_Prfoile)
-                  startActivity(new Intent(getApplicationContext(),UserPrfofilew.class));
+              if(item.getItemId()==R.id.allHotels) {
+                  if (!isWiConnected(DashBoard.this)) {
 
+                      showCustomDialog();
+
+                  }
+                  else {
+                      startActivity(new Intent(getApplicationContext(), All_Hotels.class));
+                  }
+              }
+
+                  else if(item.getItemId()==R.id.Profile) {
+                      if (!isWiConnected(DashBoard.this)) {
+
+                  showCustomDialog();
+
+              }
+                      else if(phoneUser==null)
+                      {
+                          AlertDialog.Builder alertDialog2 = new AlertDialog.Builder(
+                                  DashBoard.this);
+
+// Setting Dialog Title
+                          alertDialog2.setTitle("Log In.");
+
+// Setting Dialog Message
+                          alertDialog2.setMessage("You are not logged in. Log In To View Profile.");
+                          alertDialog2.setIcon(R.drawable.apptitle);
+                          alertDialog2.setPositiveButton("YES",
+                                  new DialogInterface.OnClickListener() {
+                                      public void onClick(DialogInterface dialog, int which) {
+                                          // Write your code here to execute after dialog
+                                          startActivity(new Intent(DashBoard.this,LogIn_Or_SignUp.class));
+
+                                      }
+                                  });
+// Setting Negative "NO" Btn
+                          alertDialog2.setNegativeButton("NO",
+                                  new DialogInterface.OnClickListener() {
+                                      public void onClick(DialogInterface dialog, int which) {
+                                          dialog.cancel();
+                                      }
+                                  });
+
+// Showing Alert Dialog
+                          alertDialog2.show();
+                      }else {
+                  startActivity(new Intent(getApplicationContext(), UserPrfofilew.class));
+              }
+              }
+                  else if(item.getItemId()==R.id.nav_serach)
+              {
+                  if (!isWiConnected(DashBoard.this)) {
+
+                      showCustomDialog();
+
+                  }
+                  else
+                      startActivity(new Intent(getApplicationContext(), All_Hotels.class));
+
+
+              }
+                  else if(item.getItemId()==R.id.Fav) {
+                  {
+                      if (!isWiConnected(DashBoard.this)) {
+
+                          showCustomDialog();
+
+                      }
+                      else if(phoneUser==null)
+                      {
+                          AlertDialog.Builder alertDialog2 = new AlertDialog.Builder(
+                                  DashBoard.this);
+
+// Setting Dialog Title
+                          alertDialog2.setTitle("Log In.");
+
+// Setting Dialog Message
+                          alertDialog2.setMessage("You are not logged in. Log In and see your favorite hotels.");
+                          alertDialog2.setIcon(R.drawable.apptitle);
+                          alertDialog2.setPositiveButton("YES",
+                                  new DialogInterface.OnClickListener() {
+                                      public void onClick(DialogInterface dialog, int which) {
+                                          // Write your code here to execute after dialog
+                                          startActivity(new Intent(DashBoard.this,LogIn_Or_SignUp.class));
+
+                                      }
+                                  });
+// Setting Negative "NO" Btn
+                          alertDialog2.setNegativeButton("NO",
+                                  new DialogInterface.OnClickListener() {
+                                      public void onClick(DialogInterface dialog, int which) {
+                                          dialog.cancel();
+                                      }
+                                  });
+
+// Showing Alert Dialog
+                          alertDialog2.show();
+                      }else
+                          startActivity(new Intent(getApplicationContext(), Fav.class));
+                  }
+              }
+                  else if(item.getItemId()==R.id.Saved)
+              {
+                  if (!isWiConnected(DashBoard.this)) {
+
+                      showCustomDialog();
+
+                  }
+                  else if(phoneUser==null)
+                  {
+                      AlertDialog.Builder alertDialog2 = new AlertDialog.Builder(
+                              DashBoard.this);
+
+// Setting Dialog Title
+                      alertDialog2.setTitle("Log In.");
+
+// Setting Dialog Message
+                      alertDialog2.setMessage("You are not logged in. Log In and book your saved hotels.");
+                      alertDialog2.setIcon(R.drawable.apptitle);
+                      alertDialog2.setPositiveButton("YES",
+                              new DialogInterface.OnClickListener() {
+                                  public void onClick(DialogInterface dialog, int which) {
+                                      // Write your code here to execute after dialog
+                                      startActivity(new Intent(DashBoard.this,LogIn_Or_SignUp.class));
+
+                                  }
+                              });
+// Setting Negative "NO" Btn
+                      alertDialog2.setNegativeButton("NO",
+                              new DialogInterface.OnClickListener() {
+                                  public void onClick(DialogInterface dialog, int which) {
+                                      dialog.cancel();
+                                  }
+                              });
+
+// Showing Alert Dialog
+                      alertDialog2.show();
+                  }
+                  else
+                      startActivity(new Intent(getApplicationContext(),WatchLater.class));
+              }
                 return true;
             }
         });
@@ -206,8 +375,40 @@ String[] list;
     public void onBackPressed() {
         if(dr.isDrawerVisible(GravityCompat.START))
             dr.closeDrawer(GravityCompat.START);
-        else
-        super.onBackPressed();
+        else {
+            AlertDialog.Builder alertDialog2 = new AlertDialog.Builder(
+                    this);
+
+// Setting Dialog Title
+            alertDialog2.setTitle("Exit");
+
+// Setting Dialog Message
+            alertDialog2.setMessage("Are You Sure Want To Exit??");
+            alertDialog2.setIcon(R.drawable.apptitle);
+            alertDialog2.setPositiveButton("YES",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Write your code here to execute after dialog
+                            Intent a = new Intent(Intent.ACTION_MAIN);
+                            a.addCategory(Intent.CATEGORY_HOME);
+                            a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(a);
+
+                        }
+                    });
+// Setting Negative "NO" Btn
+            alertDialog2.setNegativeButton("NO",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+
+// Showing Alert Dialog
+            alertDialog2.show();
+
+
+        }
     }
 
     public void recyclerView1()
@@ -242,7 +443,44 @@ String[] list;
             }
         }).check();
     }
+    public boolean isWiConnected(DashBoard l) {
+        ConnectivityManager c = (ConnectivityManager) l.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo wi = c.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        NetworkInfo mi = c.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
 
+        if ((wi != null && wi.isConnected()) || (mi != null && mi.isConnected())) {
+            return true;
+        } else
+            return false;
+
+    }
+
+    private void showCustomDialog() {
+        String x="LogIn_Or_SignUp";
+        d1 = new Dialog(DashBoard.this);
+        d1.setContentView(R.layout.custom);
+        d1.getWindow().setBackgroundDrawable(getDrawable(R.drawable.customdraw));
+        d1.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        d1.setCancelable(false);
+        d1.getWindow().getAttributes().windowAnimations = R.style.animate;
+        d1.show();
+        Button b1 = d1.findViewById(R.id.cancel);
+        b1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(DashBoard.this, DashBoard.class));
+                finish();
+            }
+
+        });
+        Button b2 = d1.findViewById(R.id.connect);
+        b2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+            }
+        });
+    }
     public void vintage(View view) {
     }
 
@@ -251,4 +489,5 @@ String[] list;
 
     public void aubearge(View view) {
     }
+
 }

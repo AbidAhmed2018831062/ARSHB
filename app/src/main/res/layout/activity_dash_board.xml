@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".DashBoard"
     android:orientation="vertical"
-    android:background="@color/LightWhite"
+    android:background="#fff"
 
     android:id="@+id/drawer">
     <com.google.android.material.navigation.NavigationView

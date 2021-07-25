@@ -1,5 +1,6 @@
 package com.example.finalproject;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -16,12 +17,14 @@ public class rl1Adapter extends RecyclerView.Adapter<rl1Adapter.MyAdapter> {
     Context c;
     int rl1img[];
     String rl1h[],rl1des[];
+    Activity ac;
     public rl1Adapter(Context c,int rl1img[],String rl1h[],String rl1des[])
     {
         this.c=c;
         this.rl1img=rl1img;
         this.rl1h=rl1h;
         this.rl1des=rl1des;
+        ac= (Activity) c;
     }
 
     @NonNull
@@ -45,6 +48,7 @@ public class rl1Adapter extends RecyclerView.Adapter<rl1Adapter.MyAdapter> {
                 in.putExtra("name",na);
 
                 c.startActivity(in);
+                ac.finish();
             }
         });
 

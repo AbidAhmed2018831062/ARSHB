@@ -1,6 +1,7 @@
 package com.example.finalproject;
 
 import android.app.ActivityOptions;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Pair;
@@ -8,7 +9,10 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 public class LogIn_Or_SignUp extends AppCompatActivity {
  Button b1,b2;
@@ -45,7 +49,43 @@ public class LogIn_Or_SignUp extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(LogIn_Or_SignUp.this,DashBoard.class));
-        finish();
+        if(FirebaseAuth.getInstance().getCurrentUser()!=null) {
+            startActivity(new Intent(LogIn_Or_SignUp.this, DashBoard.class));
+            finish();
+        }
+        else
+        {
+            AlertDialog.Builder alertDialog2 = new AlertDialog.Builder(
+                    this);
+
+// Setting Dialog Title
+            alertDialog2.setTitle("Exit");
+
+// Setting Dialog Message
+            alertDialog2.setMessage("Are You Sure Want To Exit??");
+            alertDialog2.setIcon(R.drawable.apptitle);
+            alertDialog2.setPositiveButton("YES",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Write your code here to execute after dialog
+                            Intent a = new Intent(Intent.ACTION_MAIN);
+                            a.addCategory(Intent.CATEGORY_HOME);
+                            a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(a);
+
+                        }
+                    });
+// Setting Negative "NO" Btn
+            alertDialog2.setNegativeButton("NO",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+
+// Showing Alert Dialog
+            alertDialog2.show();
+
+        }
     }
 }

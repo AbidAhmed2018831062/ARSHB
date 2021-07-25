@@ -239,7 +239,18 @@ android:padding="30dp"
         android:paddingRight="30dp"
         android:textColor="#000"
         android:textSize="16dp"
-        android:layout_marginBottom="30dp"></TextView>
+        android:layout_marginBottom="30dp"></TextView> <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomnav"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_gravity="bottom"
+        android:background="#673AB7"
+        app:menu="@menu/userprofilemenu"
+        app:itemIconTint="#000"
+        app:backgroundTint="#fff"
+        app:itemTextColor="#000"/>
+
     </LinearLayout>
+
 
 </ScrollView>

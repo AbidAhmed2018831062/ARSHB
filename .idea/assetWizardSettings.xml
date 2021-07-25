@@ -23,7 +23,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/E:/Android%20Studio/plugins/android/lib/android.jar!/images/material/icons/materialicons/money/baseline_money_24.xml" />
+                                      <entry key="url" value="jar:file:/E:/Android%20Studio/plugins/android/lib/android.jar!/images/material/icons/materialicons/remove_circle_outline/baseline_remove_circle_outline_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -33,7 +33,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="money_24" />
+                            <entry key="outputName" value="logout" />
                             <entry key="sourceFile" value="E:\FinalProject" />
                           </map>
                         </option>

@@ -1,14 +1,14 @@
 package com.example.finalproject;
 
 public class OrderShow {
-    String Cname,Hname,price,roomscount,issueDate,endDate,Rname,idate;
+    String Cname,Hname,price,roomscount,issueDate,endDate,Rname,idate,email;
 
 
     OrderShow()
     {
 
     }
-    OrderShow(String Cname, String Hname, String price, String roomscount, String issueDate, String endDate, String Rname,String idate)
+    OrderShow(String Cname, String Hname, String price, String roomscount, String issueDate, String endDate, String Rname,String idate,String email)
     {
         this.Cname=Cname;
         this.Hname=Hname;
@@ -18,7 +18,16 @@ public class OrderShow {
         this.endDate=endDate;
         this.Rname=Rname;
         this.idate=idate;
+        this.email=email;
 
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getIdate() {

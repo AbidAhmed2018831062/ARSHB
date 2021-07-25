@@ -1,11 +1,5 @@
 package com.example.finalproject;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +7,12 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -63,7 +63,8 @@ public class WatchLater extends AppCompatActivity {
                 li.clear();
                 for(DataSnapshot ds: dataSnapshot.getChildren())
                 {
-                    final String name=ds.getValue().toString();
+                    SaveAndFav sf=ds.getValue(SaveAndFav.class);
+                    final String name=sf.getName();
                     li.add(name);
                     count++;
                     Toast.makeText(getApplicationContext(),li.get(0),Toast.LENGTH_LONG).show();

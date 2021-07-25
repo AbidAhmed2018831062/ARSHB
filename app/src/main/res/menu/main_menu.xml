@@ -31,10 +31,27 @@
         android:textSize="20sp">
 <menu>
     <group android:checkableBehavior="single">
-        <item android:id="@+id/nav_Prfoile"
+        <item android:id="@+id/Fav"
+            android:title="Fav"
+            android:icon="@drawable/fav"
+            android:textColor="#000"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            />
+        <item android:id="@+id/Saved"
+            android:title="Saved"
+            android:icon="@drawable/save"
+            android:textColor="#000"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            />
+        <item android:id="@+id/Profile"
             android:title="Profile"
-            android:icon="@drawable/search"
-            android:textColor="#000"/>
+            android:icon="@drawable/profile"
+            android:textColor="#000"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            />
 
     </group>
 </menu>

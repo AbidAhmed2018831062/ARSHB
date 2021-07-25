@@ -99,7 +99,8 @@ public class ApprovalAdapter extends RecyclerView.Adapter<ApprovalAdapter.NEED> 
 
                         HashMap<String,String> hm=sh.returnData();
                         String name=hm.get(SessionManagerHotels.FULLNAME);
-                      
+                        String emai=hm.get(SessionManagerHotels.EMAIL);
+
                         String subject= "Your Last Order Has Been Approved. Now go the Pay Now section of your profile to complete the booking";
                         final String Email="hotelarshb7@gmail.com";
                         final String pass="arshbhotelABIDRAJU";
@@ -118,7 +119,7 @@ public class ApprovalAdapter extends RecyclerView.Adapter<ApprovalAdapter.NEED> 
 
                             Message message = new MimeMessage(session);
                             message.setFrom(new InternetAddress(Email));
-                            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
+                            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(list.get(i).getEmail()));
                             message.setSubject("Successful");
                             message.setText(subject);
 
@@ -147,7 +148,7 @@ public class ApprovalAdapter extends RecyclerView.Adapter<ApprovalAdapter.NEED> 
                         userNum=input1.toString();
                         userNum="+88"+userNum;
                         OrderShow or=new OrderShow(cname,hname,price,qua,start1,
-                               end1,rn,idate1);
+                               end1,rn,idate1,emai);
                         FirebaseDatabase.getInstance().getReference("Users").child(userNum).
                                 child("Payment").child(qua+start1+end1+price+idate1).setValue(or);
                         FirebaseDatabase.getInstance().getReference("Users").child(userNum).child("Token").addValueEventListener(new ValueEventListener() {

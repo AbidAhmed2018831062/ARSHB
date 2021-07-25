@@ -11,16 +11,42 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-      <TextView
-        android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+           >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/head"
+                android:layout_marginBottom="5dp"
+                android:text="Rose View"
+                android:textColor="#000"
+                android:textSize="18sp"
+                android:fontFamily="@font/muli_black"
+                android:layout_centerVertical="true"
+                ></TextView>
+
+            <ImageView
+                android:padding="3dp"
+                android:background="@color/grey"
+                android:id="@+id/plusicon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:transitionName="nextTra"
+
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/plus" />
+        </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/head"
-        android:layout_marginBottom="10dp"
-        android:text="Rose View"
-        android:textColor="#000"
-        android:textSize="18sp"
-        android:fontFamily="@font/muli_black"
-        ></TextView>
+        android:orientation="vertical"
+        android:id="@+id/inte">
         <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -226,5 +252,5 @@
 
         android:id="@+id/bar"></com.github.mikephil.charting.charts.BarChart>
     </LinearLayout>
-
+    </LinearLayout>
 </ScrollView>

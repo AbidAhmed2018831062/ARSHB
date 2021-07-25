@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.HashMap;
+
 public class MainActivity extends AppCompatActivity {
      ImageView im1;
      TextView t1;
@@ -48,29 +50,42 @@ public class MainActivity extends AppCompatActivity {
 
     }
     private void newIntentr() {
-     /*   if(auth.getCurrentUser()!=null)
-        {
-            startActivity(new Intent(getApplicationContext(),UserProfile.class));
-            finish();
 
-        }else {*/
-     shOn=getSharedPreferences("OnBo",MODE_PRIVATE);
-     boolean firsttime=shOn.getBoolean("isFirsttime",true);
-     if(firsttime) {
-         SharedPreferences.Editor editor = shOn.edit();
-         editor.putBoolean("isFirsttime", false);
-         editor.commit();
-         Intent i = new Intent(MainActivity.this, OnBoarding.class);
-         startActivity(i);
-         finish();
-     }
-     else
-     {
+            shOn = getSharedPreferences("OnBo", MODE_PRIVATE);
+            boolean firsttime = shOn.getBoolean("isFirsttime", true);
+            if (firsttime) {
+                SharedPreferences.Editor editor = shOn.edit();
+                editor.putBoolean("isFirsttime", false);
+                editor.commit();
+                Intent i = new Intent(MainActivity.this, OnBoarding.class);
+                startActivity(i);
+                finish();
+            } else {
+                SessionManagerHotels sh = new SessionManagerHotels(this, SessionManagerHotels.USERSESSION);
 
-         startActivity(new Intent(getApplicationContext(),DashBoard.class));
-     }
+                HashMap<String, String> hm = sh.returnData();
+                final String phone2 = hm.get(SessionManagerHotels.RATING);
+                SessionManagerHotels sh1 = new SessionManagerHotels(this, SessionManagerHotels.USERSESSION);
 
-    }
+                HashMap<String, String> hm1 = sh1.returnData();
+                final String phone = hm.get(SessionManagerHotels.RATING);
+                if (phone2 == null&&phone==null) {
+                    startActivity(new Intent(getApplicationContext(), LogIn_Or_SignUp.class));
+                    finish();
+                } else if(phone2==null&&phone!=null){
+                    startActivity(new Intent(getApplicationContext(), DashBoard.class));
+                    finish();
+                }
+                else
+                {
+                    startActivity(new Intent(getApplicationContext(), HotelsOverview.class));
+                    finish();
+                }
+
+            }
+
+        }
+
 
     private void doWork() {
         for(int i=10;i<=60;i=i+20){

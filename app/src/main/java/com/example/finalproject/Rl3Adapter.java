@@ -1,5 +1,6 @@
 package com.example.finalproject;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -27,12 +28,14 @@ public class Rl3Adapter extends RecyclerView.Adapter<Rl3Adapter.MyViewHolder> im
     Context c;
     List<Users> li;
     List<Users> listI;
+    Activity ac;
     public Rl3Adapter(Context c, List<Users> h)
     {
         this.c=c;
 
         this.li=h;
         this.listI=(h);
+        ac= (Activity) c;
     }
     @NonNull
     @Override
@@ -76,6 +79,7 @@ public class Rl3Adapter extends RecyclerView.Adapter<Rl3Adapter.MyViewHolder> im
                 Intent in=new Intent(c,HotelShowCase.class);
                 in.putExtra("name",na);
                 c.startActivity(in);
+                ac.finish();
             }
         });
 

@@ -1,8 +1,11 @@
 package com.example.finalproject;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
@@ -16,7 +19,9 @@ import androidx.cardview.widget.CardView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -37,6 +42,8 @@ TextView name,study,date,place,aboutme,fb;
 ImageView profile_image;
 CardView fav,save,order,upcoming,pay;
 String phone;
+    BottomNavigationView  bm;
+
 
 List<OrderShow> list=new ArrayList<>();
     @Override
@@ -49,13 +56,70 @@ List<OrderShow> list=new ArrayList<>();
         profile_image=(ImageView) findViewById(R.id.profile_image);
         fav=(CardView)findViewById(R.id.fav);
         pay=(CardView)findViewById(R.id.pay);
-        SessionManager sh=new SessionManager(this,SessionManager.USERSESSION);
+        final SessionManager sh=new SessionManager(this,SessionManager.USERSESSION);
 
         HashMap<String,String>  hm=sh.returnData();
         final String phone2=hm.get(SessionManager.PHONE);
         order=(CardView)findViewById(R.id.order);
         upcoming=(CardView)findViewById(R.id.upcoming);
         save=(CardView)findViewById(R.id.save);
+        bm = (BottomNavigationView) findViewById(R.id.bottomnav);
+        bm.setOnNavigationItemReselectedListener(new BottomNavigationView.OnNavigationItemReselectedListener() {
+            @Override
+            public void onNavigationItemReselected(@NonNull MenuItem item) {
+                if (item.getItemId()==R.id.s) {
+                    startActivity(new Intent(UserPrfofilew.this, All_Hotels.class));
+                } else if (item.getItemId() == R.id.fav) {
+                    startActivity(new Intent(UserPrfofilew.this, Fav.class));
+
+                } else if (item.getItemId() == R.id.profile) {
+                    startActivity(new Intent(UserPrfofilew.this, UserPrfofilew.class));
+
+                }
+                else if(item.getItemId()==R.id.Saved)
+                {
+                    startActivity(new Intent(UserPrfofilew.this, WatchLater.class));
+
+                }else if(item.getItemId()==R.id.logout)
+                {
+
+
+                    AlertDialog.Builder alertDialog2 = new AlertDialog.Builder(
+                            UserPrfofilew.this);
+
+// Setting Dialog Title
+                    alertDialog2.setTitle("Log Out.");
+
+// Setting Dialog Message
+                    alertDialog2.setMessage("Are you sure you want to Log Out?");
+                    alertDialog2.setIcon(R.drawable.apptitle);
+                    alertDialog2.setPositiveButton("YES",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                sh.logOut();
+                                 FirebaseAuth.getInstance().signOut();
+
+                                    dialog.cancel();
+                                    startActivity(new Intent(UserPrfofilew.this, DashBoard.class));
+
+                                }
+                            });
+// Setting Negative "NO" Btn
+                    alertDialog2.setNegativeButton("NO",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+
+// Showing Alert Dialog
+                    alertDialog2.show();
+
+
+                }
+
+            }
+        });
         FirebaseInstanceId.getInstance().getInstanceId()
                 .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
                     @Override

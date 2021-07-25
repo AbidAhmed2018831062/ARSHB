@@ -52,6 +52,8 @@ int year,cmonth,day,day1,cmonth1,year1;
     String Hname;
     String token;
     String userName,phone2;
+    String emai="";
+    HashMap<String,String> hm;
     static String name1,qua23,start11,end12,ne1,HNAME1,final1,price1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +64,7 @@ int year,cmonth,day,day1,cmonth1,year1;
         HNAME=getIntent().getStringExtra("HNAME");
         SessionManager sh=new SessionManager(this,SessionManager.USERSESSION);
 
-        HashMap<String,String> hm=sh.returnData();
+         hm=sh.returnData();
        phone2=hm.get(SessionManager.PHONE);
        userName=hm.get(SessionManager.FULLNAME);
         quas=getResources().getStringArray(R.array.qua);
@@ -90,38 +92,54 @@ int year,cmonth,day,day1,cmonth1,year1;
         });
         order.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) { SessionManagerHotels sh = new SessionManagerHotels(getApplicationContext(), SessionManagerHotels.USERSESSION);
+            public void onClick(View view) {
+                final String ne=getIntent().getStringExtra("Rn");
+                SessionManagerHotels sh = new SessionManagerHotels(getApplicationContext(), SessionManagerHotels.USERSESSION);
+                FirebaseDatabase.getInstance().getReference("Hotels").child(ne).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        emai=dataSnapshot.child("email").getValue().toString();
+                        Toast.makeText(getApplicationContext(),emai+"Inside",Toast.LENGTH_LONG).show();
+                        String subject = "Your Hotel Has New Order. Now go the Need Approal section of your profile to approve the booking";
+                        final String Email = "hotelarshb7@gmail.com";
+                        final String pass = "arshbhotelABIDRAJU";
+                        Properties prop = new Properties();
+                        prop.put("mail.smtp.host", "smtp.gmail.com");
+                        prop.put("mail.smtp.port", "465");
+                        prop.put("mail.smtp.auth", "true");
+                        prop.put("mail.smtp.socketFactory.port", "465");
+                        prop.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+                        Session session = Session.getDefaultInstance(prop, new javax.mail.Authenticator() {
+                            protected PasswordAuthentication getPasswordAuthentication() {
+                                return new PasswordAuthentication(Email, pass);
+                            }
+                        });
+                        try {
 
-                String subject = "Your Hotel Has New Order. Now go the Need Approal section of your profile to approve the booking";
-                final String Email = "hotelarshb7@gmail.com";
-                final String pass = "arshbhotelABIDRAJU";
-                Properties prop = new Properties();
-                prop.put("mail.smtp.host", "smtp.gmail.com");
-                prop.put("mail.smtp.port", "465");
-                prop.put("mail.smtp.auth", "true");
-                prop.put("mail.smtp.socketFactory.port", "465");
-                prop.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-                Session session = Session.getDefaultInstance(prop, new javax.mail.Authenticator() {
-                    protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(Email, pass);
+                            Message message = new MimeMessage(session);
+                            message.setFrom(new InternetAddress(Email));
+                            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emai));
+                            message.setSubject("New Order");
+                            message.setText(subject);
+                            Toast.makeText(getApplicationContext(),emai+"Outsdie",Toast.LENGTH_LONG).show();
+
+                            new OrderReady.SendEmail().execute(message);
+
+
+                        } catch (AddressException e) {
+                            e.printStackTrace();
+                        } catch (MessagingException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
                     }
                 });
-                try {
 
-                    Message message = new MimeMessage(session);
-                    message.setFrom(new InternetAddress(Email));
-                    message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
-                    message.setSubject("New Order");
-                    message.setText(subject);
-
-                    new OrderReady.SendEmail().execute(message);
-
-
-                } catch (AddressException e) {
-                    e.printStackTrace();
-                } catch (MessagingException e) {
-                    e.printStackTrace();
-                }
 
                 year=start.getYear();
                 cmonth=start.getMonth();
@@ -178,7 +196,7 @@ int year,cmonth,day,day1,cmonth1,year1;
                 else month1="December";
                 start1=""+day+" "+month+" "+year;
                 end1=""+day1+" "+month1+" "+year1;
-                final String ne=getIntent().getStringExtra("Rn");
+
                 Intent in=new Intent(OrderReady.this,OrderConfirmation.class);
                 in.putExtra("Name",name);
                 in.putExtra("Qua",qua);
@@ -219,13 +237,15 @@ int year,cmonth,day,day1,cmonth1,year1;
                         int cday = cal.get(Calendar.DAY_OF_MONTH);
                         int cm = cal.get(Calendar.MONTH);
                         int cy = cal.get(Calendar.YEAR);
-                        OrderShow or=new OrderShow(userName+"\n "+phone2,ne,p+"",qua+"",start1+"",end1+"",name,cday+" "+cm+" "+cy);
+
+
+                        OrderShow or=new OrderShow(userName+"\n "+phone2,ne,p+"",qua+"",start1+"",end1+"",name,cday+" "+cm+" "+cy,hm.get(SessionManager.EMAIL));
                         FirebaseDatabase.getInstance().getReference("Hotels").child(ne).child("needApp").child(start1+end1+p+""+name+cday+" "+cm+" "+cy).setValue(or);
                         name1=name;
                         qua23=qua;
                         start11=start1;
                         end12=end1;
-                        ne1=ne;
+
                         HNAME1=HNAME;
                         final1=""+finalDiff;
                         price1=price;

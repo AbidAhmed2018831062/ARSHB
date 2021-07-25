@@ -3,6 +3,7 @@ package com.example.finalproject;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,6 +28,7 @@ List<OrderShow> list=new ArrayList<>();
 List<OrderShow> list1=new ArrayList<>();
 RecyclerView allR;
 int cday,cmonth,cyear;
+TextView te;
 String phone,name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,7 @@ String phone,name;
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_order_given);
         allR=(RecyclerView)findViewById(R.id.orders);
+        te=(TextView)findViewById(R.id.te);
       //  back=(ImageView)findViewById(R.id.back);
       //  back.setOnClickListener(new View.OnClickListener() {
         phone=getIntent().getStringExtra("phone").toString();
@@ -42,10 +45,17 @@ String phone,name;
          cday = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
          cyear = Calendar.getInstance().get(Calendar.YEAR);
          cmonth = Calendar.getInstance().get(Calendar.MONTH);
-         if(name.equals("upcoming"))
-        rl = new OrderAdapter(OrderGiven.this, list);
+         if(name.equals("upcoming")) {
+             rl = new OrderAdapter(OrderGiven.this, list);
+             te.setText("Your Upcoming Orders:");
+         }
          else
          {
+             if(phone.contains("+")) {
+                 te.setText("Your Orders:");
+             }
+             else
+                 te.setText("Your Received Orders:");
              rl = new OrderAdapter(OrderGiven.this, list1);
          }
         allR.setHasFixedSize(true);
@@ -57,7 +67,7 @@ String phone,name;
      db= FirebaseDatabase.getInstance().getReference("Users").child(phone).child("Order");
       }
       else
-          db= FirebaseDatabase.getInstance().getReference("Hotels").child(phone).child("Order");
+          db= FirebaseDatabase.getInstance().getReference("Hotels").child(name).child("Order");
 
         db.addValueEventListener(new ValueEventListener() {
             @Override

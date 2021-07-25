@@ -1,5 +1,7 @@
 package com.example.finalproject;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -20,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -51,7 +54,8 @@ LinearLayout layoutList;
  rl4HR rl;
  static String Dele[]=new String[1000];
  static int poi=0;
-
+ String fullname3;
+    SessionManagerHotels sh;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +68,7 @@ LinearLayout layoutList;
         dr=(DrawerLayout) findViewById(R.id.drawer);
         menui=(ImageView) findViewById(R.id.menuicon);
 
-        SessionManagerHotels sh= new SessionManagerHotels(HotelRooms.this,SessionManagerHotels.USERSESSION);
+         sh= new SessionManagerHotels(HotelRooms.this,SessionManagerHotels.USERSESSION);
 
         HashMap<String,String> hm=sh.returnData();
         name=hm.get(SessionManagerHotels.FULLNAME);
@@ -84,7 +88,7 @@ LinearLayout layoutList;
                 });
         String fullname1=hm.get(SessionManagerHotels.DES);
         String fullname2=hm.get(SessionManagerHotels.EMAIL);
-        String fullname3=hm.get(SessionManagerHotels.PHONE);
+        fullname3=hm.get(SessionManagerHotels.PHONE);
         String fullname4=hm.get(SessionManagerHotels.USERNAME);
         String fullname5=hm.get(SessionManagerHotels.RATING);
         String fullname6=hm.get(SessionManagerHotels.PASS);
@@ -194,6 +198,11 @@ layoutList.addView(roomView);*/
                         finish();
 
                 }
+                else if(item.getItemId()==R.id.received)
+                {
+                    startActivity(new Intent(getApplicationContext(), OrderGiven.class).putExtra("phone",fullname3).putExtra("name",name));
+                    finish();
+                }
                     else if(item.getItemId()==R.id.approval)
                 {
                     startActivity(new Intent(getApplicationContext(), Approval.class));
@@ -204,6 +213,40 @@ layoutList.addView(roomView);*/
                     in.putExtra("phone",name);
                     startActivity(in);
                     finish();
+                }
+                else if(item.getItemId()==R.id.nav_LogOut)
+                {
+
+                    AlertDialog.Builder alertDialog2 = new AlertDialog.Builder(
+                            HotelRooms.this);
+
+// Setting Dialog Title
+                    alertDialog2.setTitle("Log Out.");
+
+// Setting Dialog Message
+                    alertDialog2.setMessage("Are you sure you want to Log Out?");
+                    alertDialog2.setIcon(R.drawable.apptitle);
+                    alertDialog2.setPositiveButton("YES",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    sh.logOut();
+                                    FirebaseAuth.getInstance().signOut();
+
+                                    dialog.cancel();
+                                    startActivity(new Intent(HotelRooms.this, LogIn_Or_SignUp.class));
+
+                                }
+                            });
+// Setting Negative "NO" Btn
+                    alertDialog2.setNegativeButton("NO",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+
+// Showing Alert Dialog
+                    alertDialog2.show();
                 }
 
                 return true;
