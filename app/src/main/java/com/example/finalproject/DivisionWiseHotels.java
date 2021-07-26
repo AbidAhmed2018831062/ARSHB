@@ -20,6 +20,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -91,7 +92,7 @@ public class DivisionWiseHotels extends AppCompatActivity {
                   String n="";
                   for(int i=na.length()-1;i>=0;i--)
                   {
-                      if(Character.isWhitespace(na.charAt(i)))
+                      if(Character.isWhitespace(na.charAt(i))||na.charAt(i)==',')
                       {
                                 break;
                       }
@@ -127,22 +128,30 @@ public class DivisionWiseHotels extends AppCompatActivity {
                             }
                             hname+=na.charAt(i);
                         }
+String hname1="";
+                  for(int i=hname.length()-2;i>=0;i--)
+                  {
+                     hname1+=hname.charAt(i);
+                  }
+                        StringBuilder sb1=new StringBuilder(hname1);
+                        sb1.reverse();
+                        hname=sb1.toString();
 
-                      //  Toast.makeText(getApplicationContext(),hname, Toast.LENGTH_LONG).show();
-
-                      DatabaseReference db1= FirebaseDatabase.getInstance().getReference("Hotels").child(hname);
-                        db1.addValueEventListener(new ValueEventListener() {
+                      Query db1= FirebaseDatabase.getInstance().getReference("Hotels").orderByChild("name").equalTo(hname);
+                        final String finalHname = hname;
+                        final String finalHname1 = hname;
+                        db1.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                               HNAME=dataSnapshot.child("name").getValue().toString();
-                               HURL=dataSnapshot.child("url").getValue().toString();
+                                if(dataSnapshot.exists()) {
+                             //       Toast.makeText(getApplicationContext(), finalHname, Toast.LENGTH_LONG).show();
+                              HNAME=dataSnapshot.child(finalHname1).child("name").getValue().toString();
+                             HURL=dataSnapshot.child(finalHname1).child("url").getValue().toString();
                                 Users it1 = new Users(HURL, HNAME, "Expand All");
                              //   Toast.makeText(getApplicationContext(),HNAME, Toast.LENGTH_LONG).show();
                                 listI.add(it1);
                                 rl3.notifyDataSetChanged();
-
-
-
+                                }
                             }
 
                             @Override
