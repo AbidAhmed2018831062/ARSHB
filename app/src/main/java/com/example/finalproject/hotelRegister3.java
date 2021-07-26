@@ -99,54 +99,60 @@ private static final int IMAGE_REQUEST=1;
     }
     private void uploadImage()
     {
-         StorageReference ref=st.child(System.currentTimeMillis()+"."+getFileExtension(imgUri));
+        if(imgUri==null)
+        {
+            Toast.makeText(getApplicationContext(), "It is demo image. You can not upload this. Select from yur own gallery", Toast.LENGTH_LONG).show();
+        }
+        else {
+            StorageReference ref = st.child(System.currentTimeMillis() + "." + getFileExtension(imgUri));
 
-        ref.putFile(imgUri)
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+            ref.putFile(imgUri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                        phone = getIntent().getStringExtra("Phone");
-                        Toast.makeText(getApplicationContext(),phone,Toast.LENGTH_LONG).show();
+                            phone = getIntent().getStringExtra("Phone");
+                            Toast.makeText(getApplicationContext(), phone, Toast.LENGTH_LONG).show();
 
-                        password = getIntent().getStringExtra("Password");
-                        email = getIntent().getStringExtra("Email");
-                        des = getIntent().getStringExtra("Des");
-                        star= getIntent().getStringExtra("Star");
-                        username = getIntent().getStringExtra("UserName");
-                        DatabaseReference db= FirebaseDatabase.getInstance().getReference("Hotels");
-                        Task<Uri> tu=taskSnapshot.getStorage().getDownloadUrl();
-                        HashMap hem=new HashMap();
-                        Random rn=new Random();
-                        int p10=rn.nextInt(10000);
+                            password = getIntent().getStringExtra("Password");
+                            email = getIntent().getStringExtra("Email");
+                            des = getIntent().getStringExtra("Des");
+                            star = getIntent().getStringExtra("Star");
+                            username = getIntent().getStringExtra("UserName");
+                            DatabaseReference db = FirebaseDatabase.getInstance().getReference("Hotels");
+                            Task<Uri> tu = taskSnapshot.getStorage().getDownloadUrl();
+                            HashMap hem = new HashMap();
+                            Random rn = new Random();
+                            int p10 = rn.nextInt(10000);
 
-                        while(!tu.isSuccessful());
-                            Uri dow=tu.getResult();
-                        SessionManagerHotels sh=new SessionManagerHotels(hotelRegister3.this,SessionManagerHotels.USERSESSION);
+                            while (!tu.isSuccessful()) ;
+                            Uri dow = tu.getResult();
+                            SessionManagerHotels sh = new SessionManagerHotels(hotelRegister3.this, SessionManagerHotels.USERSESSION);
 
-                        sh.loginSession(name2,email,star,phone,password,des,username,dow.toString());
+                            sh.loginSession(name2, email, star, phone, password, des, username, dow.toString());
 
-                        HotelShow hr=new HotelShow(name2, dow.toString());
-                        db.child("Hotel Names").child(name2).setValue(hr);
-                        count++;
-                        Hotel h=new Hotel(name2,password,email,phone,des,star,username,dow.toString());
-                        db.child(name2).setValue(h);
-                      countingStar(star,name2,d);
-                        Intent in=new Intent(getApplicationContext(),hotelregister5.class);
-                        in.putExtra("Name",name2);
+                            HotelShow hr = new HotelShow(name2, dow.toString());
+                            db.child("Hotel Names").child(name2).setValue(hr);
+                            count++;
+                            Hotel h = new Hotel(name2, password, email, phone, des, star, username, dow.toString());
+                            db.child(name2).setValue(h);
+                            countingStar(star, name2, d);
+                            Intent in = new Intent(getApplicationContext(), hotelregister5.class);
+                            in.putExtra("Name", name2);
 
-                        startActivity(in);
-                        finish();
+                            startActivity(in);
+                            finish();
 
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        // Handle unsuccessful uploads
-                        // ...
-                    }
-                });
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            // Handle unsuccessful uploads
+                            // ...
+                        }
+                    });
+        }
     }
 
     private void countingStar(String star, String name2,int d) {

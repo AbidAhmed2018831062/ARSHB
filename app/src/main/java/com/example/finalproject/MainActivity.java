@@ -65,10 +65,10 @@ public class MainActivity extends AppCompatActivity {
 
                 HashMap<String, String> hm = sh.returnData();
                 final String phone2 = hm.get(SessionManagerHotels.RATING);
-                SessionManagerHotels sh1 = new SessionManagerHotels(this, SessionManagerHotels.USERSESSION);
+                SessionManager sh1 = new SessionManager(this, SessionManager.USERSESSION);
 
                 HashMap<String, String> hm1 = sh1.returnData();
-                final String phone = hm.get(SessionManagerHotels.RATING);
+                final String phone = hm.get(SessionManager.PHONE);
                 if (phone2 == null&&phone==null) {
                     startActivity(new Intent(getApplicationContext(), LogIn_Or_SignUp.class));
                     finish();

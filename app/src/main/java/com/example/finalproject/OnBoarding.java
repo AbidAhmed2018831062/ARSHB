@@ -43,7 +43,7 @@ sliderAdapter sd;
         skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              startActivity(new Intent(getApplicationContext(),DashBoard.class));
+              startActivity(new Intent(getApplicationContext(),LogIn_Or_SignUp.class));
               finish();
             }
         });
@@ -57,7 +57,7 @@ sliderAdapter sd;
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(),DashBoard.class));
+                startActivity(new Intent(getApplicationContext(),LogIn_Or_SignUp.class));
             }
         });
     }

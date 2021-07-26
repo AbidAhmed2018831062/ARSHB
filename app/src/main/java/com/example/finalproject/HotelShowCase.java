@@ -67,6 +67,8 @@ public class HotelShowCase extends AppCompatActivity {
     TextView count1;
     int co = 1, cow = 1;
     boolean isP=false;
+    LinearLayout profile;
+    TextView noR;
 
     int rate;
 
@@ -79,6 +81,8 @@ public class HotelShowCase extends AppCompatActivity {
         map = (ImageView) findViewById(R.id.map);
         ad = (TextView) findViewById(R.id.address);
         lo = (TextView) findViewById(R.id.location);
+        noR = (TextView) findViewById(R.id.noR);
+        profile = (LinearLayout) findViewById(R.id.profile);
         na = (TextView) findViewById(R.id.name);
         count1 = (TextView) findViewById(R.id.count);
         HNAME = (TextView) findViewById(R.id.name);
@@ -106,13 +110,13 @@ public class HotelShowCase extends AppCompatActivity {
                 for(DataSnapshot e: dataSnapshot.getChildren())
                 {
                     E++;
-                    k+=Integer.parseInt(e.getValue(String.class));
+                    k+=Float.parseFloat(e.getValue(String.class));
                     Toast.makeText(getApplicationContext(),e.getValue(String.class),Toast.LENGTH_LONG).show();
                 }
                 float r= (float) (k/E);
                 //Toast.makeText(getApplicationContext(),r+" "+k+" "+E,Toast.LENGTH_LONG).show();
                 rating.setRating( r);
-                Toast.makeText(getApplicationContext()," "+rating.getNumStars(),Toast.LENGTH_LONG).show();
+               // Toast.makeText(getApplicationContext()," "+rating.getNumStars(),Toast.LENGTH_LONG).show();
                 count1.setText(E+" reviews");
             }
 
@@ -156,16 +160,24 @@ public class HotelShowCase extends AppCompatActivity {
 
 
         db.addValueEventListener(new ValueEventListener() {
+            int f=0;
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
              //   list.clear();
+                noR.setText("No reviews yet.");
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    profile.setVisibility(View.VISIBLE);
+                    noR.setVisibility(View.GONE);
+                    RatingBar rating1=(RatingBar)findViewById(R.id.rating1);
                     CommentShow roo= ds.getValue(CommentShow.class);
                     Picasso.with(HotelShowCase.this).load(roo.getUrl()).fit().centerCrop().into(profile_Image);
                     profileName.setText(roo.getName());
                     review.setText(roo.getComment());
+                    rating1.setRating(Float.parseFloat(roo.getStar()));
+                    f++;
                     break;
                 }
+
             }
 
             @Override

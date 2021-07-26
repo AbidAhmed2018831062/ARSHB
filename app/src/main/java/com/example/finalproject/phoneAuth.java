@@ -1,16 +1,15 @@
 package com.example.finalproject;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.chaos.view.PinView;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -24,8 +23,6 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class phoneAuth extends AppCompatActivity {
@@ -103,10 +100,13 @@ public class phoneAuth extends AppCompatActivity {
             };
 
     private void verifyCode(String code) {
-        if (code != null) {
+        if (code != null&&!code.equals("")) {
             PhoneAuthCredential ph = PhoneAuthProvider.getCredential(codeBySystem, code);
             signInWithPhoneAuthCredential(ph);
         }
+        else
+            Toast.makeText(getApplicationContext(), "Enter Code First", Toast.LENGTH_LONG).show();
+
 
     }
 
@@ -117,12 +117,22 @@ public class phoneAuth extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            if (DO.equals("update")) {
+                            if (DO.equals("update1")) {
                                 Intent in = new Intent(phoneAuth.this, NewPassword.class);
                                 in.putExtra("Phone", phone);
+                                in.putExtra("name", "user");
                                 startActivity(in);
                                 finish();
-                            } else {
+                            }
+                            else  if (DO.equals("update2")) {
+                                Intent in = new Intent(phoneAuth.this, NewPassword.class);
+                                in.putExtra("Phone",  getIntent().getStringExtra("Phone"));
+                                in.putExtra("name", "hotel");
+                                startActivity(in);
+                                finish();
+                            }
+
+                            else {
                                 storeUserData();
                                 Toast.makeText(getApplicationContext(), "Successful", Toast.LENGTH_LONG).show();
                                 Intent in = new Intent(phoneAuth.this,SignUp4.class);
@@ -140,7 +150,7 @@ public class phoneAuth extends AppCompatActivity {
 
 
                         } else {
-                            Toast.makeText(getApplicationContext(), "UnSuccessful", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Wrong Code", Toast.LENGTH_LONG).show();
 
                         }
                     }
@@ -149,6 +159,7 @@ public class phoneAuth extends AppCompatActivity {
 
     public void verify(View view) {
         String code=pin.getText().toString();
+        if(code!=null)
         verifyCode(code);
 
     }

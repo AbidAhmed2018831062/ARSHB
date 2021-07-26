@@ -20,88 +20,93 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:src="@drawable/arrowb" />
+
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
             android:id="@+id/visi"
-android:visibility="gone"
-            android:orientation="vertical">
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/comment"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/comment"
-            android:hint="Write A Comment"
-            android:textColorHint="#000"
 
-            app:endIconMode="clear_text"
-            app:endIconTint="#000"
-            app:hintTextColor="#000"
-            app:passwordToggleEnabled="true"
-            app:startIconDrawable="@drawable/create"
-            app:startIconTint="#000">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/comment"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/muli_bold"
-                android:textColor="#000" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="match_parent"
+                android:background="@drawable/comment"
+                android:hint="Write A Comment"
+                android:textColorHint="#000"
+
+                app:endIconMode="clear_text"
+                app:endIconTint="#000"
+                app:hintTextColor="#000"
+                app:passwordToggleEnabled="true"
+                app:startIconDrawable="@drawable/create"
+                app:startIconTint="#000">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/muli_bold"
+                    android:textColor="#000" />
+            </com.google.android.material.textfield.TextInputLayout>
+
             <RatingBar
-                android:layout_marginTop="15dp"
+                android:id="@+id/rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:rating="3"
+                android:layout_marginTop="15dp"
                 android:numStars="5"
-                android:progressBackgroundTint="@color/Black"
-                style="?android:attr/ratingBarStyleIndicator"
+                android:progressBackgroundTint="#CCCCCC"
                 android:progressTint="#FFCC01"
-                android:id="@+id/rating"
+                android:stepSize=".5"
 
                 />
-        <Button
-            android:id="@+id/submit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="#000"
-            android:fontFamily="@font/muli_black"
-            android:text="Submit"
-            android:textColor="#fff">
 
-        </Button>
+            <Button
+                android:id="@+id/submit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="#000"
+                android:fontFamily="@font/muli_black"
+                android:text="Submit"
+                android:textColor="#fff">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="30dp"
-            android:background="@color/colorGrey"></View>
+            </Button>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp"
+                android:background="@color/colorGrey"></View>
         </LinearLayout>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/muli_black"
-            android:textColor="#000"
             android:text="Alll Reviews"
+            android:textColor="#000"
             android:textSize="20dp"></TextView>
+
         <TextView
+            android:id="@+id/no"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
             android:fontFamily="@font/muli_black"
+            android:text="No reviews for this hotel yet!!!"
             android:textColor="#000"
-            android:layout_marginTop="20dp"
-            android:visibility="gone"
-            android:id="@+id/no"
-            android:text="Nop reviews for this hotel yet!!!"
-            android:textSize="20dp"></TextView>
+            android:textSize="16dp"
+            android:visibility="gone"></TextView>
+
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/allR"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/allR"></androidx.recyclerview.widget.RecyclerView>
+            android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
 
     </LinearLayout>
 </ScrollView>

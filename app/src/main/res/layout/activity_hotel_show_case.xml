@@ -153,7 +153,7 @@
                   android:layout_height="wrap_content"
                   android:id="@+id/profile"
                   android:orientation="horizontal"
-                  android:layout_marginBottom="20dp"
+                  android:visibility="gone"
                   >
                   <de.hdodenhof.circleimageview.CircleImageView
                       xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -175,6 +175,28 @@
                       android:textColor="#000"
                       android:textSize="20dp"></TextView>
               </LinearLayout>
+                <RatingBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:numStars="5"
+                    style="?android:attr/ratingBarStyleIndicator"
+                    android:progressTint="#FFCC01"
+                    android:id="@+id/rating1"
+                    android:progressBackgroundTint="#000"
+                    android:layout_marginBottom="20dp"
+                    />
+                <TextView
+                    android:id="@+id/noR"
+                    android:layout_width="wrap_content"
+                    android:layout_height="29dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:fontFamily="@font/muli_black"
+                    android:text="Abid Ahmed"
+                    android:textColor="#000"
+                    android:textSize="20dp"
+                    android:layout_marginTop="24dp"
+                    android:visibility="visible"></TextView>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

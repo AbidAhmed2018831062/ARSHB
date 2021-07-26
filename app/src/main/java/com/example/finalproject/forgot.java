@@ -1,22 +1,20 @@
 package com.example.finalproject;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 public class forgot extends AppCompatActivity {
@@ -55,38 +53,56 @@ public class forgot extends AppCompatActivity {
             return false; }
     }
 
-  public void  gotoUserFinding()
-    {
-        phone1=phone.getEditText().getText().toString().trim();
-        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users");
-        userRef
-                .orderByChild("phone")
-                .equalTo("+88"+phone1)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot d) {
-                        if (d.exists()) {
-                         Intent in=new Intent(forgot.this,phoneAuth.class);
-                         in.putExtra("Phone",phone1);
-                         in.putExtra("Do","update");
-                         startActivity(in);
+  public void  gotoUserFinding() {
+      phone1 = phone.getEditText().getText().toString().trim();
+      DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users");
+      userRef
+              .orderByChild("phone")
+              .equalTo("+88" + phone1)
+              .addListenerForSingleValueEvent(new ValueEventListener() {
+                  @Override
+                  public void onDataChange(@NonNull DataSnapshot d) {
+                      if (d.exists()) {
+                          Intent in = new Intent(forgot.this, phoneAuth.class);
+                          in.putExtra("Phone", phone1);
+                          in.putExtra("Do", "update1");
+                          startActivity(in);
 
 
+                      } else {
 
+                          Query c1 = FirebaseDatabase.getInstance().getReference("Hotels").child("HotelsPassword").orderByChild("phone").equalTo(phone1);
 
-                        } else {
+                          c1.addListenerForSingleValueEvent(new ValueEventListener() {
+                              @Override
+                              public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                  if (dataSnapshot.exists()) {
+                                      Intent in = new Intent(forgot.this, phoneAuth.class);
+                                      in.putExtra("Phone", phone1);
+                                      in.putExtra("Do", "update2");
+                                      startActivity(in);
 
-                            phone.setError("No such user exist");
-                            phone.requestFocus();
-                        }
+                                  } else {
+                                      phone.setError("User does not exist");
+                                      phone.requestFocus();
+                                  }
 
-                    }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        Toast.makeText(getApplicationContext(), databaseError.getMessage(), Toast.LENGTH_LONG).show();
+                              }
 
-                    }
-                });
+                              @Override
+                              public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                              }
+                          });
+
+                      }
+                  }
+
+                  @Override
+                  public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                  }
+              });
 
         }
     public void onBackPressed() {

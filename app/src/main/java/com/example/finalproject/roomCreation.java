@@ -1,6 +1,8 @@
 package com.example.finalproject;
 
+import android.app.AlertDialog;
 import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -102,7 +104,33 @@ public class roomCreation extends AppCompatActivity {
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               layoutList.removeView(roomView);
+                AlertDialog.Builder alertDialog2 = new AlertDialog.Builder(
+                        roomCreation.this);
+
+// Setting Dialog Title
+                alertDialog2.setTitle("Delete Room");
+
+// Setting Dialog Message
+                alertDialog2.setMessage("Are You Sure Want To Delete The room??");
+                alertDialog2.setIcon(R.drawable.apptitle);
+                alertDialog2.setPositiveButton("YES",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                layoutList.removeView(roomView);
+
+
+                            }
+                        });
+// Setting Negative "NO" Btn
+                alertDialog2.setNegativeButton("NO",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+
+// Showing Alert Dialog
+                alertDialog2.show();
         }});
         ci.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,71 +144,71 @@ public class roomCreation extends AppCompatActivity {
         ui.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                g=false;
-                StorageReference ref=st.child(System.currentTimeMillis()+"."+getFileExtension(imgUri));
+                g = false;
+                if (imgUri == null) {
+                    Toast.makeText(getApplicationContext(), "It is demo image. You can not upload this. Select from yur own gallery", Toast.LENGTH_LONG).show();
+                } else {
+                    StorageReference ref = st.child(System.currentTimeMillis() + "." + getFileExtension(imgUri));
 
-                ref.putFile(imgUri)
-                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    ref.putFile(imgUri)
+                            .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
 
-                                Task<Uri> tu=taskSnapshot.getStorage().getDownloadUrl();
-                                HashMap hem=new HashMap();
-                                Random rn=new Random();
-                                int p10=rn.nextInt(10000);
-                                while(!tu.isSuccessful());
-                                Uri dow=tu.getResult();
-                                url234[r]=dow.toString();
-                                r++;
-                                ci.setVisibility(View.GONE);
-                                ui.setVisibility(View.GONE);
-                                RoomImage.setVisibility(View.GONE);
+                                    Task<Uri> tu = taskSnapshot.getStorage().getDownloadUrl();
+                                    HashMap hem = new HashMap();
+                                    Random rn = new Random();
+                                    int p10 = rn.nextInt(10000);
+                                    while (!tu.isSuccessful()) ;
+                                    Uri dow = tu.getResult();
+                                    url234[r] = dow.toString();
+                                    r++;
+                                    ci.setVisibility(View.GONE);
+                                    ui.setVisibility(View.GONE);
+                                    RoomImage.setVisibility(View.GONE);
 
-                                se.setVisibility(View.VISIBLE);
-                                rn1.setVisibility(View.VISIBLE);
-                                pr.setVisibility(View.VISIBLE);
-                                sub.setVisibility(View.VISIBLE);
-                                for(int j=0;j<d;j++)
-                                {
-                                    if(RoomName[j].equals(rn1.getEditText().getText().toString())) {
-                                        rn1.getEditText().setError("Room Name Already Exists");
-                                        rn1.getEditText().requestFocus();
+                                    se.setVisibility(View.VISIBLE);
+                                    rn1.setVisibility(View.VISIBLE);
+                                    pr.setVisibility(View.VISIBLE);
+                                    sub.setVisibility(View.VISIBLE);
+                                    for (int j = 0; j < d; j++) {
+                                        if (RoomName[j].equals(rn1.getEditText().getText().toString())) {
+                                            rn1.getEditText().setError("Room Name Already Exists");
+                                            rn1.getEditText().requestFocus();
+                                        }
                                     }
+                                    RoomName[d] = rn1.getEditText().getText().toString();
+                                    d++;
+                                    sub.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            if (!se.getEditText().getText().toString().equals("") && !pr.getEditText().getText().toString().equals("") && !rn1.getEditText().getText().toString().equals("")) {
+                                                SessionManagerHotels sh = new SessionManagerHotels(roomCreation.this, SessionManagerHotels.USERSESSION);
+
+                                                HashMap<String, String> hm = sh.returnData();
+                                                String name123 = hm.get(SessionManagerHotels.FULLNAME);
+                                                Rooms roo = new Rooms(rn1.getEditText().getText().toString(), se.getEditText().getText().toString(), pr.getEditText().getText().toString(), url234[r - 1]);
+                                                FirebaseDatabase.getInstance().getReference("Hotels").child(name123).child("rooms").child(rn1.getEditText().getText().toString()).setValue(roo);
+                                                g = true;
+                                                layoutList.removeView(roomView);
+                                                Toast.makeText(getApplicationContext(), "Rooms submitted successfully", Toast.LENGTH_LONG).show();
+                                            } else {
+                                                Toast.makeText(getApplicationContext(), "All fields need to be filled", Toast.LENGTH_LONG).show();
+                                            }
+                                        }
+                                    });
+
                                 }
-                                RoomName[d]=rn1.getEditText().getText().toString();
-                                d++;
-                                sub.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        if(!se.getEditText().getText().toString().equals("")&&!pr.getEditText().getText().toString().equals("")&&!rn1.getEditText().getText().toString().equals(""))
-                                        {
-                                            SessionManagerHotels sh= new SessionManagerHotels(roomCreation.this,SessionManagerHotels.USERSESSION);
-
-                                            HashMap<String,String> hm=sh.returnData();
-                                            String name123=hm.get(SessionManagerHotels.FULLNAME);
-                                          Rooms roo=new Rooms(rn1.getEditText().getText().toString(),se.getEditText().getText().toString(),pr.getEditText().getText().toString(),url234[r-1]);
-                                          FirebaseDatabase.getInstance().getReference("Hotels").child(name123).child("rooms").child(rn1.getEditText().getText().toString()).setValue(roo);
-                                      g=true;
-                                        layoutList.removeView(roomView);
-                                            Toast.makeText(getApplicationContext(), "Rooms submitted successfully", Toast.LENGTH_LONG).show();
-                                        }
-                                        else
-                                        {
-                                            Toast.makeText(getApplicationContext(),"All fields need to be filled",Toast.LENGTH_LONG).show();
-                                        }
-                                    }
-                                });
-
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception exception) {
-                                // Handle unsuccessful uploads
-                                // ...
-                            }
-                        });
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception exception) {
+                                    // Handle unsuccessful uploads
+                                    // ...
+                                }
+                            });
+                }
             }
         });
 

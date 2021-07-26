@@ -1,10 +1,6 @@
 package com.example.finalproject;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -12,6 +8,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.chaos.view.PinView;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,11 +21,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 
@@ -106,10 +101,13 @@ verify.setOnClickListener(new View.OnClickListener() {
             };
 
     private void verifyCode(String code) {
-        if (code != null||!code.equals("")) {
+        if (code != null&&!code.equals("")) {
             PhoneAuthCredential ph = PhoneAuthProvider.getCredential(codeBySystem, code);
             signInWithPhoneAuthCredential(ph);
         }
+        else
+            Toast.makeText(getApplicationContext(), "Enter Code First", Toast.LENGTH_LONG).show();
+
 
     }
 

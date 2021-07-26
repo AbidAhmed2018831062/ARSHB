@@ -1,11 +1,7 @@
 package com.example.finalproject;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -14,6 +10,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
@@ -87,7 +89,7 @@ LinearLayout visi;
                     @Override
                     public void onDataChange(@NonNull DataSnapshot d) {
                          url = d.child(phone).child("url").getValue(String.class);
-                        CommentShow show=new CommentShow(fullname,review,phone, url,rating.getNumStars()+"");
+                        CommentShow show=new CommentShow(fullname,review,phone, url,rating.getRating()+"");
                         DatabaseReference db= FirebaseDatabase.getInstance().getReference("Hotels").child(hotelName).child("Review").child("Reveiw"+jk);
                         db.setValue(show);
                         list.add(show);
@@ -101,6 +103,7 @@ LinearLayout visi;
 
                         DatabaseReference dgh=  FirebaseDatabase.getInstance().getReference("Hotels").child(hotelName).child("Rating");
                         dgh.updateChildren(h);
+                        startActivity(new Intent(getApplicationContext(),Reviews.class).putExtra("name",hotelName));
 
                     }
 
@@ -113,9 +116,9 @@ LinearLayout visi;
 
             }
         });
-        final int[] k = {0};
+        final int[] k234 = {0};
         final int[] yu = { 0 };
-        FirebaseDatabase.getInstance().getReference("Users").child("Order").addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference("Users").child(phone).child("Order").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot d:dataSnapshot.getChildren())
@@ -124,8 +127,8 @@ LinearLayout visi;
                     String hdes=or.getHname();
                     if(hdes.contains(hotelName))
                     {
-                        k[0]++;
-                        FirebaseDatabase.getInstance().getReference("Hotels").child("Order").addValueEventListener(new ValueEventListener(){
+                        k234[0]++;
+                        FirebaseDatabase.getInstance().getReference("Hotels").child(hotelName).child("Review").addValueEventListener(new ValueEventListener(){
 
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
@@ -133,12 +136,19 @@ LinearLayout visi;
                                {
                                    CommentShow cs=ds.getValue(CommentShow.class);
                                    String Cname=cs.getName();
-                                   if(Cname.contains(fullname))
+
+                                   if(Cname!=null&&!Cname.equals("")&&!Cname.isEmpty()&&Cname.contains(fullname))
                                    {
                                           yu[0]++;
+                                       Toast.makeText(getApplicationContext(),"Kaise Ho",Toast.LENGTH_LONG).show();
                                    }
 
                                }
+                                if(k234[0] !=0&&yu[0]==0) {
+                                    pr.dismiss();   Toast.makeText(getApplicationContext(),"Kaise Ho"+yu[0],Toast.LENGTH_LONG).show();
+
+                                    visi.setVisibility(View.VISIBLE);
+                                }
                             }
 
                             @Override
@@ -156,10 +166,7 @@ LinearLayout visi;
 
             }
         });
-        if(k[0] !=0&&yu[0]==0) {
-            pr.dismiss();
-            visi.setVisibility(View.VISIBLE);
-        }
+
         Random rn=new Random();
         int jk= rn.nextInt(10000000);
         DatabaseReference db = FirebaseDatabase.getInstance().getReference("Hotels").child(hotelName).child("Review");
@@ -191,7 +198,8 @@ LinearLayout visi;
     }
 
     @Override
-    public void onBackPressed() {
-        Reviews.super.onBackPressed();
+    public void onBackPressed()
+    {
+        startActivity(new Intent(getApplicationContext(),HotelShowCase.class));
     }
 }
