@@ -163,7 +163,8 @@ double lng2,lat2;
                             moveCamera(new LatLng(lat2,lng2), DEFAULT_ZOOM, "My Location");
                             int j = 0;
                             for (Address address : finalAddresses) {
-
+                                 if(j>=op.length)
+                                     break;
                                 float[] dist=new float[10];
                                 double lat1 = address.getLatitude();
                                 double lng1 = address.getLongitude();
@@ -172,14 +173,18 @@ double lng2,lat2;
                                 LatLng oa=new LatLng(lat1,lng1);
                                 cr=new LatLng(lat2,lng2);
                                 km = SphericalUtil.computeDistanceBetween(cr, oa);
+                                Toast.makeText(getApplicationContext(),j+" ",Toast.LENGTH_LONG).show();
+                                if(getIntent().getStringExtra("na").equals("Dashboard")) {
+                                    if (Math.abs(km / 1000) <= 10) {
 
-                                if(Math.abs(km/1000) <= 10){
+                                        moveCamera(new LatLng(address.getLatitude(), address.getLongitude()), DEFAULT_ZOOM, op[j]);
 
-                                    moveCamera(new LatLng(address.getLatitude(), address.getLongitude()), DEFAULT_ZOOM, op[j]);
+                                    }
 
                                 }
+                                else
+                                    moveCamera(new LatLng(address.getLatitude(), address.getLongitude()), DEFAULT_ZOOM, op[0]);
                                 j++;
-
                             }
 
                         } else

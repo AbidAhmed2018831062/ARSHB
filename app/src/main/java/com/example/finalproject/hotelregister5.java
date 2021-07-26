@@ -92,21 +92,21 @@ public class hotelregister5 extends AppCompatActivity {
                 }
                 if(fa.isChecked())
                 {
-                    DatabaseReference db= FirebaseDatabase.getInstance().getReference("Hotels").child("name1");
+                    DatabaseReference db= FirebaseDatabase.getInstance().getReference("Hotels").child(name1);
                     HashMap hm=new HashMap();
                     hm.put("fa","yes");
                     db.updateChildren(hm);
                 }
                 else
                 {
-                    DatabaseReference db= FirebaseDatabase.getInstance().getReference("Hotels").child("name1");
+                    DatabaseReference db= FirebaseDatabase.getInstance().getReference("Hotels").child(name1);
                     HashMap hm=new HashMap();
                     hm.put("fa","no");
                     db.updateChildren(hm);
                 }
                 if(fia.isChecked())
                 {
-                    DatabaseReference db= FirebaseDatabase.getInstance().getReference("Hotels").child("name1");
+                    DatabaseReference db= FirebaseDatabase.getInstance().getReference("Hotels").child(name1);
                     HashMap hm=new HashMap();
                     hm.put("fia","yes");
                     db.updateChildren(hm);
@@ -211,18 +211,27 @@ public class hotelregister5 extends AppCompatActivity {
                     HashMap a=new HashMap();
                     SessionManagerHotels sh=new SessionManagerHotels(hotelregister5.this,SessionManagerHotels.USERSESSION);
                     HashMap<String,String> u=sh.returnData();
-                    String n=u.get(SessionManager.FULLNAME);
-                    String pass=u.get(SessionManager.PASS);
-                    String phone=u.get(SessionManager.PHONE);
+                    String n=u.get(SessionManagerHotels.FULLNAME);
+                    String pass=u.get(SessionManagerHotels.PASS);
+                    String phone=u.get(SessionManagerHotels.PHONE);
                     int cmonth= Calendar.getInstance().get(Calendar.MONTH);
                     int cye= Calendar.getInstance().get(Calendar.YEAR);
                     HashMap mon=new HashMap();
                     mon.put("omon",cmonth);
                     mon.put("oyear",cye);
                     FirebaseDatabase.getInstance().getReference("Hotels").child(name1).child("Opening").updateChildren(mon);
+                    String phone12="";
+                    if(phone.contains("+"))
+                    {
+                        for(int i=3;i<phone.length();i++)
+                        {
+                            phone12+=phone.charAt(i);
+                        }
+                    }
                     a.put("hotel"+p10, n+" ,"+ad1);
-                    HotelLogIn hl=new HotelLogIn(phone,pass,n);
-                    FirebaseDatabase.getInstance().getReference("Hotels").child("HotelsPassword").setValue(hl);
+                    HotelLogIn hl=new HotelLogIn(phone12,pass,n);
+
+                    FirebaseDatabase.getInstance().getReference("Hotels").child("HotelsPassword").child(phone12).setValue(hl);
                    Earning DS=new Earning(0,0);
                     FirebaseDatabase.getInstance().getReference("Hotels").child(name1).child("Earning").setValue(DS);
 

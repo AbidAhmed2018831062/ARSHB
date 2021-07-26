@@ -81,19 +81,23 @@
                android:elevation="8dp"
                android:layout_marginBottom="20dp"
                android:layout_marginTop="20dp">
-               <TextView
+
+               <AutoCompleteTextView
+                   android:id="@+id/actv"
+                   android:layout_width="match_parent"
                    android:layout_height="wrap_content"
-                   android:layout_width="wrap_content"
-                   android:layout_centerVertical="true"
-                   android:text="Search..."
-                   android:textColor="#000"
-                   android:textSize="18sp"
-                   android:layout_marginLeft="10dp"/>
+                   android:completionHint="Select a country"
+                   android:completionThreshold="1"
+                   android:fontFamily="@font/muli_bold"
+                   android:hint="Select a country"
+                   android:textColor="#000" />
+
                <ImageView
                    android:layout_height="30dp"
                    android:layout_width="30dp"
                    android:src="@drawable/search"
                    android:layout_alignParentRight="true"
+                   android:id="@+id/sear"
                    android:layout_centerVertical="true"/>
            </RelativeLayout>
        </RelativeLayout>

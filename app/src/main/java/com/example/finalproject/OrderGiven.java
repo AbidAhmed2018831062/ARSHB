@@ -1,6 +1,8 @@
 package com.example.finalproject;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,6 +30,7 @@ List<OrderShow> list=new ArrayList<>();
 List<OrderShow> list1=new ArrayList<>();
 RecyclerView allR;
 int cday,cmonth,cyear;
+    TextView empty;
 TextView te;
 String phone,name;
     @Override
@@ -35,6 +38,7 @@ String phone,name;
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_order_given);
+        empty=(TextView)findViewById(R.id.empty);
         allR=(RecyclerView)findViewById(R.id.orders);
         te=(TextView)findViewById(R.id.te);
       //  back=(ImageView)findViewById(R.id.back);
@@ -147,6 +151,11 @@ String phone,name;
                     }
 
                 rl.notifyDataSetChanged();
+                if(list.size()==0)
+                {
+                    empty.setVisibility(View.VISIBLE);
+                    empty.setText("No Results Found");
+                }
             }
 
             @Override
@@ -158,6 +167,12 @@ String phone,name;
 
     @Override
     public void onBackPressed() {
-        OrderGiven.super.onBackPressed();
+        if(phone.contains("+")) {
+            startActivity(new Intent(getApplicationContext(), DashBoard.class));
+        }
+        else
+            startActivity(new Intent(getApplicationContext(), HotelsOverview.class));
+
+
     }
 }

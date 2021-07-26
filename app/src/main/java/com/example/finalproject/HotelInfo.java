@@ -1,11 +1,12 @@
 package com.example.finalproject;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -55,8 +56,9 @@ ImageView back;
 
     }
 
+
     @Override
     public void onBackPressed() {
-        HotelInfo.super.onBackPressed();
+        startActivity(new Intent(getApplicationContext(),HotelsOverview.class));
     }
 }

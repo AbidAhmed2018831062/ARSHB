@@ -1,6 +1,9 @@
 package com.example.finalproject;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +24,7 @@ RecyclerView rl3;
 PaymentAdapter rl;
 String name;
     List<OrderShow> list=new ArrayList<>();
+    TextView empty;
     List<OrderShow> list1=new ArrayList<>();
 
     @Override
@@ -29,6 +33,7 @@ String name;
         setContentView(R.layout.activity_pending_payment);
         rl3=(RecyclerView)findViewById(R.id.rl3);
         rl = new PaymentAdapter(this, list);
+        empty=(TextView)findViewById(R.id.empty);
         SessionManager sh= new SessionManager(this,SessionManager.USERSESSION);
         rl3.setHasFixedSize(true);
         HashMap<String,String> hm=sh.returnData();
@@ -46,6 +51,11 @@ String name;
                     list.add(or);
                 }
                 rl.notifyDataSetChanged();
+                if(list.size()==0)
+                {
+                    empty.setVisibility(View.VISIBLE);
+                    empty.setText("No Results Found");
+                }
             }
 
             @Override
@@ -54,5 +64,10 @@ String name;
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(getApplicationContext(),DashBoard.class));
     }
 }

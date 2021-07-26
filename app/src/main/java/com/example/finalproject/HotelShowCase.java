@@ -41,6 +41,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static java.lang.Float.NaN;
+
 public class HotelShowCase extends AppCompatActivity {
     ImageView back, save;
     String name;
@@ -65,6 +67,7 @@ public class HotelShowCase extends AppCompatActivity {
     RatingBar rating;
     List<CommentShow>list1=new ArrayList<>();
     TextView count1;
+    float r;
     int co = 1, cow = 1;
     boolean isP=false;
     LinearLayout profile;
@@ -104,7 +107,7 @@ public class HotelShowCase extends AppCompatActivity {
             }
         });
         DatabaseReference dgh=  FirebaseDatabase.getInstance().getReference("Hotels").child(name).child("Rating");
-        dgh.addValueEventListener(new ValueEventListener() {
+        dgh.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot e: dataSnapshot.getChildren())
@@ -113,8 +116,34 @@ public class HotelShowCase extends AppCompatActivity {
                     k+=Float.parseFloat(e.getValue(String.class));
                     Toast.makeText(getApplicationContext(),e.getValue(String.class),Toast.LENGTH_LONG).show();
                 }
-                float r= (float) (k/E);
-                //Toast.makeText(getApplicationContext(),r+" "+k+" "+E,Toast.LENGTH_LONG).show();
+                if(E!=0)
+                 r= (float) (k/E);
+                if(r==NaN)
+                    r= (float) 0.0;
+
+
+                FirebaseDatabase.getInstance().getReference("Hotels").child("Rating").orderByChild("name").equalTo(name).addListenerForSingleValueEvent(new ValueEventListener() {
+                   @Override
+                   public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                       if(dataSnapshot.exists())
+                       {
+                           HashMap hmj=new HashMap();
+                           hmj.put("rating",r);
+                           FirebaseDatabase.getInstance().getReference("Hotels").child("Rating").child(name).updateChildren(hmj);
+                       }
+                       else
+                       {
+                           RatingClass rs=new RatingClass(name,r);
+                           FirebaseDatabase.getInstance().getReference("Hotels").child("Rating").child(name).setValue(rs);
+
+                       }
+                   }
+
+                   @Override
+                   public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                   }
+               });
                 rating.setRating( r);
                // Toast.makeText(getApplicationContext()," "+rating.getNumStars(),Toast.LENGTH_LONG).show();
                 count1.setText(E+" reviews");
@@ -173,6 +202,7 @@ public class HotelShowCase extends AppCompatActivity {
                     Picasso.with(HotelShowCase.this).load(roo.getUrl()).fit().centerCrop().into(profile_Image);
                     profileName.setText(roo.getName());
                     review.setText(roo.getComment());
+                    rating.setVisibility(View.VISIBLE);
                     rating1.setRating(Float.parseFloat(roo.getStar()));
                     f++;
                     break;
@@ -393,9 +423,17 @@ layoutList.addView(roomView);*/
             @Override
             public void onClick(View view) {
                 checkPermission();
-                if(isP==true)
-                startActivity(new Intent(getApplicationContext(),ActivityBeforeMap.class).putExtra("name",ad.getText().toString()+", "+na.getText().toString()));
-                else
+                if(isP==true) {
+                    if(!ad.getText().toString().equals("")) {
+                        String[] op = new String[1];
+                        op[0] = na.getText().toString() + "," + ad.getText().toString();
+                        startActivity(new Intent(getApplicationContext(), ActivityBeforeMap.class).putExtra("name", na.getText().toString() + ","+ad.getText().toString()).putExtra("op", op).putExtra("na","Hotel"));
+                        Toast.makeText(getApplicationContext(), ad.getText().toString(), Toast.LENGTH_LONG).show();
+                    }
+                    else
+                        Toast.makeText(getApplicationContext(),"Activity is getting updated. Please try again a few seconds later!!",Toast.LENGTH_LONG).show();
+
+                }   else
                     Toast.makeText(getApplicationContext(),"Permission was not given",Toast.LENGTH_LONG).show();
             }
         });

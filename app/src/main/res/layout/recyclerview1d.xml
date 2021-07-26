@@ -36,6 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:rating="3.5"
+            android:progressBackgroundTint="@color/grey"
             style="@style/Widget.AppCompat.RatingBar.Small"/>
         <TextView
             android:textColor="#000"

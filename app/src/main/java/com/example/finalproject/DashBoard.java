@@ -17,6 +17,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -63,11 +65,15 @@ public class DashBoard extends AppCompatActivity {
     private FusedLocationProviderClient f;
      double lng2,lat2;
     boolean isP=false;
+    ImageView sear;
     Dialog d1;
     int img[]={R.drawable.tree,R.drawable.dhaka,R.drawable.barishal,R.drawable.chittagong,R.drawable.khulna,R.drawable.rajshahi,R.drawable.rangpur,R.drawable.mymensingh};
      String str;
 String[] list;
+int H=0;
     FirebaseUser u;
+    AutoCompleteTextView editText;
+    ArrayAdapter<String> adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +90,7 @@ String[] list;
         dr=(DrawerLayout) findViewById(R.id.drawer);
         menui=(ImageView) findViewById(R.id.menuicon);
         plusicon=(ImageView) findViewById(R.id.plusicon);
+        sear=(ImageView) findViewById(R.id.sear);
         map=(ImageView) findViewById(R.id.map);
         nav=(NavigationView) findViewById(R.id.navigation);
         u= FirebaseAuth.getInstance().getCurrentUser();
@@ -92,8 +99,49 @@ String[] list;
         division.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
         da=new divisionAdapter(this,list,img);
         division.setAdapter(da);
+        editText = findViewById(R.id.actv);
+        sear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!isWiConnected(DashBoard.this)) {
+
+                    showCustomDialog();
+
+                }
+                else {
+                    startActivity(new Intent(getApplicationContext(), All_Hotels.class).putExtra("com",editText.getText().toString()));
+                }
+            }
+        });
+
+
+        editText.setThreshold(1);
         SessionManager sh=new SessionManager(this,SessionManager.USERSESSION);
+       FirebaseDatabase.getInstance().getReference("Hotels").child("Hotel Names").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ArrayList<String> hotelsName=new ArrayList<>();
+           for(DataSnapshot ds:dataSnapshot.getChildren())
+           {
+               HotelShow hs=ds.getValue(HotelShow.class);
+             hotelsName.add(hs.getName());
+
+           }
+                adapter = new ArrayAdapter<String>(DashBoard.this,
+                        android.R.layout.simple_list_item_1, hotelsName);
+                editText.setAdapter(adapter);
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         checkPermission();
+
+        //editText.setThreshold(1);
         if(isP==true) {
             FirebaseDatabase.getInstance().getReference("Hotels").child("Address").addValueEventListener(new ValueEventListener() {
                 @Override
@@ -126,7 +174,7 @@ String[] list;
 
                             }
                             else
-                            startActivity(new Intent(getApplicationContext(), ActivityBeforeMap.class).putExtra("name", str).putExtra("op", op));
+                            startActivity(new Intent(getApplicationContext(), ActivityBeforeMap.class).putExtra("name", str).putExtra("op", op).putExtra("na","Dashboard"));
                         }
                     });
 
@@ -217,7 +265,7 @@ String[] list;
 
                   }
                   else {
-                      startActivity(new Intent(getApplicationContext(), All_Hotels.class));
+                      startActivity(new Intent(getApplicationContext(), All_Hotels.class).putExtra("com","no"));
                   }
               }
 
@@ -373,7 +421,11 @@ String[] list;
     }
     @Override
     public void onBackPressed() {
-        if(dr.isDrawerVisible(GravityCompat.START))
+        if(editText.hasFocus())
+        {
+            editText.clearFocus();
+        }
+       else if(dr.isDrawerVisible(GravityCompat.START))
             dr.closeDrawer(GravityCompat.START);
         else {
             AlertDialog.Builder alertDialog2 = new AlertDialog.Builder(
@@ -415,8 +467,32 @@ String[] list;
     {
         rl1.setHasFixedSize(true);
         rl1.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
-        rl1Adapter rl=new rl1Adapter(this,rl1img,rl1h,rl1des);
-        rl1.setAdapter(rl);
+        FirebaseDatabase.getInstance().getReference("Hotels").child("Rating").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                int opiu=0;
+                ArrayList<RatingClass> ars=new ArrayList<>();
+                for(DataSnapshot ds: dataSnapshot.getChildren())
+                {
+                    if(opiu==3)
+                        break;
+                    RatingClass rs=ds.getValue(RatingClass.class);
+                    if(rs.getRating()>=4.0)
+                    {
+                    ars.add(rs);
+                    opiu++;
+                    }
+                }
+                rl1Adapter rl=new rl1Adapter(DashBoard.this,rl1img,ars,rl1des);
+                rl1.setAdapter(rl);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
 
     }
 

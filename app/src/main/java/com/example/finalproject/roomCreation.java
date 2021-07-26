@@ -313,4 +313,8 @@ public class roomCreation extends AppCompatActivity {
         return mim.getExtensionFromMimeType(con.getType(imgURI));
     }
 
+    @Override
+    public void onBackPressed() {
+        roomCreation.super.onBackPressed();
+    }
 }

@@ -84,9 +84,6 @@ public class hotelRegister4 extends AppCompatActivity {
                             phone.setError("Phone Already in use");
                             phone.requestFocus();
 
-
-
-
                         } else {
 
                             Toast.makeText(getApplicationContext(), "+88" + phone1, Toast.LENGTH_LONG).show();

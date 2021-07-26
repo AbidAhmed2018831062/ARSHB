@@ -50,12 +50,7 @@
                     android:textColor="#000"
                     android:textStyle="bold"
                     android:textSize="15sp"
-                    android:icon="@drawable/idashboard"
-                    />
-                <item android:id="@+id/cancelled"
-                    android:title="Order Cancelled"
-                    android:icon="@drawable/search"
-                    android:textColor="#000"/>
+                    android:icon="@drawable/idashboard"/>
                 <item android:id="@+id/nav_LogOut"
                     android:title="Log Out"
                     android:textColor="#000"
