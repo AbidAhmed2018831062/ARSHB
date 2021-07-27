@@ -203,7 +203,7 @@ public class HotelShowCase extends AppCompatActivity {
             @Override
             public void onNavigationItemReselected(@NonNull MenuItem item) {
                 if (item.getItemId()==R.id.s) {
-                    startActivity(new Intent(HotelShowCase.this, All_Hotels.class));
+                    startActivity(new Intent(HotelShowCase.this, All_Hotels.class).putExtra("com","no"));
                 } else if (item.getItemId() == R.id.fav) {
                     startActivity(new Intent(HotelShowCase.this, Fav.class));
 
@@ -468,7 +468,7 @@ layoutList.addView(roomView);*/
                     if(!ad.getText().toString().equals("")) {
                         String[] op = new String[1];
                         op[0] = na.getText().toString() + "," + ad.getText().toString();
-                        startActivity(new Intent(getApplicationContext(), ActivityBeforeMap.class).putExtra("name", na.getText().toString() + ","+ad.getText().toString()).putExtra("op", op).putExtra("na","Hotel"));
+                        startActivity(new Intent(getApplicationContext(), ActivityBeforeMap.class).putExtra("name", na.getText().toString() + ","+ad.getText().toString()).putExtra("op", op).putExtra("na","Hotel").putExtra("abid","1"));
                         Toast.makeText(getApplicationContext(), ad.getText().toString(), Toast.LENGTH_LONG).show();
                     }
                     else

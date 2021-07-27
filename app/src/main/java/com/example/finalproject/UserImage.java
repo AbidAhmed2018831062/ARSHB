@@ -1,7 +1,9 @@
 package com.example.finalproject;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -136,8 +138,35 @@ upload.setVisibility(View.VISIBLE);
                                         });
                                     }
                                     pr.dismiss();
-                                    startActivity(new Intent(getApplicationContext(),DashBoard.class));
-                                    finish();
+                                    AlertDialog.Builder alertDialog2 = new AlertDialog.Builder(
+                                            UserImage.this);
+
+// Setting Dialog Title
+                                    alertDialog2.setTitle("Successful.");
+
+// Setting Dialog Message
+                                    alertDialog2.setMessage("Image Upload successful. Will you like to go back to dashboard section?.");
+                                    alertDialog2.setIcon(R.drawable.apptitle);
+                                    alertDialog2.setPositiveButton("YES",
+                                            new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    // Write your code here to execute after dialog
+                                                    startActivity(new Intent(getApplicationContext(),DashBoard.class));
+                                                    finish();
+
+                                                }
+                                            });
+// Setting Negative "NO" Btn
+                                    alertDialog2.setNegativeButton("NO",
+                                            new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    dialog.cancel();
+                                                }
+                                            });
+
+// Showing Alert Dialog
+                                    alertDialog2.show();
+
                                 }
 
                                 @Override

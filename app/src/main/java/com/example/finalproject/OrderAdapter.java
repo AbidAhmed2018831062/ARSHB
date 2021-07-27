@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -50,7 +49,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.Show> {
         holder.cdes.setText(list.get(i).getCname());
         holder.hdes.setText(list.get(i).getHname());
         holder.total.setText(list.get(i).getPrice());
-        Toast.makeText(c, list.get(i).getCname() + "" + list.get(i).getHname() + "" + list.get(i).getRname(), Toast.LENGTH_LONG).show();
+     //   Toast.makeText(c, list.get(i).getCname() + "" + list.get(i).getHname() + "" + list.get(i).getRname(), Toast.LENGTH_LONG).show();
         holder.rname.setText(list.get(i).getRname());
         holder.qua.setText(list.get(i).getRoomscount());
         holder.count.setOnClickListener(new View.OnClickListener() {

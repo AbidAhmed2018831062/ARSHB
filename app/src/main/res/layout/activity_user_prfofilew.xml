@@ -86,14 +86,6 @@
         android:text="    Sadman Shakib"
         android:layout_marginTop="10dp"
         />
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:text="Edit Details"
-        android:layout_marginTop="25dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="#3949AB"></Button>
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"

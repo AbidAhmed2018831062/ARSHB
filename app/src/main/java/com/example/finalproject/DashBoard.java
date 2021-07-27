@@ -21,7 +21,6 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -174,7 +173,7 @@ int H=0;
 
                             }
                             else
-                            startActivity(new Intent(getApplicationContext(), ActivityBeforeMap.class).putExtra("name", str).putExtra("op", op).putExtra("na","Dashboard"));
+                            startActivity(new Intent(getApplicationContext(), ActivityBeforeMap.class).putExtra("name", str).putExtra("op", op).putExtra("na","Dashboard").putExtra("abid","ab"));
                         }
                     });
 
@@ -204,7 +203,8 @@ int H=0;
 
                                  }
                                  else {
-                                     Toast.makeText(getApplicationContext(), phoneUser + "/" + phoneHotel, Toast.LENGTH_LONG).show();
+                              //
+                                     //       Toast.makeText(getApplicationContext(), phoneUser + "/" + phoneHotel, Toast.LENGTH_LONG).show();
                                      Intent in = new Intent(DashBoard.this, UserPrfofilew.class);
                                      Pair pair[] = new Pair[1];
                                      pair[0] = new Pair<View, String>(plusicon, "nextTra");
@@ -500,7 +500,7 @@ int H=0;
         Dexter.withContext(this).withPermission(Manifest.permission.ACCESS_FINE_LOCATION).withListener(new PermissionListener() {
             @Override
             public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
-                Toast.makeText(getApplicationContext(), "Granted", Toast.LENGTH_LONG).show();
+              //  Toast.makeText(getApplicationContext(), "Granted", Toast.LENGTH_LONG).show();
                 isP = true;
             }
 

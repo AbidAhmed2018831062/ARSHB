@@ -54,7 +54,7 @@ public class All_Hotels extends AppCompatActivity {
         s = (SearchView) findViewById(R.id.serachView);
         //s.setIconified(false);
         //        //s.setIconifiedByDefault(false)
-        if(!getIntent().getStringExtra("com").equals("no")){
+        if(getIntent().getStringExtra("com")!=null&&!getIntent().getStringExtra("com").equals("no")){
             nameOfDiv.setText("Your serached results: ");
         }
 
@@ -94,7 +94,7 @@ public class All_Hotels extends AppCompatActivity {
                                listI.add(it1);
                            }
                            else{
-                               if(hr.getName().toLowerCase().contains(getIntent().getStringExtra("com").toLowerCase())){
+                               if(hr.getName().contains(getIntent().getStringExtra("com"))){
                                    Users it1 = new Users(hr.getUrl(), hr.getName(), "Expand All");
                                    listI.add(it1);
                                }

@@ -70,6 +70,7 @@ double lng2,lat2;
     RelativeLayout s;
     LocationRequest locationRequest;
     ProgressDialog pr;
+     String yui,uip;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +85,8 @@ double lng2,lat2;
         gps=(ImageView)findViewById(R.id.gps);
         hname=getIntent().getStringExtra("name");
         op=getIntent().getStringArrayExtra("op");
+        yui=getIntent().getStringExtra("abid");
+        uip=getIntent().getStringExtra("na");
 
         SupportMapFragment mp = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mp.getMapAsync(new OnMapReadyCallback() {
@@ -107,7 +110,7 @@ double lng2,lat2;
                 gps.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                         startActivity(new Intent(getApplicationContext(),ActivityBeforeMap.class).putExtra("name", hname).putExtra("op", op));
+                         startActivity(new Intent(getApplicationContext(),ActivityBeforeMap.class).putExtra("name", hname).putExtra("op", op).putExtra("abid",yui).putExtra("na",getIntent().getStringExtra("na")));
                          finish();
                     }
                 });
@@ -125,12 +128,12 @@ double lng2,lat2;
         Geocoder g = new Geocoder(ActivityBeforeMap.this);
         List<Address> addresses = new ArrayList<>();
         try {
-            addresses = g.getFromLocationName(hname, 100);
+            addresses = g.getFromLocationName(hname, 5);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-       Toast.makeText(getApplicationContext(), op.length + " ", Toast.LENGTH_LONG).show();
+      Toast.makeText(getApplicationContext(), addresses.size() + " ", Toast.LENGTH_LONG).show();
 
         if (addresses.size() > 0) {
 
@@ -155,16 +158,17 @@ double lng2,lat2;
                 f.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
                     @Override
                     public void onSuccess(Location location) {
+
                         Toast.makeText(getApplicationContext(),"Zoom Out to see nearby places",Toast.LENGTH_LONG).show();
                         if (location != null) {
-                            Toast.makeText(getApplicationContext(),"Zoom Out to see nearby places",Toast.LENGTH_LONG).show();
+                         //   Toast.makeText(getApplicationContext(),"Zoom Out to see nearby places",Toast.LENGTH_LONG).show();
                             lat2 = location.getLatitude();
                             lng2 = location.getLongitude();
                             moveCamera(new LatLng(lat2,lng2), DEFAULT_ZOOM, "My Location");
                             int j = 0;
                             for (Address address : finalAddresses) {
-                                 if(j>=op.length)
-                                     break;
+
+
                                 float[] dist=new float[10];
                                 double lat1 = address.getLatitude();
                                 double lng1 = address.getLongitude();
@@ -173,22 +177,23 @@ double lng2,lat2;
                                 LatLng oa=new LatLng(lat1,lng1);
                                 cr=new LatLng(lat2,lng2);
                                 km = SphericalUtil.computeDistanceBetween(cr, oa);
-                                Toast.makeText(getApplicationContext(),j+" ",Toast.LENGTH_LONG).show();
-                                if(getIntent().getStringExtra("na").equals("Dashboard")) {
-                                    if (Math.abs(km / 1000) <= 10) {
+                            //  Toast.makeText(getApplicationContext(),uip+" ",Toast.LENGTH_LONG).show();
 
+                              //  Toast.makeText(getApplicationContext(),km+" "+op[j],Toast.LENGTH_LONG).show();
+                                    if (Math.abs(km / 1000) <= 10) {
+                                        Toast.makeText(getApplicationContext(),km+" ",Toast.LENGTH_LONG).show();
                                         moveCamera(new LatLng(address.getLatitude(), address.getLongitude()), DEFAULT_ZOOM, op[j]);
 
                                     }
-
-                                }
-                                else
-                                    moveCamera(new LatLng(address.getLatitude(), address.getLongitude()), DEFAULT_ZOOM, op[0]);
+                                else if(!uip.equals("Dashboard"))
+                                    moveCamera(new LatLng(address.getLatitude(), address.getLongitude()), DEFAULT_ZOOM, op[j]);
                                 j++;
+                          //      Toast.makeText(getApplicationContext(),j+""+op[j],Toast.LENGTH_LONG).show();
                             }
 
-                        } else
-                            Toast.makeText(getApplicationContext(), location + "", Toast.LENGTH_LONG).show();
+                        } else {
+                            //   Toast.makeText(getApplicationContext(), location + "", Toast.LENGTH_LONG).show();
+                        }
 
                     }
                 });
@@ -208,7 +213,7 @@ private void moveCamera(final LatLng ll, float sum,String p)
     m.moveCamera(CameraUpdateFactory.newLatLngZoom(ll,sum));
     MarkerOptions n=new MarkerOptions().position(ll).title(p);
     m.addMarker(n);
-    Toast.makeText(getApplicationContext(),hname+" ",Toast.LENGTH_LONG).show();
+   // Toast.makeText(getApplicationContext(),hname+" ",Toast.LENGTH_LONG).show();
     hideSoftKeyboard();
 }
 

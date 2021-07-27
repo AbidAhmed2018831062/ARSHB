@@ -292,4 +292,10 @@ layoutList.addView(roomView);*/
                 Toast.makeText(getApplicationContext(),dele[i], Toast.LENGTH_LONG).show();
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(getApplicationContext(), HotelsOverview.class));
+        finish();
+    }
 }

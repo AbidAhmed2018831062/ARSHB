@@ -73,7 +73,7 @@ public class ApprovalAdapter extends RecyclerView.Adapter<ApprovalAdapter.NEED> 
         len=list.get(i).getCname().length();
         cname=list.get(i).getCname();
         holder.hdes.setText(list.get(i).getHname());
-        Toast.makeText(c,list.get(i).getHname(),Toast.LENGTH_LONG).show();
+      //  Toast.makeText(c,list.get(i).getHname(),Toast.LENGTH_LONG).show();
         holder.total.setText(list.get(i).getPrice());
         end1=list.get(i).getEndDate();
         hname=list.get(i).getHname();

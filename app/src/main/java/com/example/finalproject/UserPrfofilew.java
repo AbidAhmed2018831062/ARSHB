@@ -68,7 +68,7 @@ List<OrderShow> list=new ArrayList<>();
             @Override
             public void onNavigationItemReselected(@NonNull MenuItem item) {
                 if (item.getItemId()==R.id.s) {
-                    startActivity(new Intent(UserPrfofilew.this, All_Hotels.class));
+                    startActivity(new Intent(UserPrfofilew.this, All_Hotels.class).putExtra("com","no"));
                 } else if (item.getItemId() == R.id.fav) {
                     startActivity(new Intent(UserPrfofilew.this, Fav.class));
 
@@ -76,7 +76,7 @@ List<OrderShow> list=new ArrayList<>();
                     startActivity(new Intent(UserPrfofilew.this, UserPrfofilew.class));
 
                 }
-                else if(item.getItemId()==R.id.Saved)
+                else if(item.getItemId()==R.id.watch)
                 {
                     startActivity(new Intent(UserPrfofilew.this, WatchLater.class));
 
