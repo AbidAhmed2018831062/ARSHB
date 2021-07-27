@@ -43,7 +43,7 @@ ImageView profile_image;
 CardView fav,save,order,upcoming,pay;
 String phone;
     BottomNavigationView  bm;
-
+     String[] url = new String[1];
 
 List<OrderShow> list=new ArrayList<>();
     @Override
@@ -160,13 +160,21 @@ List<OrderShow> list=new ArrayList<>();
             public void onClick(View view) {
               final  BottomSheetDialog bsd=new BottomSheetDialog(UserPrfofilew.this, R.style.BottomSheetDialogTheme);
                 View bs= LayoutInflater.from(getApplicationContext()).inflate(R.layout.bottomsheet,(LinearLayout)findViewById(R.id.bottomsheet));
-                bs.findViewById(R.id.view).setOnClickListener(new OnClickListener() {
+                bs.findViewById(R.id.change).setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        startActivity(new Intent(getApplicationContext(),UserImage.class));
+                        startActivity(new Intent(getApplicationContext(),UserImage.class).putExtra("url",url[0]));
                         finish();
                     }
                 });
+                bs.findViewById(R.id.view).setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(getApplicationContext(),UserImage.class).putExtra("url",url[0]));
+                        finish();
+                    }
+                });
+
                 bsd.setContentView(bs);
                 bsd.show();
             }
@@ -188,7 +196,7 @@ List<OrderShow> list=new ArrayList<>();
         String edu=hm.get(SessionManager.EDUCATION);
         String location=hm.get(SessionManager.LOCATION);
         String signupdate=hm.get(SessionManager.signupdate);
-        final String[] url = new String[1];
+
         Query c = FirebaseDatabase.getInstance().getReference("Users").orderByChild("phone").equalTo(phone);
         c.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

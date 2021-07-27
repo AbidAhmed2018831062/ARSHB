@@ -167,7 +167,7 @@ public class roomCreation extends AppCompatActivity {
                                     ci.setVisibility(View.GONE);
                                     ui.setVisibility(View.GONE);
                                     RoomImage.setVisibility(View.GONE);
-
+Toast.makeText(getApplicationContext(),"Please wait for a few seconds to ulpod the photo.",Toast.LENGTH_LONG).show();
                                     se.setVisibility(View.VISIBLE);
                                     rn1.setVisibility(View.VISIBLE);
                                     pr.setVisibility(View.VISIBLE);
@@ -285,7 +285,8 @@ public class roomCreation extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),"All field needs to be filled", Toast.LENGTH_LONG).show();
         }
         return r;
-    }  @Override
+    }
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if((requestCode == IMAGE_REQUEST) && (resultCode == RESULT_OK) && (data.getData() != null)){

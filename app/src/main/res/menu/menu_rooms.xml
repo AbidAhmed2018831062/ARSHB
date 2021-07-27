@@ -10,6 +10,7 @@
             android:textStyle="bold"
             android:textSize="15sp"
             />
+
         <item android:id="@+id/update"
             android:title="Update Info"
             android:textColor="#000"
@@ -24,6 +25,13 @@
             android:textSize="15sp"
             android:icon="@drawable/update_24"
             />
+        <item android:id="@+id/photos"
+            android:title="Add Photos"
+            android:icon="@drawable/photo"
+            android:textColor="#000"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            />
         <item android:id="@+id/add"
             android:title="Add Rooms"
             android:textColor="#000"
@@ -37,7 +45,14 @@
             android:textStyle="bold"
             android:textSize="15sp"
             android:icon="@drawable/update_24"
-            />
+            />   <item android:id="@+id/ame"
+        android:title="Add Amenities"
+        android:textColor="#000"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:icon="@drawable/ame"
+        />
+
     </group>
     <item android:title="Order"
         android:textColor="#000"

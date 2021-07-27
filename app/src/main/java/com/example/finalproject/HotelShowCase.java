@@ -71,7 +71,10 @@ public class HotelShowCase extends AppCompatActivity {
     int co = 1, cow = 1;
     boolean isP=false;
     LinearLayout profile;
-    TextView noR;
+    TextView noR,hallt;
+    ImageView hall;
+    ImageView display;
+    Button hallb;
 
     int rate;
 
@@ -82,7 +85,11 @@ public class HotelShowCase extends AppCompatActivity {
         setContentView(R.layout.activity_hotel_show_case);
         back = (ImageView) findViewById(R.id.back);
         map = (ImageView) findViewById(R.id.map);
+        hallb = (Button) findViewById(R.id.hallb);
+        display = (ImageView) findViewById(R.id.display);
         ad = (TextView) findViewById(R.id.address);
+        hallt = (TextView) findViewById(R.id.hallt);
+        hall = (ImageView) findViewById(R.id.hall);
         lo = (TextView) findViewById(R.id.location);
         noR = (TextView) findViewById(R.id.noR);
         profile = (LinearLayout) findViewById(R.id.profile);
@@ -104,6 +111,39 @@ public class HotelShowCase extends AppCompatActivity {
 
                 startActivity(in);
                 finish();
+            }
+        });
+        hallb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),WatchAll.class).putExtra("name",name));
+            }
+        });
+        FirebaseDatabase.getInstance().getReference("Hotels").child(name).child("Photos").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+               if(dataSnapshot.hasChildren())
+               {
+                   for(DataSnapshot ds:dataSnapshot.getChildren())
+                   {
+                       Picasso.with(HotelShowCase.this).load(ds.getValue().toString()).into(hall);
+                       hallt.setText("Hall of"+" "+name);
+                       break;
+
+                   }
+               }
+               else
+               {
+
+                   hallt.setText("No photos have benn added by the hotel.");
+                   hallb.setVisibility(View.GONE);
+                   hall.setVisibility(View.GONE);
+               }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
         DatabaseReference dgh=  FirebaseDatabase.getInstance().getReference("Hotels").child(name).child("Rating");
@@ -202,7 +242,7 @@ public class HotelShowCase extends AppCompatActivity {
                     Picasso.with(HotelShowCase.this).load(roo.getUrl()).fit().centerCrop().into(profile_Image);
                     profileName.setText(roo.getName());
                     review.setText(roo.getComment());
-                    rating.setVisibility(View.VISIBLE);
+                    rating1.setVisibility(View.VISIBLE);
                     rating1.setRating(Float.parseFloat(roo.getStar()));
                     f++;
                     break;
@@ -410,6 +450,7 @@ layoutList.addView(roomView);*/
                 ad.setText(address);
                 des.setText(des1);
                 lo.setText(address);
+                Picasso.with(HotelShowCase.this).load(url).fit().centerCrop().into(display);
 
 
             }

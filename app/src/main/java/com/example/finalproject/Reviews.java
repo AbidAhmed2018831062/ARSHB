@@ -90,7 +90,7 @@ LinearLayout visi;
                     public void onDataChange(@NonNull DataSnapshot d) {
                          url = d.child(phone).child("url").getValue(String.class);
                         CommentShow show=new CommentShow(fullname,review,phone, url,rating.getRating()+"");
-                        DatabaseReference db= FirebaseDatabase.getInstance().getReference("Hotels").child(hotelName).child("Review").child("Reveiw"+jk);
+                        DatabaseReference db= FirebaseDatabase.getInstance().getReference("Hotels").child(hotelName).child("Review").child(phone);
                         db.setValue(show);
                         list.add(show);
                         rl.notifyDataSetChanged();
@@ -200,6 +200,6 @@ LinearLayout visi;
     @Override
     public void onBackPressed()
     {
-        startActivity(new Intent(getApplicationContext(),HotelShowCase.class));
+        startActivity(new Intent(getApplicationContext(),DashBoard.class));
     }
 }

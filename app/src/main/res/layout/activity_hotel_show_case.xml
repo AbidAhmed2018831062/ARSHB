@@ -212,6 +212,47 @@
                     android:background="@drawable/amenities"
                     android:text="Watch All Reviews"
                     android:textColor="#000"></Button>
+                              <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="30dp"
+                    android:background="@color/colorGrey"></View>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/muli_black"
+                    android:gravity="center"
+                    android:text="Photos"
+                    android:textColor="#000"
+                    android:textSize="20dp"></TextView>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:scaleType="fitXY"
+                    android:id="@+id/hall"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/hallt"
+                    android:textColor="#000"
+                    android:fontFamily="@font/muli_black"
+                    android:textSize="18sp"
+                    android:gravity="center"
+                    android:layout_marginBottom="10dp"></TextView>
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/hallb"
+                    android:textColor="#000"
+                    android:fontFamily="@font/muli_black"
+                    android:text="Watch All Photos"
+                    android:elevation="8dp"
+                    android:background="#fff"
+                    android:textSize="18sp"></Button>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="2dp"

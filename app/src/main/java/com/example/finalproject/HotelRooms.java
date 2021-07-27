@@ -137,8 +137,6 @@ layoutList.addView(roomView);*/
             }
         });
 
-
-
         Query c = FirebaseDatabase.getInstance().getReference("Hotels").orderByChild("name").equalTo(name);
         c.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -193,9 +191,19 @@ layoutList.addView(roomView);*/
                     startActivity(new Intent(getApplicationContext(), UpdateRooms.class));
                     finish();
                 }
+                else if(item.getItemId()==R.id.ame)
+                {
+                    startActivity(new Intent(getApplicationContext(), ShowAmenties.class).putExtra("name",name));
+                    finish();
+                }
                     else if(item.getItemId()==R.id.add){
                         startActivity(new Intent(getApplicationContext(), roomCreation.class).putExtra("Name",name));
                         finish();
+
+                }
+                else if(item.getItemId()==R.id.photos){
+                    startActivity(new Intent(getApplicationContext(), PhotosFor.class));
+                    finish();
 
                 }
                 else if(item.getItemId()==R.id.received)
