@@ -316,7 +316,7 @@ int H=0;
 
                   }
                   else
-                      startActivity(new Intent(getApplicationContext(), All_Hotels.class));
+                      startActivity(new Intent(getApplicationContext(), All_Hotels.class).putExtra("com","no"));
 
 
               }

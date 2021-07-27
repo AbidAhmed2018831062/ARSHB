@@ -94,7 +94,9 @@ public class All_Hotels extends AppCompatActivity {
                                listI.add(it1);
                            }
                            else{
-                               if(hr.getName().contains(getIntent().getStringExtra("com"))){
+                               String COM=hr.getName().toLowerCase();
+                               String COM1=getIntent().getStringExtra("com").toLowerCase();
+                               if(COM.contains(COM1)){
                                    Users it1 = new Users(hr.getUrl(), hr.getName(), "Expand All");
                                    listI.add(it1);
                                }
